@@ -9,7 +9,7 @@
 	<h:panelGroup id="container-group">
 		<div class="container">
 			<ui:insert name="content">
-				<ui:include src="#{navigation.content}" />
+				<ui:include src="#{navigation.fullPath()}" />
 			</ui:insert>
 		</div>
 	</h:panelGroup>

@@ -39,6 +39,10 @@
   transition: var(--transition-time);
 }
 
+.nav-link.active {
+	background: var(--bg-secondary);
+}
+
 .nav-link:hover {
   background: var(--bg-secondary);
 }

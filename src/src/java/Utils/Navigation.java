@@ -1,10 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSF/JSFManagedBean.java to edit this template
- */
 package Utils;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
 
@@ -13,9 +9,11 @@ import java.io.Serializable;
  * @author csgn
  */
 @Named("navigation")
-@RequestScoped
+@ViewScoped
 public class Navigation implements Serializable {
-	private String content = "/modules/home.xhtml";
+	private String path = "/modules/";
+	private String extension = ".xhtml";
+	private String content = "home";
 
 	public String getContent() {
 		return content;
@@ -23,6 +21,10 @@ public class Navigation implements Serializable {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String fullPath() {
+		return path + content + extension;
 	}
 
 }
