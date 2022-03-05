@@ -24,3 +24,12 @@ hs_err_pid*
 /src/interprog/nbproject/private/
 /src/interprog/build/
 /src/interprog/dist/
+
+# NetBeans specific #
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
