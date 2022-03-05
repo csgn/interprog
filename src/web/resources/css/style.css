@@ -20,3 +20,7 @@
 	--transition-time: 300ms;
   /*--bg-secondary2: linear-gradient(90deg, #ffe4e0, #fff0d4);*/
 }
+
+h1 {
+	color: var(--text-primary);
+}

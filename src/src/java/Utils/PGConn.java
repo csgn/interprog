@@ -16,7 +16,9 @@ import org.postgresql.jdbc.PgResultSetMetaData;
  * @author csgn (Sergen Cepoglu)
  */
 public abstract class PGConn {
-	public static class PGRow extends HashMap<String, Object> {}
+
+	public static class PGRow extends HashMap<String, Object> {
+	}
 
 	final private static String DB_URL = "jdbc:postgresql://localhost:5432/interprogdb";
 	final private static String DB_USERNAME = "root";
@@ -29,11 +31,11 @@ public abstract class PGConn {
 			Class.forName("org.postgresql.Driver");
 			conn = DriverManager.getConnection(PGConn.DB_URL, PGConn.DB_USERNAME, PGConn.DB_PASSWORD);
 			System.out.println("Connection Done");
-			
+
 		} catch (SQLException e) {
 			System.out.println("ERROR: " + e.getMessage());
 		} catch (Exception e) {
-			System.out.println("ERROR: " +e.getMessage());
+			System.out.println("ERROR: " + e.getMessage());
 		}
 
 		return conn;
@@ -44,7 +46,6 @@ public abstract class PGConn {
 		PreparedStatement pst = null;
 		Connection conn = PGConn.getConnection();
 		ArrayList<PGConn.PGRow> rows = new ArrayList<PGConn.PGRow>();
-
 
 		try {
 			pst = conn.prepareStatement(queryString);
@@ -60,12 +61,10 @@ public abstract class PGConn {
 				cols.add(meta.getColumnName(i));
 			}
 
-
-
 			while (rs.next()) {
 				PGConn.PGRow row = new PGConn.PGRow();
 
-				for (String col: cols) {
+				for (String col : cols) {
 					Object r = rs.getObject(col);
 					row.put(col, r);
 				}
@@ -73,11 +72,10 @@ public abstract class PGConn {
 				rows.add(row);
 			}
 
-      conn.close();
+			conn.close();
 		} catch (SQLException e) {
 			System.out.println("ERROR: " + e.getMessage());
 		}
-
 
 		return rows;
 	}
