@@ -1,0 +1,97 @@
+/*
+ @author csgn
+*/
+.navbar {
+  width: 4rem;
+  height: 100vh;
+  position: fixed;
+  background-color: var(--bg-primary);
+  transition: width var(--transition-time) ease;
+  text-transform: uppercase;
+  overflow: hidden;
+  user-select: none;
+}
+
+.navbar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.nav-item {
+  width: 100%;
+}
+
+.nav-item:last-child {
+  margin-top: auto;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  height: 4rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: var(--transition-time);
+}
+
+.nav-link:hover {
+  background: var(--bg-secondary);
+}
+
+.link-text {
+  display: none;
+  margin-left: 1rem;
+}
+
+.nav-link ion-icon {
+  min-width: 4rem;
+  margin-top: 0 1.5rem;
+}
+
+.navbar:hover {
+  width: 16rem;
+}
+
+.navbar .nav-item:last-child ion-icon {
+  transform: rotate(0deg);
+  transition: transform var(--transition-time);
+}
+
+.navbar:hover .nav-item:last-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar:hover .nav-item:last-child ion-icon {
+  transform: rotate(180deg);
+  cursor: default;
+}
+
+.navbar:hover .nav-item:last-child .nav-link:hover {
+  background: none;
+}
+
+.navbar:hover .link-text {
+  display: block;
+}
+
+.logo {
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 0.3ch;
+  width: 100%;
+}
+
+.navbar:hover .logo {
+  background: var(--bg-secondary);
+}
+
+.logo ion-icon {
+  transform: rotate(360deg);
+}
