@@ -12,51 +12,51 @@
 		<nav class="navbar">
 			<ul class="navbar-nav">
 				<li class="logo">
-					<h:commandLink action="#{navigation.setContent('/modules/home.xhtml')}" class="nav-link">
+					<h:commandLink action="#{navigation.setContent('home')}" class="nav-link">
 						<ion-icon name="logo-web-component" size="large"></ion-icon>
 						<span class="link-text">Interprog</span>
 					</h:commandLink>
 				</li>
-				<li class="nav-item">
-					<h:commandLink action="#{navigation.setContent('/modules/home.xhtml')}" class='nav-link'>
+				<li id="home" class="nav-item">
+					<h:commandLink action="#{navigation.setContent('home')}" class='nav-link active'>
 						<ion-icon name="home" size="large"></ion-icon>
 						<span class="link-text">Home</span>
-						<f:ajax execute="@this" render=":container-group" />
+						<f:ajax execute="@this" render=":container-group" onevent="currentContent" />
 					</h:commandLink>
 				</li>
-				<li class="nav-item">
-					<h:commandLink action="#{navigation.setContent('/modules/jobs.xhtml')}"  class='nav-link'>
+				<li id="jobs" class="nav-item">
+					<h:commandLink action="#{navigation.setContent('jobs')}"  class='nav-link'>
 						<ion-icon name="calendar" size="large"></ion-icon>
 						<span class="link-text">Jobs</span>
-						<f:ajax execute="@this" render=":container-group" />
+						<f:ajax execute="@this" render=":container-group" onevent="currentContent" />
 					</h:commandLink>
 				</li>
-				<li class="nav-item">
-					<h:commandLink action="#{navigation.setContent('/modules/customers.xhtml')}" class='nav-link'>
+				<li id="customers" class="nav-item">
+					<h:commandLink action="#{navigation.setContent('customers')}" class='nav-link'>
 						<ion-icon name="person-add" size="large"></ion-icon>
 						<span class="link-text">Customers</span>
-						<f:ajax execute="@this" render=":container-group" />
+						<f:ajax execute="@this" render=":container-group" onevent="currentContent" />
 					</h:commandLink>
 				</li>
-				<li class="nav-item">
-					<h:commandLink action="#{navigation.setContent('/modules/employees.xhtml')}" class='nav-link'>
+				<li id="employees" class="nav-item">
+					<h:commandLink action="#{navigation.setContent('employees')}" class='nav-link'>
 						<ion-icon name="people" size="large"></ion-icon>
 						<span class="link-text">Employees</span>
-						<f:ajax execute="@this" render=":container-group" />
+						<f:ajax execute="@this" render=":container-group" onevent="currentContent" />
 					</h:commandLink>
 				</li>
-				<li class="nav-item">
-					<h:commandLink action="#{navigation.setContent('/modules/products.xhtml')}" class='nav-link'>
+				<li id="products" class="nav-item">
+					<h:commandLink action="#{navigation.setContent('products')}" class='nav-link'>
 						<ion-icon name="albums" size="large"></ion-icon>
 						<span class="link-text">Products</span>
-						<f:ajax execute="@this" render=":container-group" />
+						<f:ajax execute="@this" render=":container-group" onevent="currentContent" />
 					</h:commandLink>
 				</li>
-				<li class="nav-item">
-					<h:commandLink action="#{navigation.setContent('/modules/settings.xhtml')}" class='nav-link'>
+				<li id="settings" class="nav-item">
+					<h:commandLink action="#{navigation.setContent('settings')}" class='nav-link'>
 						<ion-icon name="settings" size="large"></ion-icon>
 						<span class="link-text">Settings</span>
-						<f:ajax execute="@this" render=":container-group" />
+						<f:ajax execute="@this" render=":container-group" onevent="currentContent" />
 					</h:commandLink>
 				</li>
 				<li class="nav-item">
@@ -67,6 +67,18 @@
 			</ul>
 		</nav>
 	</h:form>
-
+	<script type="text/javascript">
+		function currentContent(d) {
+			if (d.status === "success") {
+				var navs = document.querySelectorAll('.nav-item .nav-link.active[id]');
+				navs.forEach(el => {
+					if (el.id !== d.source.id) {
+						el.classList.remove('active')
+						d.source.classList.toggle("active")
+					}
+				})
+			}
+		}
+	</script>
 </ui:composition>
 
