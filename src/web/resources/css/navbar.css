@@ -88,3 +88,7 @@
 .wrapper.active .nav-item:first-child .nav-link {
   background: var(--bg-secondary);
 }
+
+.nav-link.active {
+	background: var(--bg-secondary);
+}
