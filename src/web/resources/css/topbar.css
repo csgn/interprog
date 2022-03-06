@@ -3,9 +3,9 @@
 */
 .topbar {
   height: 4rem;
+  margin-left: 4rem;
   transition: var(--transition-time);
   background: var(--bg-primary);
-  padding: 0 1rem 0 0;
 }
 
 .topbar-top {
@@ -13,6 +13,8 @@
   height: 100%;
   display: flex;
   justify-content: flex-end;
+  padding-left: 0.5rem;
+  transition: margin-left var(--transition-time);
 }
 
 .top-item {
@@ -43,28 +45,25 @@
   opacity: 0.6;
 }
 
-
 .wrapper.active .topbar {
-	background: var(--bg-secondary-rev);
+  background: var(--bg-secondary-rev);
 }
 
 .top-item .dropdown {
-	display: none;
+  display: none;
 }
 
 .top-item:hover .dropdown {
-	display: inline-block;
+  display: inline-block;
 }
 
-.logo {
+.top-item:first-child {
+  margin-right: auto;
+  z-index: 1000;
   font-weight: bold;
   text-align: center;
   letter-spacing: 0.3ch;
-  width: 100%;
-	list-style: none;
-}
-
-.link-text {
-  display: inline-flex;
-  margin-left: 1rem;
+  padding-left: 2rem;
+  text-transform: uppercase;
+  color: var(--text-primary);
 }

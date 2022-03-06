@@ -11,8 +11,8 @@ import java.io.Serializable;
 @Named("navigation")
 @ViewScoped
 public class Navigation implements Serializable {
-	private String path = "/modules/";
-	private String extension = ".xhtml";
+	final private String path = "/modules/";
+	final private String extension = ".xhtml";
 	private String content = "home";
 
 	public String getContent() {
