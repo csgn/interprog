@@ -10,6 +10,7 @@
   text-transform: uppercase;
   overflow: hidden;
   user-select: none;
+	margin-top: 4rem;
 }
 
 .navbar-nav {
@@ -47,11 +48,6 @@
   background: var(--bg-secondary);
 }
 
-.link-text {
-  display: none;
-  margin-left: 1rem;
-}
-
 .nav-link ion-icon {
   min-width: 4rem;
   margin-top: 0 1.5rem;
@@ -79,17 +75,6 @@
 
 .navbar:hover .nav-item:last-child .nav-link:hover {
   background: none;
-}
-
-.navbar:hover .link-text {
-  display: block;
-}
-
-.logo {
-  font-weight: bold;
-  text-align: center;
-  letter-spacing: 0.3ch;
-  width: 100%;
 }
 
 .navbar:hover .logo {
