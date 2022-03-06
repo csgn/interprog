@@ -11,6 +11,7 @@
   background: var(--bg-primary);
   transition: var(--transition-time);
   border-left: 0.5px #eee solid;
+	border-top: 0.5px #eee solid;
 }
 
 .wrapper.active .container {
