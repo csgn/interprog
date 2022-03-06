@@ -4,10 +4,9 @@
 .topbar {
   height: 4rem;
   border-bottom: 0.5px #eee solid;
-  margin-left: 4rem;
   transition: var(--transition-time);
   background: var(--bg-primary);
-  padding: 0 1rem;
+  padding: 0 1rem 0 0;
 }
 
 .topbar-top {
@@ -56,4 +55,17 @@
 
 .top-item:hover .dropdown {
 	display: inline-block;
+}
+
+.logo {
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 0.3ch;
+  width: 100%;
+	list-style: none;
+}
+
+.link-text {
+  display: inline-flex;
+  margin-left: 1rem;
 }
