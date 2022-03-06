@@ -20,7 +20,7 @@ public abstract class PGConn {
 	public static class PGRow extends HashMap<String, Object> {
 	}
 
-	final private static String DB_URL = "jdbc:postgresql://localhost:5432/interprogdb";
+	final private static String DB_URL = "jdbc:postgresql://localhost:5432/interprog";
 	final private static String DB_USERNAME = "root";
 	final private static String DB_PASSWORD = "12345";
 

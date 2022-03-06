@@ -10,7 +10,6 @@
   text-transform: uppercase;
   overflow: hidden;
   user-select: none;
-	margin-top: 4rem;
 }
 
 .navbar-nav {
@@ -40,12 +39,12 @@
   transition: var(--transition-time);
 }
 
-.nav-link.active {
-	background: var(--bg-secondary);
-}
-
 .nav-link:hover {
   background: var(--bg-secondary);
+}
+
+.link-text {
+  display: none;
 }
 
 .nav-link ion-icon {
@@ -77,10 +76,15 @@
   background: none;
 }
 
-.navbar:hover .logo {
-  background: var(--bg-secondary);
+.navbar:hover .link-text {
+  display: block;
 }
 
-.logo ion-icon {
-  transform: rotate(360deg);
+.wrapper.active .nav-item:first-child {
+  background-color: var(--bg-primary);
+  border-bottom: 0.5px #eee solid;
+}
+
+.wrapper.active .nav-item:first-child .nav-link {
+  background: var(--bg-secondary);
 }

@@ -27,27 +27,27 @@
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>home</from-outcome>
-			<to-view-id>modules/home.xhtml</to-view-id>
+			<to-view-id>/modules/home.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>jobs</from-outcome>
-			<to-view-id>modules/jobs.xhtml</to-view-id>
+			<to-view-id>/modules/jobs.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>customers</from-outcome>
-			<to-view-id>modules/customers.xhtml</to-view-id>
+			<to-view-id>/modules/customers.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>employees</from-outcome>
-			<to-view-id>modules/employees.xhtml</to-view-id>
+			<to-view-id>/modules/employees.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>products</from-outcome>
-			<to-view-id>modules/products.xhtml</to-view-id>
+			<to-view-id>/modules/products.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>settings</from-outcome>
-			<to-view-id>modules/settings.xhtml</to-view-id>
+			<to-view-id>/modules/settings.xhtml</to-view-id>
 		</navigation-case>
 
 
