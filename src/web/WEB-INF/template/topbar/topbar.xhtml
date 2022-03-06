@@ -10,6 +10,12 @@
 
 	<div class="topbar">
 		<div class="topbar-top">
+			<li class="logo">
+				<h:commandLink action="#{navigation.setContent('home')}" class="nav-link">
+					<ion-icon name="logo-web-component" size="large"></ion-icon>
+					<span class="link-text">INTERPROG</span>
+				</h:commandLink>
+			</li>
 			<li class="top-item">
 				<dd:dropdown>
 					<dd:dropdown-item title='0 Notifications' url='' icon='mail' />
