@@ -1,6 +1,6 @@
 package DAO;
 
-import Entity.Employee;
+import Model.Employee;
 import Utils.PGConn;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class EmployeeDAO {
 
-	private Connection con = PGConn.getConnection();
+	private final Connection con = PGConn.getConnection();
 	private PreparedStatement ps;
 
 	public List<Employee> findAll() {
@@ -24,7 +24,14 @@ public class EmployeeDAO {
 			this.ps = this.con.prepareStatement("Select * from employee");
 			ResultSet rs = this.ps.executeQuery();
 			if (rs.next()) {
-				Employee tmp = new Employee(rs.getInt("id"), rs.getString("name"), rs.getString("surname"), rs.getString("phone"), rs.getString("color"), rs.getString("password"), rs.getInt("roleId"));
+				Employee tmp = new Employee(
+								rs.getInt("id"),
+								rs.getString("name"),
+								rs.getString("surname"),
+								rs.getString("phone"),
+								rs.getString("color"),
+								rs.getString("password"),
+								rs.getInt("roleId"));
 				employees.add(tmp);
 			}
 			return employees;
@@ -40,7 +47,14 @@ public class EmployeeDAO {
 			this.ps.setInt(1, id);
 			ResultSet rs = this.ps.executeQuery();
 			if (rs.next()) {
-				Employee tmp = new Employee(rs.getInt("id"), rs.getString("name"), rs.getString("surname"), rs.getString("phone"), rs.getString("color"), rs.getString("password"), rs.getInt("roleId"));
+				Employee tmp = new Employee(
+								rs.getInt("id"),
+								rs.getString("name"),
+								rs.getString("surname"),
+								rs.getString("phone"),
+								rs.getString("color"),
+								rs.getString("password"),
+								rs.getInt("roleId"));
 				return tmp;
 			}
 		} catch (SQLException e) {
@@ -55,7 +69,14 @@ public class EmployeeDAO {
 			this.ps.setString(1, phoneNumber);
 			ResultSet rs = this.ps.executeQuery();
 			if (rs.next()) {
-				Employee tmp = new Employee(rs.getInt("id"), rs.getString("name"), rs.getString("surname"), rs.getString("phone"), rs.getString("color"), rs.getString("password"), rs.getInt("roleId"));
+				Employee tmp = new Employee(
+								rs.getInt("id"),
+								rs.getString("name"),
+								rs.getString("surname"),
+								rs.getString("phone"),
+								rs.getString("color"),
+								rs.getString("password"),
+								rs.getInt("roleId"));
 				return tmp;
 			}
 		} catch (SQLException e) {
@@ -80,23 +101,5 @@ public class EmployeeDAO {
 			return false;
 		}
 		return false;
-	}
-
-	public int getRoleId(String user, String password) {
-		try {
-			this.ps = con.prepareStatement("Select phone, password, roleid from employee where phone = ?");
-			this.ps.setString(1, user);
-			this.ps.setString(2, password);
-
-			ResultSet rs = this.ps.executeQuery();
-
-			if (rs.next()) {
-				return rs.getInt("roleid");
-			}
-		} catch (SQLException e) {
-			System.out.println("Error -->" + e.getMessage());
-			return -1;
-		}
-		return -1;
 	}
 }

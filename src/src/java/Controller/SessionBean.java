@@ -1,7 +1,7 @@
 package Controller;
 
 import DAO.EmployeeDAO;
-import Entity.Employee;
+import Model.Employee;
 import Utils.Session;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
@@ -12,7 +12,6 @@ import java.io.Serializable;
  *
  * @author Metin
  */
-
 @Named("sessionBean")
 @SessionScoped
 public class SessionBean implements Serializable {
@@ -25,15 +24,16 @@ public class SessionBean implements Serializable {
 	private String sessionId;
 	private Employee employee;
 	private HttpSession sessionCreated;
-	private final EmployeeDAO employeeDAO = new EmployeeDAO();
+	private final EmployeeDAO employeeDAO;
 
 	public SessionBean() {
+		this.employeeDAO = new EmployeeDAO();
 	}
 
 	public String getPassword() {
 		return this.password;
 	}
-	
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -50,55 +50,31 @@ public class SessionBean implements Serializable {
 		return sessionId;
 	}
 
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
-	}
-
 	public String getName() {
 		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getSurname() {
 		return surname;
 	}
 
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-
 	public int getRoleId() {
 		return roleId;
-	}
-
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
 	}
 
 	public HttpSession getSessionCreated() {
 		return sessionCreated;
 	}
 
-	public void setSessionCreated(HttpSession sessionCreated) {
-		this.sessionCreated = sessionCreated;
-	}
-
 	public Employee getEmployee() {
 		return employee;
 	}
 
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}
-	
 	public boolean validateUsernamePassword() {
 		boolean valid = this.employeeDAO.validate(this.phoneNumber, this.password);
 		return valid;
 	}
-	
+
 	public HttpSession createSession() {
 		if (validateUsernamePassword()) {
 			this.employee = this.employeeDAO.findByPhoneNumber(this.phoneNumber);
@@ -114,7 +90,7 @@ public class SessionBean implements Serializable {
 			return null;
 		}
 	}
-	
+
 	public String login() {
 		this.sessionCreated = createSession();
 		if (this.sessionCreated == null) {

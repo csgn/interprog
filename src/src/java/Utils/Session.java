@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author Metin
  */
-
 public class Session {
 
 	public static HttpSession getSession() {
