@@ -46,21 +46,23 @@ public class AuthorizationFilter implements Filter {
 			HttpSession session = req.getSession(false);
 			String reqURI = req.getRequestURI();
 			String loginPath = "/login";
-			
-			// True if logged in otherwise false
+
+			// true if logged in otherwise false
 			boolean loginStatus = isLoggedIn(session);
+
+			// is this request to the login page?
 			boolean loginRequest = reqURI.contains(loginPath);
 			boolean resourceRequest = reqURI.contains(ResourceHandler.RESOURCE_IDENTIFIER);
 
 			if (resourceRequest) {
 				chain.doFilter(request, response);
-			
-				// request to other pages but not logged in
+
+				// request to other pages but not logged in -> redirect to login page
 			} else if (!loginRequest && !loginStatus) {
 				res.sendRedirect(loginPath);
-			
-				// request to login page and logged in redirect to index
-			} else if (loginRequest && loginStatus){
+
+				// request to login page and logged in -> redirect to index
+			} else if (loginRequest && loginStatus) {
 				res.sendRedirect("/");
 			} else {
 				chain.doFilter(request, response);
