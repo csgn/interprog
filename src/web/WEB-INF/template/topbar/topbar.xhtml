@@ -6,31 +6,34 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 								xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 								xmlns:dd="http://xmlns.jcp.org/jsf/composite/composite/dropdown"
+								xmlns:ib="http://xmlns.jcp.org/jsf/composite/composite/icon-button"
 								xmlns:h="http://xmlns.jcp.org/jsf/html">
 
 	<div class="topbar">
 		<div class="topbar-top">
 			<li class="top-item">
-      	<span>interprog</span>
-      </li>
+				<span>interprog</span>
+			</li>
 			<li class="top-item">
 				<dd:dropdown>
-					<dd:dropdown-item title='0 Notifications' url='' icon='mail' />
+						<ib:icon-button name="notifications" />
+						<dd:dropdown-menu>
+							<dd:dropdown-item title='0 Notifications' url='' icon='mail' />
+						</dd:dropdown-menu>
 				</dd:dropdown>
+			</li>
 
-				<a href="#" class="icon-button">
-					<ion-icon name="notifications" />
-				</a>
-			</li>
+
 			<li class="top-item">
 				<dd:dropdown>
-					<dd:dropdown-item title='Profile' url='' icon='person' />
-					<dd:dropdown-item title='Sign Out' url='' icon='log-out' />
+					<ib:icon-button name="caret-down" />
+					<dd:dropdown-menu>
+						<dd:dropdown-item title='Profile' url='' icon='person' />
+						<dd:dropdown-item title='Sign Out' url='' icon='log-out' />
+					</dd:dropdown-menu>
 				</dd:dropdown>
-				<a href="#" class="icon-button">
-					<ion-icon name="caret-down" />
-				</a>
 			</li>
+
 		</div>
 	</div>
 

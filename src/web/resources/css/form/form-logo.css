@@ -1,0 +1,34 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Mar 7, 2022, 7:45:53 PM
+    Author     : csgn
+*/
+
+
+.fm-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  flex-direction: column;
+  padding: 2rem 2rem;
+  user-select: none;
+}
+
+.fm-logo ion-icon {
+  width: 96px;
+  height: 96px;
+  color: #333;
+}
+
+
+.fm-title {
+  font-weight: bold;
+  font-size: 24px;
+  text-transform: uppercase;
+  color: #333;
+  letter-spacing: 0.3ch;
+}

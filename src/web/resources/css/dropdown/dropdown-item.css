@@ -1,0 +1,26 @@
+/* 
+    Created on : Mar 7, 2022, 9:30:58 PM
+    Author     : csgn
+*/
+
+.dd-item a {
+	height: 50px;
+	display: flex;
+	align-items: center;
+	border-radius: 7px;
+	transition: background var(--transition-time);
+	padding: 0.5rem;
+	text-transform: uppercase;
+	color: var(--text-secondary);
+	letter-spacing: 0.1ch;
+}
+
+.dd-item a:hover {
+	background: var(--bg-secondary);
+	cursor: pointer;
+}
+
+.dd-item a ion-icon {
+	color: var(--text-secondary);
+	margin-right: 1rem;
+}

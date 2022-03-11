@@ -24,39 +24,6 @@
   justify-content: center;
 }
 
-.icon-button {
-  --button-size: calc(5rem * 0.5);
-  width: var(--button-size);
-  height: var(--button-size);
-  background-color: var(--bg-secondary);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.5s;
-  border: 0.5px #ddd solid;
-}
-
-.icon-button ion-icon {
-  color: #333;
-}
-
-.icon-button:hover {
-  opacity: 0.6;
-}
-
-.wrapper.active .topbar {
-  background: var(--bg-secondary-rev);
-}
-
-.top-item .dropdown {
-  display: none;
-}
-
-.top-item:hover .dropdown {
-  display: inline-block;
-}
-
 .top-item:first-child {
   margin-right: auto;
   z-index: 1000;
@@ -66,4 +33,8 @@
   padding-left: 2rem;
   text-transform: uppercase;
   color: var(--text-primary);
+}
+
+.wrapper.active .topbar {
+  background: var(--bg-secondary-rev);
 }

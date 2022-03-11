@@ -38,28 +38,27 @@ public class AuthorizationFilter implements Filter {
 			String reqURI = req.getRequestURI();
 
 			// request to other pages and already logged in
-			if (!reqURI.contains("/login.xhtml") && (session != null && session.getAttribute("phoneNumber") != null)) {
+			if (!reqURI.contains("login") && (session != null && session.getAttribute("phoneNumber") != null)) {
 				chain.doFilter(request, response);
-				
+
 				// request to login page and already logged in -> return index page
-			} else if (reqURI.contains("/login.xhtml") && (session != null && session.getAttribute("phoneNumber") != null)) {
+			} else if (reqURI.contains("login") && (session != null && session.getAttribute("phoneNumber") != null)) {
 				res.sendRedirect(req.getContextPath() + "index.xhtml");
-				
+
 				// request to login page and not logged in
-			} else if (reqURI.contains("/login.xhtml") && session == null) {
+			} else if (reqURI.contains("login") && session == null) {
 				chain.doFilter(request, response);
-				
+
 				// request to other pages and not logged in -> return login page
-			} else if (!reqURI.contains("/login.xhtml") && session == null) {
-				res.sendRedirect(req.getContextPath() + "login.xhtml");
-				
+			} else if (!reqURI.contains("login") && session == null) {
+				res.sendRedirect(req.getContextPath() + "/login");
 				// request to login page and not logged in
-			} else if (reqURI.contains("/login.xhtml") && (session != null && session.getAttribute("phoneNumber") == null)) {
+			} else if (reqURI.contains("login") && (session != null && session.getAttribute("phoneNumber") == null)) {
 				chain.doFilter(request, response);
-				
+
 				// request to other pages and not logged in -> return login page
-			} else if (!reqURI.contains("/login.xhtml") && (session != null && session.getAttribute("phoneNumber") == null)) {
-				res.sendRedirect(req.getContextPath() + "login.xhtml");
+			} else if (!reqURI.contains("login") && (session != null && session.getAttribute("phoneNumber") == null)) {
+				res.sendRedirect(req.getContextPath() + "/login");
 			} else {
 				chain.doFilter(request, response);
 			}

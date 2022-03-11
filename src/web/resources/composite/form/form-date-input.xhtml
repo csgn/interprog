@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- @author csgn
+	@author csgn
 -->
 <!DOCTYPE html>
 <ui:composition xmlns = "http://www.w3.org/1999/xhtml"   
 								xmlns:h = "http://java.sun.com/jsf/html"
 								xmlns:f = "http://java.sun.com/jsf/core"
+								xmlns:fm="http://xmlns.jcp.org/jsf/composite/composite/form"
 								xmlns:composite = "http://xmlns.jcp.org/jsf/composite"
 								xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<composite:interface>
-		<composite:attribute name='title' />
-		<composite:attribute name='url' />
-		<composite:attribute name='icon' />
+		<composite:attribute name="placeholder" default="Date &amp; Time" />
+		<composite:attribute name="required" default="true" />
 	</composite:interface>
 
 	<composite:implementation>
-		<h:outputStylesheet library='css' name='dropdown/dropdown-item.css' />
-		<div class="dd-item">
-			<a href='#{cc.attrs.url}'>
-				<ion-icon name="#{cc.attrs.icon}" size="large"></ion-icon>
-				<span>#{cc.attrs.title}</span>
-			</a>
-		</div>
+		<fm:form-input type="text" placeholder="#{cc.attrs.placeholder}" required="#{cc.attrs.required}" onfocus="(this.type = 'date')" onblur="if (!this.value)
+					this.type = 'text'" />
 	</composite:implementation>
 </ui:composition>
+

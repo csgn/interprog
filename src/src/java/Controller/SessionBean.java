@@ -80,9 +80,9 @@ public class SessionBean implements Serializable {
 
 	public String login() {
 		this.sessionCreated = createSession();
-		
+
 		// redirect index page if login successful otherwise login page  
-		return this.sessionCreated == null ? "login" + "?faces-redirect=true" : "index" + "?faces-redirect=true";
+		return this.sessionCreated == null ? "login" : "dashboard";
 	}
 
 	public String logout() {
@@ -92,6 +92,6 @@ public class SessionBean implements Serializable {
 		}
 		
 		// redirect login page after logging out
-		return "login" + "?faces-redirect=true";
+		return "login";
 	}
 }

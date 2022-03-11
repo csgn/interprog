@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	@author csgn
+-->
+<!DOCTYPE html>
+<ui:composition xmlns = "http://www.w3.org/1999/xhtml"   
+								xmlns:h = "http://java.sun.com/jsf/html"
+								xmlns:f = "http://java.sun.com/jsf/core"
+								xmlns:composite = "http://xmlns.jcp.org/jsf/composite"
+								xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+								xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+	<composite:interface>
+		<composite:attribute name='type' required="true" />
+		<composite:attribute name='value' />
+		<composite:attribute name='autofocus' />
+		<composite:attribute name='placeholder' required="true" />
+		<composite:attribute name='required' />
+		<composite:attribute name='onfocus' />
+		<composite:attribute name='onblur' />
+	</composite:interface>
+
+	<composite:implementation>
+		<h:outputStylesheet library="css" name="form/form-input.css" />
+
+		<div>
+			<h:inputText
+					p:class="fm-input"
+					p:required="#{cc.attrs.required}"
+					p:value="#{cc.attrs.value}"
+					p:autofocus="#{cc.attrs.autofocus}"
+					p:type="#{cc.attrs.type}"
+					p:onfocus="#{cc.attrs.onfocus}"
+					p:onblur="#{cc.attrs.onblur}"
+					/>
+
+			<h:outputLabel p:class="placeholder">#{cc.attrs.placeholder}</h:outputLabel>
+		</div>
+	</composite:implementation>
+</ui:composition>

@@ -1,0 +1,26 @@
+/* 
+    Created on : Mar 7, 2022, 7:44:10 PM
+    Author     : csgn
+*/
+
+.fm-item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 80%;
+}
+
+.fm-item .placeholder {
+  position: relative;
+  pointer-events: none;
+  background: #fff;
+  transition: 200ms;
+  opacity: 0.5;
+  top: -2.4rem;
+  left: 1rem;
+  user-select: none;
+  border-radius: 25px;
+  letter-spacing: 0.1ch;
+	text-transform: capitalize;
+}

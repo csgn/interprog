@@ -87,6 +87,7 @@ public class EmployeeDAO {
 
 	public boolean validate(String user, String password) {
 		try {
+			System.out.println("PHONE: " + user + " PASSWORD: " +password);
 			this.ps = this.con.prepareStatement("Select phone, password, roleid from employee where phone = ? and password = ?");
 			this.ps.setString(1, user);
 			this.ps.setString(2, password);
