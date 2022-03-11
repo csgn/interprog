@@ -11,6 +11,7 @@
 	
 	<composite:interface>
 		<composite:attribute name='type' />
+		<composite:attribute name='value' />
 		<composite:attribute name='placeholder' />
 		<composite:attribute name='required' />
 		<composite:attribute name='autofocus' />
@@ -20,7 +21,7 @@
 
 	<composite:implementation>
 		<h:outputStylesheet library="css" name="form/form-input.css" />
-		<input class="fm-input" type="#{cc.attrs.type}" required="#{cc.attrs.required}" autofocus="#{cc.attrs.autofocus}" onfocus="${cc.attrs.onfocus}" onblur="#{cc.attrs.onblur}" />
+		<input class="fm-input" type="#{cc.attrs.type}" required="#{cc.attrs.required}" autofocus="#{cc.attrs.autofocus}" onfocus="${cc.attrs.onfocus}" onblur="#{cc.attrs.onblur}" value="#{cc.attrs.value}" />
 		<span class="placeholder">#{cc.attrs.placeholder}</span>
 	</composite:implementation>
 </ui:composition>

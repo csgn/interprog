@@ -19,5 +19,10 @@
                 <root id="test.src.dir"/>
             </test-roots>
         </data>
+        <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+            <word>csgn</word>
+            <word>Interprog</word>
+            <word>STYLESHEETS</word>
+        </spellchecker-wordlist>
     </configuration>
 </project>
