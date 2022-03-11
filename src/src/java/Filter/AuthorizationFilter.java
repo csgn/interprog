@@ -34,20 +34,31 @@ public class AuthorizationFilter implements Filter {
 
 			HttpServletRequest req = (HttpServletRequest) request;
 			HttpServletResponse res = (HttpServletResponse) response;
-			HttpSession ses = req.getSession(false);
+			HttpSession session = req.getSession(false);
 			String reqURI = req.getRequestURI();
 
-			if (!reqURI.contains("/login.xhtml") && (ses != null && ses.getAttribute("phoneNumber") != null)) {
+			// request to other pages and already logged in
+			if (!reqURI.contains("/login.xhtml") && (session != null && session.getAttribute("phoneNumber") != null)) {
 				chain.doFilter(request, response);
-			} else if (reqURI.contains("/login.xhtml") && (ses != null && ses.getAttribute("phoneNumber") != null)) {
+				
+				// request to login page and already logged in -> return index page
+			} else if (reqURI.contains("/login.xhtml") && (session != null && session.getAttribute("phoneNumber") != null)) {
 				res.sendRedirect(req.getContextPath() + "index.xhtml");
-			} else if (reqURI.contains("/login.xhtml") && ses == null) {
+				
+				// request to login page and not logged in
+			} else if (reqURI.contains("/login.xhtml") && session == null) {
 				chain.doFilter(request, response);
-			} else if (!reqURI.contains("/login.xhtml") && ses == null) {
+				
+				// request to other pages and not logged in -> return login page
+			} else if (!reqURI.contains("/login.xhtml") && session == null) {
 				res.sendRedirect(req.getContextPath() + "login.xhtml");
-			} else if (reqURI.contains("/login.xhtml") && (ses != null && ses.getAttribute("phoneNumber") == null)) {
+				
+				// request to login page and not logged in
+			} else if (reqURI.contains("/login.xhtml") && (session != null && session.getAttribute("phoneNumber") == null)) {
 				chain.doFilter(request, response);
-			} else if (!reqURI.contains("/login.xhtml") && (ses != null && ses.getAttribute("phoneNumber") == null)) {
+				
+				// request to other pages and not logged in -> return login page
+			} else if (!reqURI.contains("/login.xhtml") && (session != null && session.getAttribute("phoneNumber") == null)) {
 				res.sendRedirect(req.getContextPath() + "login.xhtml");
 			} else {
 				chain.doFilter(request, response);

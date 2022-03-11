@@ -4,15 +4,15 @@ package Model;
  *
  * @author Metin
  */
-
 public class Employee {
-		private int id;
-		private String name;
-		private String surname;
-		private String phone;
-		private String color;
-		private String password;
-		private int roleId;
+
+	private int id;
+	private String name;
+	private String surname;
+	private String phone;
+	private String color;
+	private String password;
+	private int roleId;
 
 	public Employee(int id, String name, String surname, String phone, String color, String password, int roleId) {
 		this.id = id;
@@ -23,7 +23,7 @@ public class Employee {
 		this.password = password;
 		this.roleId = roleId;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -79,6 +79,4 @@ public class Employee {
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;
 	}
-		
-		
 }

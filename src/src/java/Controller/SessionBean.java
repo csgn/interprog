@@ -4,6 +4,7 @@ import DAO.EmployeeDAO;
 import Model.Employee;
 import Utils.Session;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import jakarta.servlet.http.HttpSession;
 import java.io.Serializable;
@@ -16,9 +17,6 @@ import java.io.Serializable;
 @SessionScoped
 public class SessionBean implements Serializable {
 
-	private int roleId;
-	private String name;
-	private String surname;
 	private String phoneNumber;
 	private String password;
 	private String sessionId;
@@ -50,59 +48,50 @@ public class SessionBean implements Serializable {
 		return sessionId;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public String getSurname() {
-		return surname;
-	}
-
-	public int getRoleId() {
-		return roleId;
-	}
-
-	public HttpSession getSessionCreated() {
-		return sessionCreated;
-	}
-
 	public Employee getEmployee() {
 		return employee;
 	}
 
+	// is user exist with given username and password
 	public boolean validateUsernamePassword() {
-		boolean valid = this.employeeDAO.validate(this.phoneNumber, this.password);
-		return valid;
+		return this.employeeDAO.validate(this.phoneNumber, this.password);
 	}
 
+	// if user exist create new session
 	public HttpSession createSession() {
-		if (validateUsernamePassword()) {
-			this.employee = this.employeeDAO.findByPhoneNumber(this.phoneNumber);
-			HttpSession session = Session.getSession();
-			session.setAttribute("phoneNumber", this.phoneNumber);
-			session.setAttribute("roleId", this.employee.getRoleId());
-			session.setAttribute("name", this.employee.getName());
-			session.setAttribute("surname", this.employee.getSurname());
-			session.setAttribute("sessionId", Session.getId());
-			this.sessionId = Session.getId();
-			return session;
-		} else {
+		if (!validateUsernamePassword()) {
 			return null;
 		}
+		
+		// find user
+		this.employee = this.employeeDAO.findByPhoneNumber(this.phoneNumber);
+		
+		// generate new session
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		
+		// attributes are currently not used
+		session.setAttribute("phoneNumber", this.phoneNumber);
+		session.setAttribute("roleId", this.employee.getRoleId());
+		session.setAttribute("name", this.employee.getName());
+		session.setAttribute("surname", this.employee.getSurname());
+		this.sessionId = session.getId();
+		return session;
 	}
 
 	public String login() {
 		this.sessionCreated = createSession();
-		if (this.sessionCreated == null) {
-			return "login" + "?faces-redirect=true";
-		} else {
-			return "index" + "?faces-redirect=true";
-		}
+		
+		// redirect index page if login successful otherwise login page  
+		return this.sessionCreated == null ? "login" + "?faces-redirect=true" : "index" + "?faces-redirect=true";
 	}
 
 	public String logout() {
 		HttpSession session = Session.getSession();
-		session.invalidate();
+		if (session != null) {
+			session.invalidate();
+		}
+		
+		// redirect login page after logging out
 		return "login" + "?faces-redirect=true";
 	}
 }
