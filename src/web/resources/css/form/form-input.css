@@ -16,7 +16,6 @@
 
 .fm-input:focus {
   box-shadow: 0 0 0.5px 0.5px #555;
-  border-width: small small 1px;
   border: 2px #555 solid;
 }
 

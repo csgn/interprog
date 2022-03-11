@@ -24,7 +24,7 @@
 				<fm:form-header title="interprog" icon="logo-web-component"/>
 			</fm:form-item>
 			<fm:form-item>
-				<fm:form-input type="text" placeholder="Phone Number" autofocus="true" required="true" value="#{sessionBean.phoneNumber}" />
+				<fm:form-input type="text" placeholder="phone number" required="true" value="#{sessionBean.phoneNumber}" autofocus="true" />
 			</fm:form-item>
 			<fm:form-item>
 				<fm:form-input type="password" placeholder="password" required="true" value="#{sessionBean.password}" />
@@ -33,7 +33,7 @@
 				<fm:form-error msg="Couldn't find your account" />
 			</fm:form-item>
 			<fm:form-item>
-				<fm:form-button action="#{sessionBean.login()}" value="log in" />
+				<fm:form-button value="log in" bean="#{sessionBean}" method="login" />
 			</fm:form-item>
 		</fm:form>
   </body>
