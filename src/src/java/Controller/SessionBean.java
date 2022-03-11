@@ -33,7 +33,6 @@ public class SessionBean implements Serializable {
 	}
 
 	public void setPassword(String password) {
-		System.out.println("ASDSADSADA>>>>>>>>>>>>>@!@!$@!$ ");
 		this.password = password;
 	}
 
