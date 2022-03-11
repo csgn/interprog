@@ -80,8 +80,8 @@ public class SessionBean implements Serializable {
 
 	public String login() {
 		this.sessionCreated = createSession();
-
-		// redirect index page if login successful otherwise login page  
+		
+		// redirect index page if login successful otherwise login page
 		return this.sessionCreated == null ? "login" : "dashboard";
 	}
 

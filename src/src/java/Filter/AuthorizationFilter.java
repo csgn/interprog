@@ -1,5 +1,6 @@
 package Filter;
 
+import jakarta.faces.application.ResourceHandler;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -22,6 +23,14 @@ public class AuthorizationFilter implements Filter {
 	public AuthorizationFilter() {
 	}
 
+	private boolean isLoggedIn(HttpSession session) {
+		if (session == null) {
+			return false;
+		} else {
+			return session.getAttribute("phoneNumber") != null;
+		}
+	}
+
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -36,29 +45,23 @@ public class AuthorizationFilter implements Filter {
 			HttpServletResponse res = (HttpServletResponse) response;
 			HttpSession session = req.getSession(false);
 			String reqURI = req.getRequestURI();
+			String loginPath = "/login";
+			
+			// True if logged in otherwise false
+			boolean loginStatus = isLoggedIn(session);
+			boolean loginRequest = reqURI.contains(loginPath);
+			boolean resourceRequest = reqURI.contains(ResourceHandler.RESOURCE_IDENTIFIER);
 
-			// request to other pages and already logged in
-			if (!reqURI.contains("login") && (session != null && session.getAttribute("phoneNumber") != null)) {
+			if (resourceRequest) {
 				chain.doFilter(request, response);
-
-				// request to login page and already logged in -> return index page
-			} else if (reqURI.contains("login") && (session != null && session.getAttribute("phoneNumber") != null)) {
-				res.sendRedirect(req.getContextPath() + "index.xhtml");
-
-				// request to login page and not logged in
-			} else if (reqURI.contains("login") && session == null) {
-				chain.doFilter(request, response);
-
-				// request to other pages and not logged in -> return login page
-			} else if (!reqURI.contains("login") && session == null) {
-				res.sendRedirect(req.getContextPath() + "/login");
-				// request to login page and not logged in
-			} else if (reqURI.contains("login") && (session != null && session.getAttribute("phoneNumber") == null)) {
-				chain.doFilter(request, response);
-
-				// request to other pages and not logged in -> return login page
-			} else if (!reqURI.contains("login") && (session != null && session.getAttribute("phoneNumber") == null)) {
-				res.sendRedirect(req.getContextPath() + "/login");
+			
+				// request to other pages but not logged in
+			} else if (!loginRequest && !loginStatus) {
+				res.sendRedirect(loginPath);
+			
+				// request to login page and logged in redirect to index
+			} else if (loginRequest && loginStatus){
+				res.sendRedirect("/");
 			} else {
 				chain.doFilter(request, response);
 			}
