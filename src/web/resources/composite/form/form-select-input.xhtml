@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- @author csgn
+	@author csgn
 -->
 <!DOCTYPE html>
-
 <ui:composition xmlns = "http://www.w3.org/1999/xhtml"   
 								xmlns:h = "http://java.sun.com/jsf/html"
 								xmlns:f = "http://java.sun.com/jsf/core"
+								xmlns:fm="http://xmlns.jcp.org/jsf/composite/composite/form"
+								xmlns:dd="http://xmlns.jcp.org/jsf/composite/composite/dropdown"
 								xmlns:composite = "http://xmlns.jcp.org/jsf/composite"
-								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 								xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-	<composite:interface></composite:interface>
+	<composite:interface>
+		<composite:attribute name="placeholder" />
+		<composite:attribute name="required" />
+		<composite:attribute name="list" />
+	</composite:interface>
+	
 	<composite:implementation>
-		<h:outputStylesheet library="css" name="dropdown/dropdown.css" />
-		<div class="dd">
-			<composite:insertChildren />
-		</div>
-	</composite:implementation>
 
+	</composite:implementation>
 </ui:composition>
+

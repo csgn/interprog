@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<!--
+	@author csgn
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+								xmlns:composite = "http://xmlns.jcp.org/jsf/composite"
+								xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+								xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+	<composite:interface></composite:interface>
+	<composite:implementation>
+	<h:outputStylesheet library="css" name="form/form.css" />
+		<h:form class="fm">
+			<composite:insertChildren />
+		</h:form>
+	</composite:implementation>
+</ui:composition>

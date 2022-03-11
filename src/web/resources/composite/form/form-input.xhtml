@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	@author csgn
+-->
+<!DOCTYPE html>
+<ui:composition xmlns = "http://www.w3.org/1999/xhtml"   
+			xmlns:h = "http://java.sun.com/jsf/html"
+			xmlns:f = "http://java.sun.com/jsf/core"
+			xmlns:composite = "http://xmlns.jcp.org/jsf/composite"
+			xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<composite:interface>
+		<composite:attribute name='type' />
+		<composite:attribute name='placeholder' />
+		<composite:attribute name='required' />
+		<composite:attribute name='autofocus' />
+		<composite:attribute name='onfocus' default="" />
+		<composite:attribute name='onblur' default="" />
+	</composite:interface>
+
+	<composite:implementation>
+		<h:outputStylesheet library="css" name="form/form-input.css" />
+		<input class="fm-input" type="#{cc.attrs.type}" required="#{cc.attrs.required}" autofocus="#{cc.attrs.autofocus}" onfocus="${cc.attrs.onfocus}" onblur="#{cc.attrs.onblur}" />
+		<span class="placeholder">#{cc.attrs.placeholder}</span>
+	</composite:implementation>
+</ui:composition>

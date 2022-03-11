@@ -1,0 +1,26 @@
+/* 
+    Created on : Mar 7, 2022, 7:45:17 PM
+    Author     : csgn
+*/
+
+.fm-button {
+  padding: 0.8rem 1rem;
+  display: flex;
+  align-self: flex-end;
+  background: #333;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  box-shadow: 0 0 0.5px 0.5px #333;
+  cursor: pointer;
+  transition: opacity 300ms;
+  user-select: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.1ch;
+	text-decoration: none;
+}
+
+.fm-button:hover {
+  opacity: 0.7;
+}

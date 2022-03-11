@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	@author csgn
+-->
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+								xmlns:composite = "http://xmlns.jcp.org/jsf/composite"
+								xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+								xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+	<composite:interface>
+		<composite:attribute name="msg"/>
+	</composite:interface>
+	<composite:implementation>
+	<h:outputStylesheet library="css" name="form/form-error.css" />
+		<span class="fm-error">#{cc.attrs.msg}</span>
+	</composite:implementation>
+</ui:composition>
