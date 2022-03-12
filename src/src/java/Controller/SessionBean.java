@@ -72,13 +72,13 @@ public class SessionBean implements Serializable {
 		if (!validateUsernamePassword()) {
 			return null;
 		}
-		
+
 		// find user
 		this.employee = this.employeeDAO.findByPhoneNumber(this.phoneNumber);
-		
+
 		// generate new session
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-		
+
 		// attributes are currently not used
 		session.setAttribute("phoneNumber", this.phoneNumber);
 		session.setAttribute("roleId", this.employee.getRoleId());
@@ -111,7 +111,7 @@ public class SessionBean implements Serializable {
 		if (session != null) {
 			session.invalidate();
 		}
-		
+
 		// redirect login page after logging out
 		return "login";
 	}
