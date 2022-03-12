@@ -15,7 +15,6 @@ import java.io.IOException;
 /**
  *
  * @author Metin
- */
 @WebFilter(filterName = "AuthFilter", urlPatterns = {"*.xhtml"})
 public class AuthorizationFilter implements Filter {
 
@@ -72,3 +71,5 @@ public class AuthorizationFilter implements Filter {
 
 	}
 }
+
+ */
