@@ -98,6 +98,8 @@ public class SessionBean implements Serializable {
 
 		if (this.sessionCreated == null) {
 			this.setErrMessage("Couldn't find your account");
+			this.phoneNumber = null;
+			this.password = null;
 			redirect = "failure";
 		} else {
 			redirect = "success";
