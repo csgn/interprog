@@ -5,13 +5,9 @@
 
 
 .fm-error {
-  display: none;
   font-size: 13px;
   color: rgba(230, 59, 59, 0.76);
   font-weight: bold;
   user-select: none;
 }
 
-.fm-error.active {
-  display: block;
-}
