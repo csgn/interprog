@@ -27,11 +27,9 @@ public class CustomerDAO{
 	
 	public List<Customer> findAll(){
 		
-	
-		
+		customers = new ArrayList<>();
 		try{
-				customers = new ArrayList<>();
-				this.ps = this.con.prepareStatement("Select * from Customer");
+				this.ps = this.con.prepareStatement("Select * from customer");
 				rs = ps.executeQuery();
 				while(rs.next()){
 					tmp = new Customer(
@@ -42,7 +40,6 @@ public class CustomerDAO{
 								rs.getInt("accountTypeId"));
 				customers.add(tmp);
 				}
-				System.out.println(customers);
 				
 		}catch(SQLException e){
 				System.out.println(e.getMessage());
@@ -53,7 +50,7 @@ public class CustomerDAO{
 	public Customer findById(int id){
 		
 		try{
-			this.ps = this.con.prepareStatement("Select * from Customer where id =?");
+			this.ps = this.con.prepareStatement("Select * from customer where id =?");
 			this.ps.setInt(1, id);
 			rs = ps.executeQuery();
 			
@@ -70,12 +67,11 @@ public class CustomerDAO{
 			System.out.println(e.getMessage());
 		}
 		return tmp;
-	
 	}
 	
 	public Customer findByPhone(String phone){
 		try{
-			this.ps = this.con.prepareStatement("Select * from Customer where phone =?");
+			this.ps = this.con.prepareStatement("Select * from customer where phone =?");
 			this.ps.setString(1, phone);
 			rs = ps.executeQuery();
 			
@@ -95,8 +91,9 @@ public class CustomerDAO{
 	}
 	
 	public Customer findByEmail(String email){
+		
 		try{
-			this.ps = this.con.prepareStatement("Select * from Customer where email =?");
+			this.ps = this.con.prepareStatement("Select * from customer where email =?");
 			this.ps.setString(1, email);
 			rs = ps.executeQuery();
 			
@@ -106,7 +103,7 @@ public class CustomerDAO{
 								rs.getString("phone"),
 								rs.getString("email"),
 								rs.getInt("addressId"),
-								rs.getInt("accountType"));
+								rs.getInt("accountTypeId"));
 			}
 			
 		}catch(Exception e){
@@ -117,7 +114,7 @@ public class CustomerDAO{
 	
 	public Customer findByAddressId(int addressId){
 		try{
-			this.ps = this.con.prepareStatement("Select * from Customer where addressId =?");
+			this.ps = this.con.prepareStatement("Select * from customer where addressId =?");
 			this.ps.setInt(1, addressId);
 			rs = ps.executeQuery();
 			
@@ -138,11 +135,9 @@ public class CustomerDAO{
 	
 	public List<Customer> findByAccountType(int accountTypeId){
 		
-		
-		
+		customers = new ArrayList<>();
 		try{
-				customers = new ArrayList<>();
-				this.ps = this.con.prepareStatement("Select * from Customer where accountTypeId =?");
+				this.ps = this.con.prepareStatement("Select * from customer where accountTypeId =?");
 				this.ps.setInt(1, accountTypeId);
 				rs = ps.executeQuery();
 				while(rs.next()){
@@ -156,11 +151,9 @@ public class CustomerDAO{
 				}
 				System.out.println(customers);
 				
-		}catch(SQLException e){
+		}catch(Exception e){
 				System.out.println(e.getMessage());
 		}
-		System.out.println(customers.size());
 		return customers;
-		
 	}
 }

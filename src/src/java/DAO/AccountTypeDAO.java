@@ -4,10 +4,6 @@
  */
 package DAO;
 
-/**
- *
- * @author Aykut
- */
 import Model.AccountType;
 import Utils.PGConn;
 import java.sql.Connection;
@@ -16,6 +12,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ *
+ * @author Aykut
+ */
+
 
 public class AccountTypeDAO {
 	

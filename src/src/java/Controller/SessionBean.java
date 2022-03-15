@@ -26,7 +26,6 @@ public class SessionBean implements Serializable {
 	private final EmployeeDAO employeeDAO;
 
 	public SessionBean() {
-		this.employeeDAO = new EmployeeDAO();
 		
 	}
 
