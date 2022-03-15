@@ -4,7 +4,6 @@
  */
 package Model;
 
-
 import java.util.Date;
 
 /**
@@ -12,7 +11,7 @@ import java.util.Date;
  * @author Aykut
  */
 public class Job {
-	
+
 	private int id;
 	private Date creationDate;
 	private String description;
@@ -99,7 +98,4 @@ public class Job {
 	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
-	
-
-	
 }

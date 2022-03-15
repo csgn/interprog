@@ -9,19 +9,19 @@ package Model;
  * @author Aykut
  */
 public class CorporateCustomer {
-    private int id;
-		private String phone;
-		private String email;
-		private int addressId;
-		private int  accountTypeId;
-		private String companyTitle;
-		private String authorizedPerson;
-		private String taxNumber;
-		private String taxAdministration;
-		
-		public CorporateCustomer(){
-			
-		}
+
+	private int id;
+	private String phone;
+	private String email;
+	private int addressId;
+	private int accountTypeId;
+	private String companyTitle;
+	private String authorizedPerson;
+	private String taxNumber;
+	private String taxAdministration;
+
+	public CorporateCustomer() {
+	}
 
 	public CorporateCustomer(int id, String phone, String email, int addressId, int accountTypeId, String companyTitle, String authorizedPerson, String taxNumber, String taxAdministration) {
 		this.id = id;
@@ -106,6 +106,4 @@ public class CorporateCustomer {
 	public void setTaxAdministration(String taxAdministration) {
 		this.taxAdministration = taxAdministration;
 	}
-		
-	
 }

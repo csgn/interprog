@@ -9,6 +9,7 @@ package Model;
  * @author Aykut
  */
 public class Squad {
+
 	private int id;
 	private String name;
 

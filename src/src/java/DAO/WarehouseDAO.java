@@ -17,63 +17,60 @@ import java.util.List;
  * @author Aykut
  */
 public class WarehouseDAO {
-	
+
 	private final Connection con = PGConn.getConnection();
 	private PreparedStatement ps;
 	private ResultSet rs;
 	private Warehouse tmp;
 	private List<Warehouse> warehouses;
-	
-	public List<Warehouse> findAll(){
-		
+
+	public List<Warehouse> findAll() {
+
 		warehouses = new ArrayList<>();
-		try{
+		try {
 			this.ps = this.con.prepareStatement("Select * from warehouse");
 			rs = ps.executeQuery();
-				while(rs.next()){
-					tmp = new Warehouse(
+			while (rs.next()) {
+				tmp = new Warehouse(
 								rs.getInt("id"),
 								rs.getString("name"));
 				warehouses.add(tmp);
-				}
-			
-		}catch(Exception e){
+			}
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return warehouses;
 	}
-	
-	public Warehouse findById(int id){
-		
-		try{
+
+	public Warehouse findById(int id) {
+
+		try {
 			this.ps = this.con.prepareStatement("Select * from warehouse where id =?");
 			this.ps.setInt(1, id);
 			rs = ps.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				tmp = new Warehouse(
 								rs.getInt("id"),
 								rs.getString("name"));
 			}
-			
-		}catch(Exception e){
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return tmp;
 	}
-	
-	public Warehouse findByName(String name){
-		
-		try{
+
+	public Warehouse findByName(String name) {
+
+		try {
 			this.ps = this.con.prepareStatement("Select * from warehouse where name =?");
 			this.ps.setString(1, name);
 			rs = ps.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				tmp = new Warehouse(
 								rs.getInt("id"),
 								rs.getString("name"));
 			}
-			
-		}catch(Exception e){
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return tmp;

@@ -17,62 +17,60 @@ import java.util.List;
  * @author Aykut
  */
 public class SquadDAO {
+
 	private final Connection con = PGConn.getConnection();
 	private PreparedStatement ps;
 	private ResultSet rs;
 	private Squad tmp;
 	private List<Squad> squads;
-	
-	public List<Squad> findAll(){
-		
+
+	public List<Squad> findAll() {
+
 		squads = new ArrayList<>();
-		try{
+		try {
 			this.ps = this.con.prepareStatement("Select * from squad");
 			rs = ps.executeQuery();
-				while(rs.next()){
-					tmp = new Squad(
+			while (rs.next()) {
+				tmp = new Squad(
 								rs.getInt("id"),
 								rs.getString("name"));
 				squads.add(tmp);
-				}
-			
-		}catch(Exception e){
+			}
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return squads;
 	}
-	
-	public Squad findById(int id){
-		
-		try{
+
+	public Squad findById(int id) {
+
+		try {
 			this.ps = this.con.prepareStatement("Select * from squad where id =?");
 			this.ps.setInt(1, id);
 			rs = ps.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				tmp = new Squad(
 								rs.getInt("id"),
 								rs.getString("name"));
 			}
-			
-		}catch(Exception e){
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return tmp;
 	}
-	
-	public Squad findByName(String name){
-		
-		try{
+
+	public Squad findByName(String name) {
+
+		try {
 			this.ps = this.con.prepareStatement("Select * from squad where name =?");
 			this.ps.setString(1, name);
 			rs = ps.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				tmp = new Squad(
 								rs.getInt("id"),
 								rs.getString("name"));
 			}
-			
-		}catch(Exception e){
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return tmp;

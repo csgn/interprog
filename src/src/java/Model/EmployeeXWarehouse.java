@@ -9,7 +9,7 @@ package Model;
  * @author Aykut
  */
 public class EmployeeXWarehouse {
-	
+
 	private int employeeId;
 	private int warehouseId;
 
@@ -20,8 +20,7 @@ public class EmployeeXWarehouse {
 		this.employeeId = employeeId;
 		this.warehouseId = warehouseId;
 	}
-	
-	
+
 	public int getEmployeeId() {
 		return employeeId;
 	}
@@ -37,5 +36,4 @@ public class EmployeeXWarehouse {
 	public void setWarehouseId(int warehouseId) {
 		this.warehouseId = warehouseId;
 	}
-	
 }

@@ -9,7 +9,7 @@ package Model;
  * @author Aykut
  */
 public class Warehouse {
-	
+
 	private int id;
 	private String name;
 
@@ -36,6 +36,4 @@ public class Warehouse {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
 }

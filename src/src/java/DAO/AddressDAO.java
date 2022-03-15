@@ -26,7 +26,7 @@ public class AddressDAO {
 	private List<Address> addresses;
 
 	public List<Address> findAll() {
-
+		
 		addresses = new ArrayList<>();
 		try {
 			this.ps = this.con.prepareStatement("Select * from address");
@@ -41,7 +41,6 @@ public class AddressDAO {
 								rs.getString("directions"));
 				addresses.add(tmp);
 			}
-
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -49,11 +48,11 @@ public class AddressDAO {
 	}
 
 	public Address findById(int id) {
+		
 		try {
 			this.ps = this.con.prepareStatement("Select * from address where id = ?");
 			this.ps.setInt(1, id);
 			rs = ps.executeQuery();
-
 			while (rs.next()) {
 				tmp = new Address(
 								rs.getInt("id"),
@@ -63,7 +62,6 @@ public class AddressDAO {
 								rs.getString("district"),
 								rs.getString("directions"));
 			}
-
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -77,7 +75,6 @@ public class AddressDAO {
 			this.ps = this.con.prepareStatement("Select * from address where title = ?");
 			this.ps.setString(1, title);
 			rs = ps.executeQuery();
-
 			while (rs.next()) {
 				tmp = new Address(
 								rs.getInt("id"),
@@ -88,7 +85,6 @@ public class AddressDAO {
 								rs.getString("directions"));
 				addresses.add(tmp);
 			}
-
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -96,11 +92,11 @@ public class AddressDAO {
 	}
 
 	public Address findByContext(String context) {
+		
 		try {
 			this.ps = this.con.prepareStatement("Select * from address where context = ?");
 			this.ps.setString(1, context);
 			rs = ps.executeQuery();
-
 			while (rs.next()) {
 				tmp = new Address(
 								rs.getInt("id"),
@@ -110,7 +106,6 @@ public class AddressDAO {
 								rs.getString("district"),
 								rs.getString("directions"));
 			}
-
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -124,7 +119,6 @@ public class AddressDAO {
 			this.ps = this.con.prepareStatement("Select * from address where region = ?");
 			this.ps.setString(1, region);
 			rs = ps.executeQuery();
-
 			while (rs.next()) {
 				tmp = new Address(
 								rs.getInt("id"),
@@ -135,7 +129,6 @@ public class AddressDAO {
 								rs.getString("directions"));
 				addresses.add(tmp);
 			}
-
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -149,7 +142,6 @@ public class AddressDAO {
 			this.ps = this.con.prepareStatement("Select * from address where district = ?");
 			this.ps.setString(1, district);
 			rs = ps.executeQuery();
-
 			while (rs.next()) {
 				tmp = new Address(
 								rs.getInt("id"),
@@ -160,7 +152,6 @@ public class AddressDAO {
 								rs.getString("directions"));
 				addresses.add(tmp);
 			}
-
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -174,7 +165,6 @@ public class AddressDAO {
 			this.ps = this.con.prepareStatement("Select * from address where directions = ?");
 			this.ps.setString(1, directions);
 			rs = ps.executeQuery();
-
 			while (rs.next()) {
 				tmp = new Address(
 								rs.getInt("id"),
@@ -185,11 +175,9 @@ public class AddressDAO {
 								rs.getString("directions"));
 				addresses.add(tmp);
 			}
-
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return addresses;
 	}
-	
 }

@@ -40,7 +40,6 @@ public class CustomerDAO{
 								rs.getInt("accountTypeId"));
 				customers.add(tmp);
 				}
-				
 		}catch(SQLException e){
 				System.out.println(e.getMessage());
 		}
@@ -62,7 +61,6 @@ public class CustomerDAO{
 								rs.getInt("addressId"),
 								rs.getInt("accountTypeId"));
 			}
-			
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}
@@ -105,7 +103,6 @@ public class CustomerDAO{
 								rs.getInt("addressId"),
 								rs.getInt("accountTypeId"));
 			}
-			
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}
@@ -116,8 +113,7 @@ public class CustomerDAO{
 		try{
 			this.ps = this.con.prepareStatement("Select * from customer where addressId =?");
 			this.ps.setInt(1, addressId);
-			rs = ps.executeQuery();
-			
+			rs = ps.executeQuery();	
 			while(rs.next()){
 				tmp = new Customer(
 								rs.getInt("id"),
@@ -125,8 +121,7 @@ public class CustomerDAO{
 								rs.getString("email"),
 								rs.getInt("addressId"),
 								rs.getInt("accountTypeId"));
-			}
-			
+			}		
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}
@@ -149,8 +144,7 @@ public class CustomerDAO{
 								rs.getInt("accountTypeId"));
 				customers.add(tmp);
 				}
-				System.out.println(customers);
-				
+				System.out.println(customers);		
 		}catch(Exception e){
 				System.out.println(e.getMessage());
 		}

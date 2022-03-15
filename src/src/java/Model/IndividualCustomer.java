@@ -9,7 +9,7 @@ package Model;
  * @author Aykut
  */
 public class IndividualCustomer {
-		
+
 	private int id;
 	private String phone;
 	private String email;
@@ -96,6 +96,4 @@ public class IndividualCustomer {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	
-	
 }

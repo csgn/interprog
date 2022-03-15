@@ -45,6 +45,7 @@ public class EmployeeDAO {
 	}
 
 	public Employee findById(int id) {
+		
 		try {
 			this.ps = this.con.prepareStatement("Select * from employee where id = ?");
 			this.ps.setInt(1, id);
@@ -66,6 +67,7 @@ public class EmployeeDAO {
 	}
 
 	public Employee findByPhoneNumber(String phoneNumber) {
+		
 		try {
 			this.ps = this.con.prepareStatement("Select * from employee where phone = ?");
 			this.ps.setString(1, phoneNumber);
@@ -87,14 +89,13 @@ public class EmployeeDAO {
 	}
 
 	public boolean validate(String user, String password) {
+		
 		try {
 			System.out.println("PHONE: " + user + " PASSWORD: " + password);
 			this.ps = this.con.prepareStatement("Select phone, password, roleid from employee where phone = ? and password = ?");
 			this.ps.setString(1, user);
 			this.ps.setString(2, password);
-
-			ResultSet rs = this.ps.executeQuery();
-
+			rs = this.ps.executeQuery();
 			if (rs.next()) {
 				return true;
 			}
@@ -106,8 +107,8 @@ public class EmployeeDAO {
 	}
 
 	public List<Employee> getAllEmployeeBySquadId() {
+		
 		employees = new ArrayList<>();
-
 		try {
 			this.ps = this.con.prepareStatement("Select * from employee left join squad on employee.id = squad.id");
 			rs = this.ps.executeQuery();
@@ -122,7 +123,6 @@ public class EmployeeDAO {
 								rs.getInt("roleId"));
 				employees.add(tmp);
 			}
-
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -131,8 +131,8 @@ public class EmployeeDAO {
 	}
 
 	public List<Employee> findAllEmployeeByWarehouseId() {
+		
 		employees = new ArrayList<>();
-
 		try {
 			this.ps = this.con.prepareStatement("Select * from employee left join warehouse on employee.id = warehouse.id");
 			rs = this.ps.executeQuery();
@@ -147,18 +147,15 @@ public class EmployeeDAO {
 								rs.getInt("roleId"));
 				employees.add(tmp);
 			}
-
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		System.out.println("boyut: " + employees.size());
 		return employees;
 	}
 
 	public List<Employee> findAllEmployeesByJobId() {
-
+		
 		employees = new ArrayList<>();
-
 		try {
 			this.ps = this.con.prepareStatement("Select * from employee left join job on employee.id = job.ownerid");
 			rs = this.ps.executeQuery();
@@ -173,18 +170,15 @@ public class EmployeeDAO {
 								rs.getInt("roleId"));
 				employees.add(tmp);
 			}
-
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		System.out.println("ok" + employees.size());
 		return employees;
 	}
 
 	public List<Employee> findAllEmployeesByRoleId() {
 
 		employees = new ArrayList<>();
-
 		try {
 			this.ps = this.con.prepareStatement("Select * from employee left join job on employee.roleid = role.id");
 			rs = this.ps.executeQuery();
@@ -199,7 +193,6 @@ public class EmployeeDAO {
 								rs.getInt("roleId"));
 				employees.add(tmp);
 			}
-
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

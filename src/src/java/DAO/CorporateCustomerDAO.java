@@ -25,7 +25,7 @@ public class CorporateCustomerDAO {
 	private CorporateCustomer tmp;
 	private List<CorporateCustomer> corporateCustomers;
 	
-	public List<CorporateCustomer> findAll() {
+	public List<CorporateCustomer> findAll(){
 
 		try {
 			corporateCustomers = new ArrayList<>();
@@ -44,19 +44,18 @@ public class CorporateCustomerDAO {
 								rs.getString("taxAdministration"));
 				corporateCustomers.add(tmp);
 			}
-
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return corporateCustomers;
 	}
+	
 	public CorporateCustomer findById(int id){
 		
 		try{
 			this.ps = this.con.prepareStatement("Select * from corporatecustomer where id =?");
 			this.ps.setInt(1, id);
 			rs = ps.executeQuery();
-			
 			while(rs.next()){
 				tmp = new CorporateCustomer(
 								rs.getInt("id"),
@@ -69,7 +68,6 @@ public class CorporateCustomerDAO {
 								rs.getString("taxNumber"),
 								rs.getString("taxAdministration"));
 			}
-			
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}
@@ -77,11 +75,11 @@ public class CorporateCustomerDAO {
 	}
 	
 	public CorporateCustomer findByPhone(String phone){
+		
 		try{
 			this.ps = this.con.prepareStatement("Select * from corporatecustomer where phone =?");
 			this.ps.setString(1, phone);
 			rs = ps.executeQuery();
-			
 			while(rs.next()){
 				tmp = new CorporateCustomer(
 								rs.getInt("id"),
@@ -94,7 +92,6 @@ public class CorporateCustomerDAO {
 								rs.getString("taxNumber"),
 								rs.getString("taxAdministration"));
 			}
-			
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}
@@ -106,8 +103,7 @@ public class CorporateCustomerDAO {
 		try{
 			this.ps = this.con.prepareStatement("Select * from corporatecustomer where email =?");
 			this.ps.setString(1, email);
-			rs = ps.executeQuery();
-			
+			rs = ps.executeQuery();	
 			while(rs.next()){
 				tmp = new CorporateCustomer(
 								rs.getInt("id"),
@@ -120,7 +116,6 @@ public class CorporateCustomerDAO {
 								rs.getString("taxNumber"),
 								rs.getString("taxAdministration"));
 			}
-			
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}
@@ -133,7 +128,6 @@ public class CorporateCustomerDAO {
 			this.ps = this.con.prepareStatement("Select * from corporatecustomer where addressId =?");
 			this.ps.setInt(1, addressId);
 			rs = ps.executeQuery();
-			
 			while(rs.next()){
 				tmp = new CorporateCustomer(
 								rs.getInt("id"),
@@ -146,7 +140,6 @@ public class CorporateCustomerDAO {
 								rs.getString("taxNumber"),
 								rs.getString("taxAdministration"));
 			}
-			
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}
@@ -173,7 +166,6 @@ public class CorporateCustomerDAO {
 								rs.getString("taxAdministration"));
 				corporateCustomers.add(tmp);
 				}
-				
 		}catch(SQLException e){
 				System.out.println(e.getMessage());
 		}
@@ -200,7 +192,6 @@ public class CorporateCustomerDAO {
 								rs.getString("taxAdministration"));
 				corporateCustomers.add(tmp);
 				}
-				
 		}catch(SQLException e){
 				System.out.println(e.getMessage());
 		}
@@ -226,8 +217,7 @@ public class CorporateCustomerDAO {
 								rs.getString("taxNumber"),
 								rs.getString("taxAdministration"));
 				corporateCustomers.add(tmp);
-				}
-				
+				}		
 		}catch(SQLException e){
 				System.out.println(e.getMessage());
 		}
@@ -253,8 +243,7 @@ public class CorporateCustomerDAO {
 								rs.getString("taxNumber"),
 								rs.getString("taxAdministration"));
 				corporateCustomers.add(tmp);
-				}
-				
+				}		
 		}catch(SQLException e){
 				System.out.println(e.getMessage());
 		}
@@ -281,7 +270,6 @@ public class CorporateCustomerDAO {
 								rs.getString("taxAdministration"));
 				corporateCustomers.add(tmp);
 				}
-				
 		}catch(SQLException e){
 				System.out.println(e.getMessage());
 		}

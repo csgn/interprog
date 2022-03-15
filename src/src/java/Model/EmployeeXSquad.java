@@ -9,7 +9,7 @@ package Model;
  * @author Aykut
  */
 public class EmployeeXSquad {
-	
+
 	private int employeeId;
 	private int squadId;
 

@@ -18,7 +18,6 @@ public class Address {
 	private String directions;
 	
 	public Address(){
-		
 	}
 	
 	public Address(int id, String title, String context, String region, String district, String directions) {

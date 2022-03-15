@@ -9,8 +9,9 @@ package Model;
  * @author Aykut
  */
 public class Role {
-    private int id;
-		private String name;
+
+	private int id;
+	private String name;
 
 	public Role() {
 	}
@@ -35,5 +36,4 @@ public class Role {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
 }

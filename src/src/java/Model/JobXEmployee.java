@@ -9,7 +9,7 @@ package Model;
  * @author Aykut
  */
 public class JobXEmployee {
-	
+
 	private int jobId;
 	private int employeeId;
 
@@ -20,8 +20,6 @@ public class JobXEmployee {
 		this.jobId = jobId;
 		this.employeeId = employeeId;
 	}
-	
-	
 
 	public int getJobId() {
 		return jobId;
@@ -38,6 +36,4 @@ public class JobXEmployee {
 	public void setEmployeeId(int employeeId) {
 		this.employeeId = employeeId;
 	}
-	
-	
 }

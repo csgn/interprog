@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
-
 import Model.AccountType;
 import Utils.PGConn;
 import java.sql.Connection;
@@ -37,8 +36,7 @@ public class AccountTypeDAO {
 								rs.getInt("id"),
 								rs.getString("name"));
 				accountTypes.add(tmp);
-				}
-				
+				}			
 		}catch(SQLException e){
 				System.out.println(e.getMessage());
 		}
@@ -49,14 +47,12 @@ public class AccountTypeDAO {
 		try{
 			this.ps = this.con.prepareStatement("Select * from accounttype where name =?");
 			this.ps.setString(1, name);
-			rs = ps.executeQuery();
-			
+			rs = ps.executeQuery();		
 			while(rs.next()){
 				tmp = new AccountType(
 								rs.getInt("id"),							
 								rs.getString("name"));
 			}
-			
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}

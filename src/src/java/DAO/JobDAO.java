@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
+
 import Model.Job;
 import Utils.PGConn;
 import java.sql.Connection;
@@ -12,26 +13,27 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 /**
  *
  * @author Aykut
  */
 public class JobDAO {
-	
+
 	private final Connection con = PGConn.getConnection();
 	private PreparedStatement ps;
 	private ResultSet rs;
 	private Job tmp;
 	private List<Job> jobs;
-	
-	public List<Job> findAll(){
-		
+
+	public List<Job> findAll() {
+
 		jobs = new ArrayList<>();
-		try{
-				this.ps = this.con.prepareStatement("Select * from job");
-				rs = ps.executeQuery();
-				while(rs.next()){
-					tmp = new Job(
+		try {
+			this.ps = this.con.prepareStatement("Select * from job");
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				tmp = new Job(
 								rs.getInt("id"),
 								rs.getDate("creationdate"),
 								rs.getString("description"),
@@ -41,22 +43,20 @@ public class JobDAO {
 								rs.getInt("ownerId"),
 								rs.getInt("customerId"));
 				jobs.add(tmp);
-				}
-				
-		}catch(SQLException e){
-				System.out.println(e.getMessage());
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 		}
 		return jobs;
 	}
-	
-	public Job findById(int id){
-		
-		try{
+
+	public Job findById(int id) {
+
+		try {
 			this.ps = this.con.prepareStatement("Select * from job where id =?");
 			this.ps.setInt(1, id);
 			rs = ps.executeQuery();
-			
-			while(rs.next()){
+			while (rs.next()) {
 				tmp = new Job(
 								rs.getInt("id"),
 								rs.getDate("creationdate"),
@@ -67,20 +67,19 @@ public class JobDAO {
 								rs.getInt("ownerId"),
 								rs.getInt("customerId"));
 			}
-			
-		}catch(Exception e){
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return tmp;
 	}
-	public Job findByCreationDate(Date date){
-		
-		try{
+
+	public Job findByCreationDate(Date date) {
+
+		try {
 			this.ps = this.con.prepareStatement("Select * from job where date =?");
 			this.ps.setDate(1, (java.sql.Date) date);
 			rs = ps.executeQuery();
-			
-			while(rs.next()){
+			while (rs.next()) {
 				tmp = new Job(
 								rs.getInt("id"),
 								rs.getDate("creationdate"),
@@ -91,21 +90,20 @@ public class JobDAO {
 								rs.getInt("ownerId"),
 								rs.getInt("customerId"));
 			}
-			
-		}catch(Exception e){
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return tmp;
 	}
-	
-	public Job findByStatusId(int statusId){
-		
-		try{
+
+	public Job findByStatusId(int statusId) {
+
+		try {
 			this.ps = this.con.prepareStatement("Select * from job where statusid =?");
 			this.ps.setInt(1, statusId);
 			rs = ps.executeQuery();
-			
-			while(rs.next()){
+
+			while (rs.next()) {
 				tmp = new Job(
 								rs.getInt("id"),
 								rs.getDate("creationdate"),
@@ -116,20 +114,20 @@ public class JobDAO {
 								rs.getInt("ownerId"),
 								rs.getInt("customerId"));
 			}
-			
-		}catch(Exception e){
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return tmp;
 	}
-	public Job findByOwnerId(int ownerId){
-		
-		try{
+
+	public Job findByOwnerId(int ownerId) {
+
+		try {
 			this.ps = this.con.prepareStatement("Select * from job where ownerid =?");
 			this.ps.setInt(1, ownerId);
 			rs = ps.executeQuery();
-			
-			while(rs.next()){
+
+			while (rs.next()) {
 				tmp = new Job(
 								rs.getInt("id"),
 								rs.getDate("creationdate"),
@@ -140,21 +138,19 @@ public class JobDAO {
 								rs.getInt("ownerId"),
 								rs.getInt("customerId"));
 			}
-			
-		}catch(Exception e){
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return tmp;
 	}
-	
-	public Job findByCustomerId(int customerId){
-		
-		try{
+
+	public Job findByCustomerId(int customerId) {
+
+		try {
 			this.ps = this.con.prepareStatement("Select * from job where customerId =?");
 			this.ps.setInt(1, customerId);
 			rs = ps.executeQuery();
-			
-			while(rs.next()){
+			while (rs.next()) {
 				tmp = new Job(
 								rs.getInt("id"),
 								rs.getDate("creationdate"),
@@ -165,13 +161,9 @@ public class JobDAO {
 								rs.getInt("ownerId"),
 								rs.getInt("customerId"));
 			}
-			
-		}catch(Exception e){
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return tmp;
 	}
-	
-	
-	
 }
