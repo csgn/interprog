@@ -1,5 +1,6 @@
 package Controller;
 
+import DAO.CustomerDAO;
 import DAO.EmployeeDAO;
 import Model.Employee;
 import Utils.Session;
@@ -27,6 +28,9 @@ public class SessionBean implements Serializable {
 
 	public SessionBean() {
 		this.employeeDAO = new EmployeeDAO();
+		EmployeeDAO e = new EmployeeDAO();
+
+		
 	}
 
 	public String getPassword() {
