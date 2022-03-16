@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	@author csgn
+-->
+<!DOCTYPE html>
+<ui:composition xmlns = "http://www.w3.org/1999/xhtml"   
+								xmlns:h = "http://java.sun.com/jsf/html"
+								xmlns:f = "http://java.sun.com/jsf/core"
+								xmlns:composite = "http://xmlns.jcp.org/jsf/composite"
+								xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+								xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<composite:interface>
+		<composite:attribute name="value" />
+	</composite:interface>
+
+	<composite:implementation>
+		<h:outputStylesheet library="css" name="ip-file-input.css" />
+
+		<label for="fileInputBox" class="ip-file-input">
+			<input type="file" id="fileInputBox" value="#{cc.attrs.value}" required="true" style="display: none;"/>
+			<ion-icon name="add-circle-outline"></ion-icon>
+			<span>Upload</span>
+		</label>
+	</composite:implementation>
+</ui:composition>

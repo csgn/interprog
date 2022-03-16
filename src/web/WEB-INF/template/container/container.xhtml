@@ -11,6 +11,7 @@
 			<ui:insert name="content">
 				<ui:include src="#{navigation.fullPath()}" />
 			</ui:insert>
+
 			<h:outputText value="SessionID: #{sessionBean.sessionId}"/>
 			<br></br>
 			<h:outputText value="phoneNumber: #{sessionBean.employee.phone}"/>
@@ -22,7 +23,7 @@
 			<h:outputText value="roleID: #{sessionBean.employee.roleId}"/>
 			<br></br>
 			<h:form>
-				<h:commandButton value="Logout" action="#{sessionBean.logout()}"/>
+				<h:commandLink value="Logout" action="#{sessionBean.logout()}"/>
 			</h:form>
 		</div>
 	</h:panelGroup>

@@ -9,8 +9,9 @@
 								xmlns:composite = "http://xmlns.jcp.org/jsf/composite"
 								xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-								xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
-
+								xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+								xmlns:ez="http://xmlns.jcp.org/jsf/composite/composite"
+								>
 	<composite:interface>
 		<composite:attribute name='type' required="true" />
 		<composite:attribute name='value' />
@@ -21,24 +22,17 @@
 		<composite:attribute name='onblur' />
 		<composite:attribute name='oninput' />
 		<composite:attribute name='onclick' />
-		<composite:attribute name='sclass' />
+		<composite:attribute name='options' />
 	</composite:interface>
 
 	<composite:implementation>
-		<h:outputStylesheet library="css" name="form/form-input.css" />
-		<div class="fm-input-container">
-			<h:inputText
-					p:class="fm-input #{cc.attrs.sclass}"
-					p:required="#{cc.attrs.required}"
-					p:value="#{cc.attrs.value}"
-					p:autofocus="#{cc.attrs.autofocus}"
-					p:type="#{cc.attrs.type}"
-					p:onfocus="#{cc.attrs.onfocus}"
-					p:onblur="#{cc.attrs.onblur}"
-					p:oninput="#{cc.attrs.oninput}"
-					p:onclick="#{cc.attrs.onclick}"
-					/>
-			<h:outputLabel p:class="placeholder">#{cc.attrs.placeholder}</h:outputLabel>
+		<h:outputStylesheet library="css" name="ip-input_search.css" />
+		<div class="ip-input_search">
+			<ez:ip-input id="#{cc.id}_input" type="#{cc.attrs.type}" placeholder="#{cc.attrs.placeholder}" value="#{cc.attrs.value}" required="#{cc.attrs.required}" onfocus="toggleDropdown('#{cc.id}', 0)" onblur="#{cc.attrs.onblur}" oninput="filterOptions('#{cc.id}', this)" onclick="#{cc.attrs.onclick}"/>
+
+			<c:if test="#{cc.attrs.options != null}">
+				<ez:ip-dropdown id="#{cc.id}_dropdown" options="#{cc.attrs.options}" />
+			</c:if>
 		</div>
 	</composite:implementation>
 </ui:composition>

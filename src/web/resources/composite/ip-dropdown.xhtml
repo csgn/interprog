@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	@author csgn
+-->
+<!DOCTYPE html>
+<ui:composition xmlns = "http://www.w3.org/1999/xhtml"   
+								xmlns:composite = "http://xmlns.jcp.org/jsf/composite"
+								xmlns:h = "http://java.sun.com/jsf/html"
+								xmlns:f = "http://java.sun.com/jsf/core"
+								xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+								xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+	<composite:interface>
+		<composite:attribute name="options" />
+	</composite:interface>
+
+	<composite:implementation>
+		<h:outputStylesheet library="css" name="ip-dropdown.css" />
+
+		<div class="ip-dropdown_container">
+			<div class="ip-dropdown_menu" id="#{cc.id}">
+				<ui:repeat value="#{cc.attrs.options}" var="option">
+					<div class="ip-dropdown_option" onclick="setOption(this)" id="#{cc.id}_dropdownOption_#{cc.attrs.options.indexOf(option)}">
+						<label>#{option}</label>
+					</div>
+				</ui:repeat>
+				<span class="ip-dropdown_search_error">Couldn't find anything</span>
+			</div>
+		</div>
+	
+		<h:outputScript library="js" name="ip-dropdown.js" />
+	</composite:implementation>
+</ui:composition>

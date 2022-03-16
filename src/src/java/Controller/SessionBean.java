@@ -107,13 +107,14 @@ public class SessionBean implements Serializable {
 	}
 
 	public String logout() {
+		System.out.println("LOGOUT");
 		HttpSession session = Session.getSession();
 		if (session != null) {
 			session.invalidate();
 		}
 
 		// redirect login page after logging out
-		return "login";
+		return "logout";
 	}
 
 }

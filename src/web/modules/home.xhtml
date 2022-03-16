@@ -4,6 +4,63 @@
 -->
 <!DOCTYPE html>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui='http://xmlns.jcp.org/jsf/facelets'
-								xmlns:h="http://xmlns.jcp.org/jsf/html">
-		<h1>HOME</h1>
+								xmlns:h="http://xmlns.jcp.org/jsf/html"
+								xmlns:md="http://xmlns.jcp.org/jsf/composite/composite/modal"
+								xmlns:fm="http://xmlns.jcp.org/jsf/composite/composite/form"
+								xmlns:ez="http://xmlns.jcp.org/jsf/composite/composite"
+								xmlns:f="http://xmlns.jcp.org/jsf/core">
+	<h1>HOME</h1>
+
+	<md:modal id="modal-1" title="Create New Job" toggleButtonName="order a new job">
+		<h:form enctype="multipart/form-data">
+			<div style="width: fit-content">
+				<ez:ip-input_search id='customerSearchInput' type='text' placeholder='select a customer' required='true' options="#{['sergen cepoglu', 'nihal corbaci']}" value="#{jobFormBean.customer}" />
+			</div>
+
+			<div>
+				<h:inputTextarea style='height: 200px; width: 600px; margin-bottom:1rem; border: 0.5px solid #ddd; border-radius: 5px; padding: 1rem; max-width: 600px; min-width: 600px; min-height: 200px;' value="#{jobFormBean.text}" />
+			</div>
+
+			<div style="display: flex; justify-content: space-between">
+				<div style="width: 50%;">
+					<fm:form-date-input id="dateTimeInput" placeholder="Date &amp; Time" required="false" value="#{jobFormBean.dateTime}" />
+				</div>
+				<div style="width: 50%; margin-left: 1rem;">
+					<ez:ip-input_search id='employeeSearchInput' type='text' placeholder='select a employee' required='true' options="#{['employee 1', 'employee 2', 'employee 3', 'employee 4']}" value="#{jobFormBean.employee}" />
+				</div>
+			</div>
+
+			<div>
+				<ez:ip-file-input value="#{jobFormBean.file}" />
+			</div>
+
+			<div class="modal-footer">
+				<h:commandButton value="Save" class="button" action="#{jobFormBean.create}">
+					<f:ajax execute="@this" render=":jobFormGroup" listener="#{jobFormBean.create}" />
+				</h:commandButton>
+			</div>
+		</h:form>
+	</md:modal>
+	
+	<h:panelGroup id="jobFormGroup">
+	<div style="
+			 margin: 0;
+			 padding: 0;
+			 display: flex;
+			 justify-content: center;
+			 align-items: center;
+			 height: 50vh;
+			 position: relative;
+			 flex-direction: column;
+			 "
+		>	
+		#{jobFormBean.customer}
+		#{jobFormBean.text}
+		#{jobFormBean.dateTime}
+		#{jobFormBean.employee}
+		#{jobFormBean.file}
+	</div>
+	</h:panelGroup>
+
+
 </ui:composition>

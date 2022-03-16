@@ -1,11 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <title>TODO supply a title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  </head>
-  <body>
-    <div>TODO write content</div>
-  </body>
-</html>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+								xmlns:composite = "http://xmlns.jcp.org/jsf/composite"
+								xmlns:ib="http://xmlns.jcp.org/jsf/composite/composite/icon-button"
+								xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+								xmlns:h="http://xmlns.jcp.org/jsf/html"
+								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+	<composite:interface>
+		<composite:attribute name="toggleButtonName" default="Button" />
+		<composite:attribute name="bean"  type="java.lang.Object"/>
+		<composite:attribute name="method" />
+		<composite:attribute name="title" />
+	</composite:interface>
+	<composite:implementation>
+		<h:outputStylesheet library="css" name="modal/modal.css" />
+		<h:outputStylesheet library="css" name="button.css" />
+
+		<div class='modal-container' id="modal-#{cc.id}">
+			<span class="modal-empty" onclick="toggle('#{cc.id}', 1)"></span>
+			<div class='modal-content'>
+				<div class="modal-header">
+					<h3>#{cc.attrs.title}</h3>
+					<ion-icon name="close-outline" size="large" onclick="toggle('#{cc.id}', 1)"></ion-icon>
+				</div>
+				<div class="modal-context">
+					<composite:insertChildren />
+				</div>
+			</div>
+		</div>
+		<button class="button" onclick="toggle('#{cc.id}', 0)">#{cc.attrs.toggleButtonName}</button>
+		<h:outputScript library="js" name="modal.js" />
+	</composite:implementation>
+</ui:composition>
