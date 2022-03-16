@@ -29,7 +29,7 @@ public class AccountTypeDAO {
 		
 		try{
 				accountTypes = new ArrayList<>();
-				this.ps = this.con.prepareStatement("Select * from accounttype ");
+				this.ps = this.con.prepareStatement("Select * from accounttype");
 				rs = ps.executeQuery();
 				while(rs.next()){
 					tmp = new AccountType(
