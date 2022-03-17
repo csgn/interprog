@@ -5,7 +5,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 			xmlns:h="http://xmlns.jcp.org/jsf/html"
-			xmlns:fm="http://xmlns.jcp.org/jsf/composite/composite/form">
+			xmlns:fm="http://xmlns.jcp.org/jsf/composite/composite/form"
+			xmlns:f="http://xmlns.jcp.org/jsf/core">
   <h:head>
     <title>Login - Interprog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -30,7 +31,7 @@
 				<fm:form-input type="password" placeholder="password" required="true" value="#{sessionBean.password}" />
 			</fm:form-item>
 			<fm:form-item>
-				<fm:form-error msg="Couldn't find your account" />
+				<fm:form-error msg="#{sessionBean.errMessage}" />
 			</fm:form-item>
 			<fm:form-item>
 				<fm:form-button value="log in" bean="#{sessionBean}" method="login" />

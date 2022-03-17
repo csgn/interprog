@@ -23,6 +23,7 @@ public class SessionBean implements Serializable {
 	private Employee employee;
 	private HttpSession sessionCreated;
 	private final EmployeeDAO employeeDAO;
+	private String errMessage;
 
 	public SessionBean() {
 		this.employeeDAO = new EmployeeDAO();
@@ -55,6 +56,15 @@ public class SessionBean implements Serializable {
 		return employee;
 	}
 
+	public String getErrMessage() {
+		return errMessage;
+	}
+
+	public void setErrMessage(String errMessage) {
+		this.errMessage = errMessage;
+	}
+	
+
 	// is user exist with given username and password
 	public boolean validateUsernamePassword() {
 		return this.employeeDAO.validate(this.phoneNumber, this.password);
@@ -65,13 +75,13 @@ public class SessionBean implements Serializable {
 		if (!validateUsernamePassword()) {
 			return null;
 		}
-		
+
 		// find user
 		this.employee = this.employeeDAO.findByPhoneNumber(this.phoneNumber);
-		
+
 		// generate new session
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-		
+
 		// attributes are currently not used
 		session.setAttribute("phoneNumber", this.phoneNumber);
 		session.setAttribute("roleId", this.employee.getRoleId());
@@ -82,10 +92,21 @@ public class SessionBean implements Serializable {
 	}
 
 	public String login() {
+		String redirect;
 		this.sessionCreated = createSession();
 
 		// redirect index page if login successful otherwise login page  
-		return this.sessionCreated == null ? "login" : "dashboard";
+		
+		this.setErrMessage("");
+
+		if (this.sessionCreated == null) {
+			this.setErrMessage("Couldn't find your account");
+			redirect = "failure";
+		} else {
+			redirect = "success";
+		}
+
+		return redirect;
 	}
 
 	public String logout() {
@@ -93,8 +114,9 @@ public class SessionBean implements Serializable {
 		if (session != null) {
 			session.invalidate();
 		}
-		
+
 		// redirect login page after logging out
 		return "login";
 	}
+
 }

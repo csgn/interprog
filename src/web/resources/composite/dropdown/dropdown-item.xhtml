@@ -7,21 +7,24 @@
 								xmlns:h = "http://java.sun.com/jsf/html"
 								xmlns:f = "http://java.sun.com/jsf/core"
 								xmlns:composite = "http://xmlns.jcp.org/jsf/composite"
-								xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+								xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+								xmlns:fm="http://xmlns.jcp.org/jsf/composite/composite/form">
+
+	>
 
 	<composite:interface>
 		<composite:attribute name='title' />
-		<composite:attribute name='url' />
 		<composite:attribute name='icon' />
+		<composite:attribute name='onclick' />
 	</composite:interface>
 
 	<composite:implementation>
 		<h:outputStylesheet library='css' name='dropdown/dropdown-item.css' />
-		<div class="dd-item">
-			<a href='#{cc.attrs.url}'>
+		<h:form class="dd-item">
+			<h:commandButton action="#{sessionBean.test()}">
 				<ion-icon name="#{cc.attrs.icon}" size="large"></ion-icon>
 				<span>#{cc.attrs.title}</span>
-			</a>
-		</div>
+			</h:commandButton>
+			</h:form>
 	</composite:implementation>
 </ui:composition>
