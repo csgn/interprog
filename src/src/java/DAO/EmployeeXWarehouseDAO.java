@@ -63,7 +63,7 @@ public class EmployeeXWarehouseDAO {
 	public EmployeeXWarehouse findByWarehouseId(int warehouseId) {
 
 		try {
-			this.ps = this.con.prepareStatement("Select * from employeexsquad where warehouseid =?");
+			this.ps = this.con.prepareStatement("Select * from employeexswarehouse where warehouseid =?");
 			this.ps.setInt(1, warehouseId);
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -75,5 +75,39 @@ public class EmployeeXWarehouseDAO {
 			System.out.println(e.getMessage());
 		}
 		return tmp;
+	}
+	
+	public void insert(int employeeId, int warehouseId){
+		
+		try{
+			this.ps = this.con.prepareStatement("insert into employeexwarehouse values (employeeid = ?, warehouseid = ?)");
+			this.ps.setInt(1,employeeId);
+			this.ps.setInt(2, warehouseId);
+			rs = ps.executeQuery();
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void deleteByEmployeeId(int employeeId){
+		
+		try {
+			this.ps = this.con.prepareStatement("delete from employeexwarehouse where (employeeid = ?)");
+			this.ps.setInt(1, employeeId);
+			rs = ps.executeQuery();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void deleteBySquadId(int warehouseId){
+		
+		try {
+			this.ps = this.con.prepareStatement("delete from employeexwarehouse where (warehouseid = ?)");
+			this.ps.setInt(1, warehouseId);
+			rs = ps.executeQuery();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }

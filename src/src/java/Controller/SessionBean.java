@@ -1,6 +1,5 @@
 package Controller;
 
-import DAO.CustomerDAO;
 import DAO.EmployeeDAO;
 import Model.Employee;
 import Utils.Session;

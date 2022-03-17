@@ -26,7 +26,7 @@ public class AddressDAO {
 	private List<Address> addresses;
 
 	public List<Address> findAll() {
-		
+
 		addresses = new ArrayList<>();
 		try {
 			this.ps = this.con.prepareStatement("Select * from address");
@@ -48,7 +48,7 @@ public class AddressDAO {
 	}
 
 	public Address findById(int id) {
-		
+
 		try {
 			this.ps = this.con.prepareStatement("Select * from address where id = ?");
 			this.ps.setInt(1, id);
@@ -92,7 +92,7 @@ public class AddressDAO {
 	}
 
 	public Address findByContext(String context) {
-		
+
 		try {
 			this.ps = this.con.prepareStatement("Select * from address where context = ?");
 			this.ps.setString(1, context);
@@ -134,7 +134,7 @@ public class AddressDAO {
 		}
 		return addresses;
 	}
-	
+
 	public List<Address> findByDistrict(String district) {
 
 		addresses = new ArrayList<>();
@@ -157,7 +157,7 @@ public class AddressDAO {
 		}
 		return addresses;
 	}
-	
+
 	public List<Address> findByDirections(String directions) {
 
 		addresses = new ArrayList<>();
@@ -179,5 +179,29 @@ public class AddressDAO {
 			System.out.println(e.getMessage());
 		}
 		return addresses;
+	}
+
+	public void insert(int id, String title, String context, String region, String district, String directions) {
+		try {
+			this.ps = this.con.prepareStatement("insert into accounttype values (id = ? ,title = ?, region = ?, district = ?, directions = ?)");
+			this.ps.setInt(1, id);
+			this.ps.setString(2, title);
+			this.ps.setString(3, region);
+			this.ps.setString(4, district);
+			this.ps.setString(5, directions);
+			rs = ps.executeQuery();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public void deleteById(int id) {
+		try {
+			this.ps = this.con.prepareStatement("delete from accounttype values (id = ?)");
+			this.ps.setInt(1, id);
+			rs = ps.executeQuery();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }

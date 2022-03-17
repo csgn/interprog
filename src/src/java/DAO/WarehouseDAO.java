@@ -75,4 +75,38 @@ public class WarehouseDAO {
 		}
 		return tmp;
 	}
+	
+	public void insert(int id, String name){
+		
+		try{
+			this.ps= this.con.prepareStatement("insert into warehouse values (id = ?, name = ?)");
+			this.ps.setInt(1, id);
+			this.ps.setString(2, name);
+			rs = ps.executeQuery();
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void deleteById(int id){
+		
+		try{
+			this.ps= this.con.prepareStatement("delete from warehouse where (id = ?)");
+			this.ps.setInt(1, id);
+			rs = ps.executeQuery();
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void deleteBySquad(String name){
+		
+		try{
+			this.ps= this.con.prepareStatement("delete from warehouse where (name = ?)");
+			this.ps.setString(1, name);
+			rs = ps.executeQuery();
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+	}
 }

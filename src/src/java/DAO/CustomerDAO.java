@@ -17,43 +17,43 @@ import java.util.List;
  *
  * @author Aykut
  */
-public class CustomerDAO{
-	
+public class CustomerDAO {
+
 	private final Connection con = PGConn.getConnection();
 	private PreparedStatement ps;
 	private ResultSet rs;
 	private Customer tmp;
-	private List<Customer> customers; 
-	
-	public List<Customer> findAll(){
-		
+	private List<Customer> customers;
+
+	public List<Customer> findAll() {
+
 		customers = new ArrayList<>();
-		try{
-				this.ps = this.con.prepareStatement("Select * from customer");
-				rs = ps.executeQuery();
-				while(rs.next()){
-					tmp = new Customer(
+		try {
+			this.ps = this.con.prepareStatement("Select * from customer");
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				tmp = new Customer(
 								rs.getInt("id"),
 								rs.getString("phone"),
 								rs.getString("email"),
 								rs.getInt("addressId"),
 								rs.getInt("accountTypeId"));
 				customers.add(tmp);
-				}
-		}catch(SQLException e){
-				System.out.println(e.getMessage());
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 		}
 		return customers;
 	}
-	
-	public Customer findById(int id){
-		
-		try{
+
+	public Customer findById(int id) {
+
+		try {
 			this.ps = this.con.prepareStatement("Select * from customer where id =?");
 			this.ps.setInt(1, id);
 			rs = ps.executeQuery();
-			
-			while(rs.next()){
+
+			while (rs.next()) {
 				tmp = new Customer(
 								rs.getInt("id"),
 								rs.getString("phone"),
@@ -61,19 +61,19 @@ public class CustomerDAO{
 								rs.getInt("addressId"),
 								rs.getInt("accountTypeId"));
 			}
-		}catch(Exception e){
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return tmp;
 	}
-	
-	public Customer findByPhone(String phone){
-		try{
+
+	public Customer findByPhone(String phone) {
+		try {
 			this.ps = this.con.prepareStatement("Select * from customer where phone =?");
 			this.ps.setString(1, phone);
 			rs = ps.executeQuery();
-			
-			while(rs.next()){
+
+			while (rs.next()) {
 				tmp = new Customer(
 								rs.getInt("id"),
 								rs.getString("phone"),
@@ -81,21 +81,21 @@ public class CustomerDAO{
 								rs.getInt("addressId"),
 								rs.getInt("accountTypeId"));
 			}
-			
-		}catch(Exception e){
+
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return tmp;
 	}
-	
-	public Customer findByEmail(String email){
-		
-		try{
+
+	public Customer findByEmail(String email) {
+
+		try {
 			this.ps = this.con.prepareStatement("Select * from customer where email =?");
 			this.ps.setString(1, email);
 			rs = ps.executeQuery();
-			
-			while(rs.next()){
+
+			while (rs.next()) {
 				tmp = new Customer(
 								rs.getInt("id"),
 								rs.getString("phone"),
@@ -103,51 +103,95 @@ public class CustomerDAO{
 								rs.getInt("addressId"),
 								rs.getInt("accountTypeId"));
 			}
-		}catch(Exception e){
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return tmp;
 	}
-	
-	public Customer findByAddressId(int addressId){
-		try{
+
+	public Customer findByAddressId(int addressId) {
+		try {
 			this.ps = this.con.prepareStatement("Select * from customer where addressId =?");
 			this.ps.setInt(1, addressId);
-			rs = ps.executeQuery();	
-			while(rs.next()){
+			rs = ps.executeQuery();
+			while (rs.next()) {
 				tmp = new Customer(
 								rs.getInt("id"),
 								rs.getString("phone"),
 								rs.getString("email"),
 								rs.getInt("addressId"),
 								rs.getInt("accountTypeId"));
-			}		
-		}catch(Exception e){
+			}
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return tmp;
 	}
-	
-	public List<Customer> findByAccountType(int accountTypeId){
-		
+
+	public List<Customer> findByAccountType(int accountTypeId) {
+
 		customers = new ArrayList<>();
-		try{
-				this.ps = this.con.prepareStatement("Select * from customer where accountTypeId =?");
-				this.ps.setInt(1, accountTypeId);
-				rs = ps.executeQuery();
-				while(rs.next()){
-					tmp = new Customer(
+		try {
+			this.ps = this.con.prepareStatement("Select * from customer where accountTypeId =?");
+			this.ps.setInt(1, accountTypeId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				tmp = new Customer(
 								rs.getInt("id"),
 								rs.getString("phone"),
 								rs.getString("email"),
 								rs.getInt("addressId"),
 								rs.getInt("accountTypeId"));
 				customers.add(tmp);
-				}
-				System.out.println(customers);		
-		}catch(Exception e){
-				System.out.println(e.getMessage());
+			}
+			System.out.println(customers);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 		return customers;
+	}
+
+	public void insert(int id, String phone, String email, int addressId, int accountTypeId) {
+		try {
+			this.ps = this.con.prepareStatement("insert into customer values (id = ? ,phone = ?, email = ?, addressId = ?, accountTypeId = ? )");
+			this.ps.setInt(1, id);
+			this.ps.setString(2, phone);
+			this.ps.setString(3, email);
+			this.ps.setInt(4, addressId);
+			this.ps.setInt(5, accountTypeId);
+			rs = ps.executeQuery();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public void deleteById(int id) {
+		try {
+			this.ps = this.con.prepareStatement("delete from customer where (id = ?)");
+			this.ps.setInt(1, id);
+			rs = ps.executeQuery();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void deleteByEmail(String email){
+		try {
+			this.ps = this.con.prepareStatement("delete from customer where (email = ?)");
+			this.ps.setString(1, email);
+			rs = ps.executeQuery();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void deleteByPhone(String phone){
+		try {
+			this.ps = this.con.prepareStatement("delete from customer where (phone = ?)");
+			this.ps.setString(1, phone);
+			rs = ps.executeQuery();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }

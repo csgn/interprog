@@ -237,4 +237,53 @@ public class IndividualCustomerDAO {
 		}
 		return individualCustomers;
 	}
+	
+	public void insert(int id, String phone, String email, int addressId, int accountTypeId, String companyTitle, String name, String surname){
+		
+		try{
+			this.ps = this.con.prepareStatement("insert into individualcustomer values (id = ?, phone = ?, email = ?, addressId = ?, accountTypeId = ?, companyTitle = ?, name = ?, surname = ?)");
+			this.ps.setInt(1, id);
+			this.ps.setString(2, phone);
+			this.ps.setString(3, email);
+			this.ps.setInt(4, addressId);
+			this.ps.setInt(5, accountTypeId);
+			this.ps.setString(6, companyTitle);
+			this.ps.setString(7, name);
+			this.ps.setString(8, surname);
+			
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void deleteById(int id){
+		try {
+			this.ps = this.con.prepareStatement("delete from individualcustomer where (id = ?)");
+			this.ps.setInt(1, id);
+			rs = ps.executeQuery();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void deleteByNameAndSurname(String name, String surname){
+		try {
+			this.ps = this.con.prepareStatement("delete from individualcustomer where (name = ? and surname = ?)");
+			this.ps.setString(1, name);
+			this.ps.setString(2, surname);
+			rs = ps.executeQuery();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void deleteByPhone(String phone){
+		try {
+			this.ps = this.con.prepareStatement("delete from individualcustomer where (phone = ?)");
+			this.ps.setString(1, phone);
+			rs = ps.executeQuery();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 }

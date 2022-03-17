@@ -199,4 +199,55 @@ public class EmployeeDAO {
 		System.out.println("ok" + employees.size());
 		return employees;
 	}
+	
+	public void insert(int id, String name, String surname, String phone, String color, String password, int roleId){
+		
+		try {
+			this.ps = this.con.prepareStatement("insert into employee values (id = ? ,name = ?, surname = ?, phone = ?, color = ?, password = ?, roleId = ? )");
+			this.ps.setInt(1, id);
+			this.ps.setString(2, name);
+			this.ps.setString(3, surname);
+			this.ps.setString(4, phone);
+			this.ps.setString(5, color);
+			this.ps.setString(6, password);
+			this.ps.setInt(7, roleId);
+			rs = ps.executeQuery();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void deleteById(int id){
+		
+		try {
+			this.ps = this.con.prepareStatement("delete from employee where (id = ?)");
+			this.ps.setInt(1, id);
+			rs = ps.executeQuery();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void deleteByNameAndSurname(String name, String surname){
+		
+		try {
+			this.ps = this.con.prepareStatement("delete from employee where (name = ? and surname = ?)");
+			this.ps.setString(1, name);
+			this.ps.setString(2, surname);
+			rs = ps.executeQuery();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void deleteByPhone(String phone){
+		
+		try {
+			this.ps = this.con.prepareStatement("delete from employee where (phone = ?)");
+			this.ps.setString(1, phone);
+			rs = ps.executeQuery();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 }
