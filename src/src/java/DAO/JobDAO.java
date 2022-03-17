@@ -166,4 +166,64 @@ public class JobDAO {
 		}
 		return tmp;
 	}
+	
+	public void insert(int id, Date creationDate, String description, Date date, String files, int statusId, int ownerId, int customerId){
+		try{
+			this.ps = this.con.prepareStatement("insert into job values (id = ?, creationdate = ?, description = ?, date = ?, files = ?, statusid = ?, ownerid = ?, customerid = ?)");
+			this.ps.setInt(1, id);
+			this.ps.setDate(2, (java.sql.Date) creationDate);
+			this.ps.setString(3, description);
+			this.ps.setDate(4, (java.sql.Date) date);
+			this.ps.setString(5, files);
+			this.ps.setInt(6, statusId);
+			this.ps.setInt(7, ownerId);
+			this.ps.setInt(8, customerId);
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void deleteById(int id){
+		
+		try {
+			this.ps = this.con.prepareStatement("delete from job where (id = ?)");
+			this.ps.setInt(1, id);
+			rs = ps.executeQuery();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void deleteByCreationDate(Date creationDate){
+		
+		try {
+			this.ps = this.con.prepareStatement("delete from job where (creationdate = ?)");
+			this.ps.setDate(1, (java.sql.Date) creationDate);
+			rs = ps.executeQuery();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void deleteByOwnerId(int ownerId){
+		
+		try {
+			this.ps = this.con.prepareStatement("delete from job where (ownerid = ?)");
+			this.ps.setInt(1, ownerId);
+			rs = ps.executeQuery();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void deleteByCustomerId(int customerId){
+		
+		try {
+			this.ps = this.con.prepareStatement("delete from job where (customerid = ?)");
+			this.ps.setInt(1, customerId);
+			rs = ps.executeQuery();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 }

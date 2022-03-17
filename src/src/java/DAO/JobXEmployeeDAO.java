@@ -76,4 +76,38 @@ public class JobXEmployeeDAO {
 		}
 		return tmp;
 	}
+	
+	public void insert(int jobId, int employeeId){
+		
+		try{
+			this.ps = this.con.prepareStatement("insert into jobxemployee values (jobid = ?, employeeid = ?)");
+			this.ps.setInt(1,jobId);
+			this.ps.setInt(2, employeeId);
+			rs = ps.executeQuery();
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void deleteByJobId(int jobId){
+		
+		try {
+			this.ps = this.con.prepareStatement("delete from jobxemployee where (jobid = ?)");
+			this.ps.setInt(1, jobId);
+			rs = ps.executeQuery();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void deleteByEmployeeId(int employeeId){
+		
+		try {
+			this.ps = this.con.prepareStatement("delete from employeexwarehouse where (employeeid = ?)");
+			this.ps.setInt(1, employeeId);
+			rs = ps.executeQuery();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 }
