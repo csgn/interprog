@@ -14,7 +14,7 @@
 	<md:modal id="modal-1" title="Create New Job" toggleButtonName="order a new job">
 		<h:form enctype="multipart/form-data">
 			<div style="width: fit-content">
-				<ez:ip-input_search id='customerSearchInput' type='text' placeholder='select a customer' required='true' options="#{['sergen cepoglu', 'nihal corbaci']}" value="#{jobFormBean.customer}" />
+				<ez:ip-input_search id='customerSearchInput' type='text' placeholder='select a customer' required='true' options="#{['sergen', 'nihal']}" value="#{jobFormBean.customer}" />
 			</div>
 
 			<div>
@@ -54,11 +54,6 @@
 			 flex-direction: column;
 			 "
 		>	
-		#{jobFormBean.customer}
-		#{jobFormBean.text}
-		#{jobFormBean.dateTime}
-		#{jobFormBean.employee}
-		#{jobFormBean.file}
 	</div>
 	</h:panelGroup>
 
