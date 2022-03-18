@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Named(value = "jobXEmployeeBean")
 @SessionScoped
-public class JobXEmployeeBean {
+public class JobXEmployeeBean implements Serializable {
 
 	private JobXEmployeeDAO jobXEmployeeDAO;
 	private JobXEmployee jobXEmployeeModel;
