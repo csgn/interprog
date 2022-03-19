@@ -27,6 +27,9 @@ public class SessionBean implements Serializable {
 
 	public SessionBean() {
 		this.employeeDAO = new EmployeeDAO();
+		EmployeeDAO e = new EmployeeDAO();
+
+		
 	}
 
 	public String getPassword() {
