@@ -4,7 +4,7 @@
  */
 package Controller;
 
-import DAO.JobDAO;
+import DAO.core.JobDAO;
 import Model.Job;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
@@ -15,45 +15,34 @@ import java.util.List;
  *
  * @author Aykut
  */
-@Named(value = "jobBean")
+@Named("jobBean")
 @SessionScoped
-public class JobBean implements Serializable{
+public class JobBean implements Serializable {
 
-	private JobDAO jobDAO;
-	private Job jobModel;
-	private List<Job> jobList;
-	
+	private Job employee;
+	private JobDAO dao;
+
 	public JobBean() {
+		employee = new Job();
+		dao = new JobDAO();
 	}
 
-	public JobDAO getJobDAO() {
-		if(this.jobDAO == null){
-			this.jobDAO = new JobDAO();
-		}
-		return jobDAO;
+	public Job find(int id) {
+		return dao.find(id);
 	}
 
-	public void setJobDAO(JobDAO jobDAO) {
-		this.jobDAO = jobDAO;
+	public List<Job> findAll() {
+		return dao.findAll();
 	}
 
-	public Job getJobModel() {
-		if(this.jobModel == null){
-			this.jobModel = new Job();
-		}
-		return jobModel;
+	public int create() {
+		int id = dao.create(employee);
+		employee = new Job();
+
+		return id;
 	}
 
-	public void setJobModel(Job jobModel) {
-		this.jobModel = jobModel;
+	public Job getJob() {
+		return employee;
 	}
-
-	public List<Job> getJobList() {
-		return jobList;
-	}
-
-	public void setJobList(List<Job> jobList) {
-		this.jobList = jobList;
-	}
-	
 }

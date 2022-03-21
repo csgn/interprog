@@ -14,7 +14,7 @@
 								>
 	<composite:interface>
 		<composite:attribute name='type' required="true" />
-		<composite:attribute name='value' />
+		<composite:attribute name='value' type="java.lang.Object" />
 		<composite:attribute name='autofocus' />
 		<composite:attribute name='placeholder' required="true" />
 		<composite:attribute name='required' />
@@ -22,16 +22,28 @@
 		<composite:attribute name='onblur' />
 		<composite:attribute name='oninput' />
 		<composite:attribute name='onclick' />
-		<composite:attribute name='options' />
+		<composite:attribute name="converter" />
+		<composite:attribute name="options" />
+		<composite:attribute name="selecttype" />
+		<composite:attribute name="optionLabel" />
+		<composite:attribute name="optionValue" />
+
 	</composite:interface>
 
 	<composite:implementation>
 		<h:outputStylesheet library="css" name="ip-input_search.css" />
 		<div class="ip-input_search">
-			<ez:ip-input id="#{cc.id}_input" type="#{cc.attrs.type}" placeholder="#{cc.attrs.placeholder}" value="#{cc.attrs.value}" required="#{cc.attrs.required}" onfocus="toggleDropdown('#{cc.id}', 0)" onblur="#{cc.attrs.onblur}" oninput="filterOptions('#{cc.id}', this)" onclick="#{cc.attrs.onclick}"/>
-
+			<ez:ip-editable
+				id="#{cc.id}_input"
+				placeholder="#{cc.attrs.placeholder}"
+				value="#{cc.attrs.value}"
+				onblur="#{cc.attrs.onblur}"
+				oninput="filterOptions('#{cc.id}', this)"
+				onclick="#{cc.attrs.onclick}"
+				converter="#{cc.attrs.converter}"
+				/>
 			<c:if test="#{cc.attrs.options != null}">
-				<ez:ip-dropdown id="#{cc.id}_dropdown" options="#{cc.attrs.options}" />
+				<ez:ip-dropdown id="#{cc.id}_dropdown" options="#{cc.attrs.options}" selecttype="#{cc.attrs.selecttype}" optionLabel="#{cc.attrs.optionLabel}" optionValue="#{cc.attrs.optionValue}" />
 			</c:if>
 		</div>
 	</composite:implementation>

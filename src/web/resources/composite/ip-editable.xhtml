@@ -11,12 +11,8 @@
 								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 								xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 	<composite:interface>
-		<composite:attribute name='type' required="true" />
 		<composite:attribute name='value' />
-		<composite:attribute name='autofocus' />
 		<composite:attribute name='placeholder' required="true" />
-		<composite:attribute name='required' />
-		<composite:attribute name='onfocus' />
 		<composite:attribute name='onblur' />
 		<composite:attribute name='oninput' />
 		<composite:attribute name='onclick' />
@@ -27,22 +23,19 @@
 		<h:outputStylesheet library="css" name="ip-input.css" />
 
 		<div class="ip-input_container">
-			<h:inputText
-				p:id="#{cc.id}"
-				p:class="ip-input"
-				p:required="#{cc.attrs.required}"
-				p:value="#{cc.attrs.value}"
-				p:autofocus="#{cc.attrs.autofocus}"
-				p:type="#{cc.attrs.type}"
-				p:onfocus="#{cc.attrs.onfocus}"
-				p:onblur="#{cc.attrs.onblur}"
-				p:oninput="#{cc.attrs.oninput}"
-				p:onclick="#{cc.attrs.onclick}"
+			<div
+				id="#{cc.id}"
+				class="ip-input"
+				contenteditable="true"
+				onblur="#{cc.attrs.onblur}"
+				oninput="#{cc.attrs.oninput}"
+				onclick="#{cc.attrs.onclick}"
+				value="#{cc.attrs.value}"
 				>
 				<c:if test="#{cc.attrs.converter != null}">
 					<f:converter converterId="#{cc.attrs.converter}" />
 				</c:if>
-			</h:inputText>
+			</div>
 			<h:outputLabel p:class="ip-input_placeholder">
 				#{cc.attrs.placeholder}
 			</h:outputLabel>

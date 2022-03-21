@@ -22,22 +22,24 @@
 		align-items: center;
 		background: #111;
 		">
-		<fm:form>
-			<fm:form-item>
-				<fm:form-header title="interprog" icon="logo-web-component"/>
-			</fm:form-item>
-			<fm:form-item>
-				<ez:ip-input type="text" placeholder="phone number" required="true" value="#{sessionBean.phoneNumber}" autofocus="true" />
-			</fm:form-item>
-			<fm:form-item>
-				<ez:ip-input type="password" placeholder="password" required="true" value="#{sessionBean.password}" />
-			</fm:form-item>
-			<fm:form-item>
-				<fm:form-error msg="#{sessionBean.errMessage}" />
-			</fm:form-item>
-			<fm:form-item>
-				<fm:form-button value="log in" bean="#{sessionBean}" method="login" />
-			</fm:form-item>
-		</fm:form>
+		<h:panelGroup>
+			<fm:form>
+				<fm:form-item>
+					<fm:form-header title="interprog" icon="logo-web-component"/>
+				</fm:form-item>
+				<fm:form-item>
+					<ez:ip-input type="text" placeholder="phone number" required="true" value="#{sessionBean.phoneNumber}" autofocus="true" />
+				</fm:form-item>
+				<fm:form-item>
+					<ez:ip-input type="password" placeholder="password" required="true" value="#{sessionBean.password}" />
+				</fm:form-item>
+				<fm:form-item>
+					<fm:form-error msg="#{sessionBean.errMessage}" />
+				</fm:form-item>
+				<fm:form-item>
+					<fm:form-button value="log in" bean="#{sessionBean}" method="login" />
+				</fm:form-item>
+			</fm:form>
+		</h:panelGroup>
   </body>
 </html>

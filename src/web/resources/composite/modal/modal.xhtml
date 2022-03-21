@@ -10,8 +10,6 @@
 
 	<composite:interface>
 		<composite:attribute name="toggleButtonName" default="Button" />
-		<composite:attribute name="bean"  type="java.lang.Object"/>
-		<composite:attribute name="method" />
 		<composite:attribute name="title" />
 	</composite:interface>
 	<composite:implementation>
@@ -26,7 +24,9 @@
 					<ion-icon name="close-outline" size="large" onclick="toggle('#{cc.id}', 1)"></ion-icon>
 				</div>
 				<div class="modal-context">
-					<composite:insertChildren />
+					<h:panelGroup>
+						<composite:insertChildren />
+					</h:panelGroup>
 				</div>
 			</div>
 		</div>

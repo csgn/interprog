@@ -1,22 +1,27 @@
 package Controller.Form;
 
+import Model.Customer;
+import Model.Employee;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
-import jakarta.servlet.http.Part;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
  * @author csgn
  */
-@Named(value = "jobFormBean")
+@Named("jobFormBean")
 @SessionScoped
 public class JobFormBean implements Serializable {
+
 	private String customer;
-	private String text;
-	private String dateTime;
-	private String employee;
-	private Part file;
+	private Employee employee;
+	private String description;
+	private Date dateTime;
+
+	public JobFormBean() {
+	}
 
 	public String getCustomer() {
 		return customer;
@@ -26,40 +31,33 @@ public class JobFormBean implements Serializable {
 		this.customer = customer;
 	}
 
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	public String getDateTime() {
-		return dateTime;
-	}
-
-	public void setDateTime(String dateTime) {
-		this.dateTime = dateTime;
-	}
-
-	public String getEmployee() {
+	public Employee getEmployee() {
 		return employee;
 	}
 
-	public void setEmployee(String employee) {
+	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
 
-	public Part getFile() {
-		return file;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setFile(Part file) {
-		this.file = file;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
+	public Date getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
+	}
 
 	public void create() {
-		System.out.println("LISTENING");
+		System.out.println("CREATED");
+		System.out.println(employee);
 	}
+
 }

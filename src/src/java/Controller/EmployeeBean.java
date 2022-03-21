@@ -4,7 +4,7 @@
  */
 package Controller;
 
-import DAO.EmployeeDAO;
+import DAO.core.EmployeeDAO;
 import Model.Employee;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
@@ -15,46 +15,35 @@ import java.util.List;
  *
  * @author Aykut
  */
-@Named(value = "employeeBean")
+@Named("employeeBean")
 @SessionScoped
 public class EmployeeBean implements Serializable {
+	private Employee employee;
+	private EmployeeDAO dao;
 
-	private EmployeeDAO employeeDAO;
-	private Employee employeeModel;
-	private List<Employee> employeeList;
-	
 	public EmployeeBean() {
+		employee = new Employee();
+		dao = new EmployeeDAO();
 	}
 
-	public EmployeeDAO getEmployeeDAO() {
-		if(this.employeeDAO == null){
-			this.employeeDAO = new EmployeeDAO();
-		}
-		return employeeDAO;
+	public Employee find(int id) {
+		return dao.find(id);
 	}
 
-	public void setEmployeeDAO(EmployeeDAO employeeDAO) {
-		this.employeeDAO = employeeDAO;
+	public List<Employee> findAll() {
+		return dao.findAll();
 	}
 
-	public Employee getEmployeeModel() {
-		if(this.employeeModel == null){
-			this.employeeModel = new Employee();
-		}
-		return employeeModel;
+	public int create() {
+		int id = dao.create(employee);
+		employee = new Employee();
+
+		return id;
 	}
 
-	public void setEmployeeModel(Employee employeeModel) {
-		this.employeeModel = employeeModel;
+	public Employee getEmployee() {
+		return employee;
 	}
 
-	public List<Employee> getEmployeeList() {
-		return employeeList;
-	}
 
-	public void setEmployeeList(List<Employee> employeeList) {
-		this.employeeList = employeeList;
-	}
-	
-	
 }

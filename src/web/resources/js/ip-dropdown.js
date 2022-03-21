@@ -1,6 +1,6 @@
 const toggleDropdown = (dropdown, option) => {
+	console.log("YAY")
 	const ip_dropdown = document.getElementById(`${dropdown}_dropdown`);
-	console.log(ip_dropdown)
 	switch (option) {
 		case 0:
 			if (!ip_dropdown.classList.contains("active"))
@@ -12,14 +12,31 @@ const toggleDropdown = (dropdown, option) => {
 	}
 };
 
-const setOption = (option) => {
+const setOption = (option, type) => {
 	const input = option.parentElement.parentElement.previousElementSibling.firstElementChild;
+	const currentOptionID = option.getAttribute("id")
+	const options = option.parentElement.children;
+	const optionText = option.textContent.trim();
 
-	if (input.value === "") {
-		input.value = option.firstElementChild.textContent;
+	switch (type) {
+		case 0: // multi select
+			break;
+		case 1: // one select
+			options.forEach(c => {
+				if (c.getAttribute("id") !== currentOptionID) {
+					c.classList.remove("active");
+				}
+			})
+
+			if (option.classList.contains("active")) {
+				input.value = "";
+			} else {
+				input.value = optionText;
+			}
+				option.classList.toggle("active");
+
+			break;
 	}
-
-	option.classList.toggle("active");
 };
 
 const filterOptions = (dropdown, input) => {
@@ -29,7 +46,7 @@ const filterOptions = (dropdown, input) => {
 	let i = 0;
 	for (const option of options) {
 		if (
-						option.firstElementChild.textContent
+						option.textContent.trim()
 						.toLocaleLowerCase()
 						.indexOf(input.value.toLowerCase()) !== -1
 						) {
@@ -48,6 +65,12 @@ const filterOptions = (dropdown, input) => {
 		searchError.classList.toggle("active");
 	} else {
 		searchError.classList.remove("active");
+	}
+
+	if (input.value === "") {
+		options.forEach(o => {
+			o.classList.remove("active")
+		})
 	}
 };
 

@@ -174,8 +174,8 @@ public class CustomerDAO {
 			System.out.println(e.getMessage());
 		}
 	}
-	
-	public void deleteByEmail(String email){
+
+	public void deleteByEmail(String email) {
 		try {
 			this.ps = this.con.prepareStatement("delete from customer where (email = ?)");
 			this.ps.setString(1, email);
@@ -184,8 +184,8 @@ public class CustomerDAO {
 			System.out.println(e.getMessage());
 		}
 	}
-	
-	public void deleteByPhone(String phone){
+
+	public void deleteByPhone(String phone) {
 		try {
 			this.ps = this.con.prepareStatement("delete from customer where (phone = ?)");
 			this.ps.setString(1, phone);

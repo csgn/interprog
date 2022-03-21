@@ -17,7 +17,6 @@ import java.util.List;
 /**
  *
  * @author Aykut
- */
 public class JobDAO {
 
 	private final Connection con = PGConn.getConnection();
@@ -38,7 +37,7 @@ public class JobDAO {
 								rs.getDate("creationdate"),
 								rs.getString("description"),
 								rs.getDate("date"),
-								rs.getString("files"),
+								(List<String>) rs.getArray("files"),
 								rs.getInt("statusId"),
 								rs.getInt("ownerId"),
 								rs.getInt("customerId"));
@@ -62,7 +61,7 @@ public class JobDAO {
 								rs.getDate("creationdate"),
 								rs.getString("description"),
 								rs.getDate("date"),
-								rs.getString("files"),
+								(List<String>) rs.getArray("files"),
 								rs.getInt("statusId"),
 								rs.getInt("ownerId"),
 								rs.getInt("customerId"));
@@ -85,7 +84,7 @@ public class JobDAO {
 								rs.getDate("creationdate"),
 								rs.getString("description"),
 								rs.getDate("date"),
-								rs.getString("files"),
+								(List<String>) rs.getArray("files"),
 								rs.getInt("statusId"),
 								rs.getInt("ownerId"),
 								rs.getInt("customerId"));
@@ -109,6 +108,7 @@ public class JobDAO {
 								rs.getDate("creationdate"),
 								rs.getString("description"),
 								rs.getDate("date"),
+								(List<String>) rs.getArray("files"),
 								rs.getString("files"),
 								rs.getInt("statusId"),
 								rs.getInt("ownerId"),
@@ -133,6 +133,7 @@ public class JobDAO {
 								rs.getDate("creationdate"),
 								rs.getString("description"),
 								rs.getDate("date"),
+								(List<String>) rs.getArray("files"),
 								rs.getString("files"),
 								rs.getInt("statusId"),
 								rs.getInt("ownerId"),
@@ -227,3 +228,5 @@ public class JobDAO {
 		}
 	}
 }
+
+ */

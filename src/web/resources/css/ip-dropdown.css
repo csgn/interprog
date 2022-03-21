@@ -41,7 +41,7 @@
 	overflow-y: scroll;
 }
 
-.ip-dropdown_option label {
+.ip-dropdown_option option {
   pointer-events: none;
 }
 

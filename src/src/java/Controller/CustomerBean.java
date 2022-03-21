@@ -24,7 +24,7 @@ public class CustomerBean implements Serializable {
 	private List<Customer> customerList;
 
 	public CustomerDAO getDao() {
-		if(this.dao == null){
+		if (this.dao == null) {
 			this.dao = new CustomerDAO();
 		}
 		return dao;
@@ -35,7 +35,7 @@ public class CustomerBean implements Serializable {
 	}
 
 	public Customer getEntity() {
-		if(this.entity == null){
+		if (this.entity == null) {
 			this.entity = new Customer();
 		}
 		return entity;
@@ -46,15 +46,15 @@ public class CustomerBean implements Serializable {
 	}
 
 	public List<Customer> getCustomerList() {
-		return customerList;
+		this.customerList = dao.findAll();
+		return this.customerList;
 	}
 
 	public void setCustomerList(List<Customer> customerList) {
 		this.customerList = customerList;
 	}
-	
+
 	public CustomerBean() {
 	}
-	
-	
+
 }
