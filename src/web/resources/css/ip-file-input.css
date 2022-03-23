@@ -1,0 +1,35 @@
+/* 
+    Created on : Mar 15, 2022, 12:37:34 PM
+    Author     : csgn
+*/
+
+.ip-file-input {
+	width: 128px;
+	height: 128px;
+	border: 0.5px var(--border-primary) solid;
+	border-radius: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	transition: var(--transition-time);
+	position: relative;
+}
+
+.ip-file-input:hover {
+	box-shadow: 0 0 0.5px 0.5px var(--border-primary);
+	cursor: pointer;
+}
+
+.ip-file-input ion-icon {
+	width: 32px;
+	height: 32px;
+	pointer-events: none;
+	user-select: none;
+}
+
+.ip-file-input span {
+	padding-top: 0.3rem;
+	pointer-events: none;
+	user-select: none;
+}

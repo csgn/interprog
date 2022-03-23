@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
  @author csgn
+
+form submit button broke everything:
+https://stackoverflow.com/questions/12915749/jsf-rerender-composite-component-insertchildren-problems
 -->
 <!DOCTYPE html>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui='http://xmlns.jcp.org/jsf/facelets'
-								xmlns:h="http://xmlns.jcp.org/jsf/html">
-		<h1>HOME</h1>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+								xmlns:ui='http://xmlns.jcp.org/jsf/facelets'
+								xmlns:h="http://xmlns.jcp.org/jsf/html"
+								xmlns:md="http://xmlns.jcp.org/jsf/composite/composite/modal"
+								xmlns:fm="http://xmlns.jcp.org/jsf/composite/composite/form"
+								xmlns:ez="http://xmlns.jcp.org/jsf/composite/composite"
+								xmlns:f="http://xmlns.jcp.org/jsf/core"
+								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	<h1>HOME</h1>
+
+	<md:modal id="modal-1" title="Create New Job" toggleButtonName="order a new job">
+		<h:form>
+			<div>
+				<h:inputTextarea style='height: 200px; width: 600px; margin-bottom:1rem; border: 0.5px solid #ddd; border-radius: 5px; padding: 1rem; max-width: 600px; min-width: 600px; min-height: 200px;' value="#{jobBean.description}" />
+			</div>
+
+			<div style="display: flex; justify-content: space-between">
+				<div style="width: 50%;">
+					<fm:form-date-input id="dateTimeInput" placeholder="Date &amp; Time" required="false" value="#{jobBean.dateTime}" />
+				</div>
+				<div style="width: 50%; margin-left: 1rem;">
+					<h:selectOneMenu value="#{jobBean.employee}" converter="employeeConverter">
+						<f:selectItems value="#{employeeBean.findAll()}" var="l" itemLabel="#{l.name} #{l.surname}" itemValue="#{l}" />
+					</h:selectOneMenu>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<h:commandButton class="button" action="#{jobBean.create}" value="Save"/>
+			</div>
+		</h:form>
+	</md:modal>
 </ui:composition>

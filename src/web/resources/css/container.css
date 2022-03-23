@@ -5,9 +5,8 @@
 .container {
   position: fixed;
   margin-left: 4rem;
-  padding-left: 3rem;
-  padding-top: 2rem;
-  width: 100%;
+	padding: 2rem 2rem;
+  width: 90%;
   height: 100vh;
   background: var(--bg-primary);
   transition: var(--transition-time);

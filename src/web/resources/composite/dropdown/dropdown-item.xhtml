@@ -9,22 +9,12 @@
 								xmlns:composite = "http://xmlns.jcp.org/jsf/composite"
 								xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 								xmlns:fm="http://xmlns.jcp.org/jsf/composite/composite/form">
-
-	>
-
 	<composite:interface>
-		<composite:attribute name='title' />
-		<composite:attribute name='icon' />
-		<composite:attribute name='onclick' />
 	</composite:interface>
-
 	<composite:implementation>
 		<h:outputStylesheet library='css' name='dropdown/dropdown-item.css' />
-		<h:form class="dd-item">
-			<h:commandButton action="#{sessionBean.test()}">
-				<ion-icon name="#{cc.attrs.icon}" size="large"></ion-icon>
-				<span>#{cc.attrs.title}</span>
-			</h:commandButton>
-			</h:form>
+		<div class="dd-item">
+			<composite:insertChildren />
+		</div>
 	</composite:implementation>
 </ui:composition>

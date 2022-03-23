@@ -12,15 +12,12 @@
 :root {
   font-size: 16px;
   font-family: Poppins, sans-serif;
-  --text-primary: #575757;
-  --text-secondary: #444;
+  --text-primary: #242424;
+  --text-secondary: #292929;
   --bg-primary: #fff;
-  --bg-secondary: linear-gradient(90deg, #ffff, #f4f4f4);
-	--bg-secondary-rev: linear-gradient(90deg, #f4f4f4, #fff);
+  --bg-secondary: linear-gradient(90deg, #ffff, #f0f0f0);
+	--bg-secondary-rev: linear-gradient(90deg, #f0f0f0, #fff);
 	--transition-time: 300ms;
-  /*--bg-secondary2: linear-gradient(90deg, #ffe4e0, #fff0d4);*/
-}
-
-h1 {
-	color: var(--text-primary);
+	--border-primary: #ddd;
+	--border-secondary: #eee;
 }

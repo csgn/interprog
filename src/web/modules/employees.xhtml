@@ -3,6 +3,127 @@
  @author csgn
 -->
 <!DOCTYPE html>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui='http://xmlns.jcp.org/jsf/facelets'>
-		<h1>EMPLOYEES</h1>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+								xmlns:ui='http://xmlns.jcp.org/jsf/facelets'
+								xmlns:h="http://xmlns.jcp.org/jsf/html"
+								xmlns:md="http://xmlns.jcp.org/jsf/composite/composite/modal"
+								xmlns:fm="http://xmlns.jcp.org/jsf/composite/composite/form"
+								xmlns:ez="http://xmlns.jcp.org/jsf/composite/composite"
+								xmlns:f="http://xmlns.jcp.org/jsf/core"
+								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+	<md:modal id="createEmployeeModal" title="Add Employee">
+		<h:panelGroup id="createEmployeeModalGroup">
+			<h:form>
+				<div>
+					<ez:ip-input type="text" placeholder="name" value="#{employeeBean.model.name}" required="true" />
+				</div>
+
+				<div>
+					<ez:ip-input type="text" placeholder="lastname" value="#{employeeBean.model.surname}" required="true" />
+
+				</div>
+
+				<div>
+					<ez:ip-input type="text" placeholder="phone" value="#{employeeBean.model.phone}" required="true" />
+				</div>
+
+				<div>
+					<ez:ip-input type="password" placeholder="password" value="#{employeeBean.model.password}" required="true" />
+				</div>
+
+				<div>
+					<h:selectOneMenu value="#{employeeBean.model.color}">
+						<f:selectItems value="#{['red', 'green', 'blue']}" var="c" itemLabel="#{c}" itemValue="#{c}" />
+					</h:selectOneMenu>
+				</div>
+
+				<div>
+					<h:selectOneMenu value="#{employeeBean.model.roleId}">
+						<f:selectItems value="#{roleBean.findAll()}" var="c" itemLabel="#{c}" itemValue="#{c.id}" />
+					</h:selectOneMenu>
+				</div>
+
+				<div class="modal-footer">
+					<h:commandButton class="button" action="#{employeeBean.create}" value="Save"/>
+				</div>
+
+			</h:form>
+		</h:panelGroup>
+	</md:modal>
+
+
+	<div>
+		<div class="header">
+			<h1>EMPLOYEES</h1>
+		</div>
+		<div style="display: flex; margin-left: auto">
+			<h:form>
+				<h:commandButton class="button" onclick="toggle('createEmployeeModal', 0)" action="#{employeeBean.clearModel}" value="ADD A NEW EMPLOYEE">
+					<f:ajax execute="@this" render="createEmployeeModal:createEmployeeModalGroup" />
+				</h:commandButton>
+			</h:form>
+		</div>
+	</div>
+
+
+	<div>
+		<h:panelGroup id="egroup">
+			<c:forEach items="#{employeeBean.findAll()}" var="e">
+				<md:modal id="emodal_#{e.id}" title="Edit #{e}">
+					<h:panelGroup id="modalgroup">
+						<h:form>
+							<div>
+								<ez:ip-input type="text" placeholder="name" value="#{employeeBean.model.name}" required="true" />
+							</div>
+							<div>
+								<ez:ip-input type="text" placeholder="lastname" value="#{employeeBean.model.surname}" required="true" />
+							</div>
+							<div>
+								<ez:ip-input type="text" placeholder="phone" value="#{employeeBean.model.phone}" required="true" />
+							</div>
+							<div>
+								<h:selectOneMenu value="#{employeeBean.model.color}">
+									<f:selectItems value="#{['red', 'green', 'blue']}" var="c" itemLabel="#{c}" itemValue="#{c}" />
+								</h:selectOneMenu>
+							</div>
+
+							<div class="modal-footer">
+								<h:commandButton class="button" action="#{employeeBean.update}" value="Save">
+									<f:ajax execute="@this" render="egroup" />
+								</h:commandButton>
+							</div>
+
+						</h:form>
+					</h:panelGroup>
+				</md:modal>
+
+				<div style="border-shadow: 0 0 0.5rem 1rem #333; border-radius: 7px; margin-top: 1rem; width: 500px; height: 64px; border: 0.5px solid #ddd; display: flex; align-items: center; padding: 0.5rem 0.5rem">
+					<div style="display: flex">
+						#{e.name} #{e.surname}
+					</div>
+					<div style="display: flex; margin-left: auto;">
+						<div style="display: flex;">
+							<h:form>
+								<h:commandButton class="button" onclick="toggle('emodal_#{e.id}', 0)" value="Edit" action="#{employeeBean.editForm(e)}">							
+									<f:ajax execute="@this" render="emodal_#{e.id}:modalgroup" />
+								</h:commandButton>
+							</h:form>
+						</div>
+
+						<c:if test="#{sessionBean.employee.id != e.id}">
+							<div style="display: flex; margin-left: 0.5rem;">
+								<h:form>
+									<h:commandButton class="button" value="Delete" action="#{employeeBean.delete(e.id)}">							
+										<f:ajax execute="@this" render="egroup" />
+									</h:commandButton>
+								</h:form>
+							</div>
+						</c:if>
+					</div>
+				</div>
+			</c:forEach>
+		</h:panelGroup>
+	</div>
+
 </ui:composition>

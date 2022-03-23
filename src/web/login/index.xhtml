@@ -6,11 +6,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 			xmlns:h="http://xmlns.jcp.org/jsf/html"
 			xmlns:fm="http://xmlns.jcp.org/jsf/composite/composite/form"
+			xmlns:ez="http://xmlns.jcp.org/jsf/composite/composite"
 			xmlns:f="http://xmlns.jcp.org/jsf/core">
   <h:head>
     <title>Login - Interprog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<h:outputStylesheet library='css' name='style.css' />
+		<h:outputStylesheet library='css' name='button.css' />
   </h:head>
   <body
 		style="
@@ -20,22 +22,24 @@
 		align-items: center;
 		background: #111;
 		">
-		<fm:form>
-			<fm:form-item>
-				<fm:form-header title="interprog" icon="logo-web-component"/>
-			</fm:form-item>
-			<fm:form-item>
-				<fm:form-input type="text" placeholder="phone number" required="true" value="#{sessionBean.phoneNumber}" autofocus="true" />
-			</fm:form-item>
-			<fm:form-item>
-				<fm:form-input type="password" placeholder="password" required="true" value="#{sessionBean.password}" />
-			</fm:form-item>
-			<fm:form-item>
-				<fm:form-error msg="#{sessionBean.errMessage}" />
-			</fm:form-item>
-			<fm:form-item>
-				<fm:form-button value="log in" bean="#{sessionBean}" method="login" />
-			</fm:form-item>
-		</fm:form>
+		<h:panelGroup>
+			<fm:form>
+				<fm:form-item>
+					<fm:form-header title="interprog" icon="logo-web-component"/>
+				</fm:form-item>
+				<fm:form-item>
+					<ez:ip-input type="text" placeholder="phone number" required="true" value="#{sessionBean.phoneNumber}" autofocus="true" />
+				</fm:form-item>
+				<fm:form-item>
+					<ez:ip-input type="password" placeholder="password" required="true" value="#{sessionBean.password}" />
+				</fm:form-item>
+				<fm:form-item>
+					<fm:form-error msg="#{sessionBean.errMessage}" />
+				</fm:form-item>
+				<fm:form-item>
+					<fm:form-button value="log in" bean="#{sessionBean}" method="login" />
+				</fm:form-item>
+			</fm:form>
+		</h:panelGroup>
   </body>
 </html>
