@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	@author csgn
+-->
+<!DOCTYPE html>
+<ui:composition xmlns = "http://www.w3.org/1999/xhtml"   
+								xmlns:composite = "http://xmlns.jcp.org/jsf/composite"
+								xmlns:h = "http://java.sun.com/jsf/html"
+								xmlns:f = "http://java.sun.com/jsf/core"
+								xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+								xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+	<composite:interface>
+		<composite:attribute name="items" />
+		<composite:attribute name="modals" />
+	</composite:interface>
+
+	<composite:implementation>
+		<h:outputStylesheet library="css" name='ip-table.css' />
+		<h:panelGroup id="#{cc.id}">
+			<div class='ip-table'>
+				<c:forEach items="#{cc.attrs.items}" var="t" >
+					#{t.name}
+				</c:forEach>
+			</div>
+		</h:panelGroup>
+	</composite:implementation>
+</ui:composition>
