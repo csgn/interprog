@@ -4,7 +4,7 @@
  */
 package Controller;
 
-import DAO.core.EmployeeDAO;
+import DAO.EmployeeDAO;
 import Model.Employee;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
@@ -14,15 +14,16 @@ import java.util.List;
 /**
  *
  * @author Aykut
+ * @author Sergen
  */
 @Named("employeeBean")
 @SessionScoped
 public class EmployeeBean implements Serializable {
-	private Employee employee;
+	private Employee model;
 	private EmployeeDAO dao;
 
 	public EmployeeBean() {
-		employee = new Employee();
+		model = new Employee();
 		dao = new EmployeeDAO();
 	}
 
@@ -34,16 +35,33 @@ public class EmployeeBean implements Serializable {
 		return dao.findAll();
 	}
 
-	public int create() {
-		int id = dao.create(employee);
-		employee = new Employee();
+	public void create() {
+		int id = dao.create(model);
+		this.clearModel();
 
-		return id;
+		System.out.println("CREATED ID: " + id);
 	}
 
-	public Employee getEmployee() {
-		return employee;
+	public void delete(int id) {
+		dao.delete(id);
+		this.clearModel();
 	}
 
+	public void update() {
+		dao.update(model);
+		this.clearModel();
+	}
+
+	public Employee getModel() {
+		return model;
+	}
+	
+	public void clearModel() {
+		model = new Employee();
+	}
+
+	public void editForm(Employee e) {
+		model = e;
+	}
 
 }

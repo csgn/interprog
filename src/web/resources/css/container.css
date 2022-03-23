@@ -6,7 +6,7 @@
   position: fixed;
   margin-left: 4rem;
 	padding: 2rem 2rem;
-  width: 100%;
+  width: 90%;
   height: 100vh;
   background: var(--bg-primary);
   transition: var(--transition-time);

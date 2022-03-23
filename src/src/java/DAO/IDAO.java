@@ -1,4 +1,4 @@
-package DAO.core;
+package DAO;
 
 import java.util.List;
 
@@ -12,5 +12,5 @@ public interface IDAO<T> {
 	List<T> findAll();
 	int create(T t);
 	void update(T t);
-	void delete(T t);
+	void delete(int id);
 }

@@ -11,20 +11,6 @@
 			<ui:insert name="content">
 				<ui:include src="#{navigation.fullPath()}" />
 			</ui:insert>
-
-			<h:outputText value="SessionID: #{sessionBean.sessionId}"/>
-			<br></br>
-			<h:outputText value="phoneNumber: #{sessionBean.employee.phone}"/>
-			<br></br>
-			<h:outputText value="name: #{sessionBean.employee.name}"/>
-			<br></br>
-			<h:outputText value="surname: #{sessionBean.employee.surname}"/>
-			<br></br>
-			<h:outputText value="roleID: #{sessionBean.employee.roleId}"/>
-			<br></br>
-			<h:form>
-				<h:commandLink value="Logout" action="#{sessionBean.logout()}"/>
-			</h:form>
 		</div>
 	</h:panelGroup>
 </ui:composition>

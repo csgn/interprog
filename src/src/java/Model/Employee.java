@@ -107,7 +107,7 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return String.valueOf(id);
+		return name + " " + surname;
 	}
 
 	

@@ -1,10 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Converter;
 
-import DAO.core.EmployeeDAO;
+import DAO.EmployeeDAO;
 import Model.Employee;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
