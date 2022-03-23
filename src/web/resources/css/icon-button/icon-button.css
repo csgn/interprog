@@ -27,4 +27,5 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 .icon-button:hover {
   opacity: 0.6;
+	cursor: pointer;
 }

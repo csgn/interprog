@@ -20,4 +20,6 @@
 	--transition-time: 300ms;
 	--border-primary: #ddd;
 	--border-secondary: #eee;
+	--bg-colorful-90: linear-gradient(90deg, rgba(247,200,221,0.9285304037372718) 0%, rgba(252,243,198,0.9144854599170471) 60%);
+	--bg-colorful-180: linear-gradient(180deg, rgba(247,200,221,0.9285304037372718) 0%, rgba(252,243,198,0.9144854599170471) 60%);
 }

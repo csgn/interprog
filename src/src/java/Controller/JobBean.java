@@ -11,13 +11,7 @@ import Model.Job;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -27,13 +21,10 @@ import java.util.logging.Logger;
 @SessionScoped
 public class JobBean implements Serializable {
 
-	private Job job;
+	private Job model;
 	private JobDAO dao;
-
 	private Customer customer;
 	private Employee employee;
-	private String description;
-	private String dateTime;
 
 	public JobBean() {
 		dao = new JobDAO();
@@ -48,22 +39,12 @@ public class JobBean implements Serializable {
 	}
 
 	public void create() {
-		try {
-			Date date = new SimpleDateFormat("yyyy-mm-dd").parse(dateTime);
-			job.setDescription(description);
-			job.setDate(date);
-			job.setFiles(new ArrayList<>());
-
-			int id = dao.create(job);
+			int id = dao.create(model);
 			System.out.println("id: " + id);
-
-		} catch (ParseException ex) {
-			Logger.getLogger(JobBean.class.getName()).log(Level.SEVERE, null, ex);
-		}
 	}
 
-	public Job getJob() {
-		return job;
+	public Job getModel() {
+		return model;
 	}
 
 	public Employee getEmployee() {
@@ -74,30 +55,7 @@ public class JobBean implements Serializable {
 		this.employee = employee;
 	}
 
-	public String getDescription() {
-		return description;
+	public void clearModel() {
+		model = new Job();
 	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getDateTime() {
-		return dateTime;
-	}
-
-	public void setDateTime(String dateTime) {
-		this.dateTime = dateTime;
-	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-	
-
-
 }

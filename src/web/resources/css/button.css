@@ -32,3 +32,16 @@
   transition: background 0s;
 }
 
+.outline {
+	transition: background var(--transition-time);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.outline:hover {
+	color: #fff;
+}
+
+.outline:active {
+
+}

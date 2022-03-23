@@ -50,6 +50,7 @@
 .nav-link ion-icon {
   min-width: 4rem;
   margin-top: 0 1.5rem;
+  transition: var(--transition-time);
 }
 
 .navbar:hover {
@@ -91,4 +92,10 @@
 
 .nav-link.active {
 	background: var(--bg-secondary);
+	font-weight: bold;
+}
+
+.nav-link.active ion-icon{
+	width: 42px;
+	height: 42px;
 }
