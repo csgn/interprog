@@ -98,10 +98,12 @@
 					</h:panelGroup>
 				</md:modal>
 
-				<div style="border-shadow: 0 0 0.5rem 1rem #333; border-radius: 7px; margin-top: 1rem; width: 500px; height: 64px; border: 0.5px solid #ddd; display: flex; justify-content: flex-start; align-items: center; padding: 0.5rem 0.5rem">
-					<span>#{e.name} #{e.surname}</span>
-					<div style="display: flex; margin-left: auto">
-						<div style="margin-right: 1rem;">
+				<div style="border-shadow: 0 0 0.5rem 1rem #333; border-radius: 7px; margin-top: 1rem; width: 500px; height: 64px; border: 0.5px solid #ddd; display: flex; align-items: center; padding: 0.5rem 0.5rem">
+					<div style="display: flex">
+						#{e.name} #{e.surname}
+					</div>
+					<div style="display: flex; margin-left: auto;">
+						<div style="display: flex;">
 							<h:form>
 								<h:commandButton class="button" onclick="toggle('emodal_#{e.id}', 0)" value="Edit" action="#{employeeBean.editForm(e)}">							
 									<f:ajax execute="@this" render="emodal_#{e.id}:modalgroup" />
@@ -109,13 +111,15 @@
 							</h:form>
 						</div>
 
-						<div>
-							<h:form>
-								<h:commandButton class="button" value="Delete" action="#{employeeBean.delete(e.id)}">							
-									<f:ajax execute="@this" render="egroup" />
-								</h:commandButton>
-							</h:form>
-						</div>
+						<c:if test="#{sessionBean.employee.id != e.id}">
+							<div style="display: flex; margin-left: 0.5rem;">
+								<h:form>
+									<h:commandButton class="button" value="Delete" action="#{employeeBean.delete(e.id)}">							
+										<f:ajax execute="@this" render="egroup" />
+									</h:commandButton>
+								</h:form>
+							</div>
+						</c:if>
 					</div>
 				</div>
 			</c:forEach>
