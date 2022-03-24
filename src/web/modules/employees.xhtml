@@ -70,7 +70,7 @@
 		<h:panelGroup id="egroup">
 			<c:forEach items="#{employeeBean.findAll()}" var="e">
 				<div class='container-row'>
-			<div class="container-column checkbox" style="width: 20px;"></div>
+					<div class="container-column checkbox" style="width: 20px;"></div>
 					<div class='container-column'>#{e.name}</div>
 					<div class='container-column'>#{e.surname}</div>
 					<div class='container-column'>#{e.phone}</div>
@@ -101,9 +101,7 @@
 							</dd:dropdown-menu>
 						</dd:dropdown>
 					</div>
-
 				</div>
-
 
 				<md:modal id="emodal_#{e.id}" title="Edit #{e}">
 					<h:panelGroup id="modalgroup">
@@ -130,5 +128,7 @@
 				</md:modal>
 			</c:forEach>
 		</h:panelGroup>
+		<div class="container-footer">
+		</div>
 	</div>
 </ui:composition>
