@@ -28,8 +28,6 @@ public class SessionBean implements Serializable {
 	public SessionBean() {
 		this.employeeDAO = new EmployeeDAO();
 		EmployeeDAO e = new EmployeeDAO();
-
-		
 	}
 
 	public String getPassword() {
@@ -77,7 +75,7 @@ public class SessionBean implements Serializable {
 		}
 
 		// find user
-		this.employee = this.employeeDAO.findByPhoneNumber(this.phoneNumber);
+		this.employee = this.employeeDAO.findByPhone(this.phoneNumber);
 
 		// generate new session
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
@@ -110,13 +108,14 @@ public class SessionBean implements Serializable {
 	}
 
 	public String logout() {
+		System.out.println("LOGOUT");
 		HttpSession session = Session.getSession();
 		if (session != null) {
 			session.invalidate();
 		}
 
 		// redirect login page after logging out
-		return "login";
+		return "logout";
 	}
 
 }

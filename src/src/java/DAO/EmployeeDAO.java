@@ -2,78 +2,154 @@ package DAO;
 
 import Model.Employee;
 import Utils.PGConn;
+import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author Metin
+ * @author csgn
  */
-public class EmployeeDAO {
+public class EmployeeDAO implements IDAO<Employee> {
+	Connection conn = PGConn.getConnection();
 
-	private final Connection con = PGConn.getConnection();
-	private PreparedStatement ps;
-	private ResultSet rs;
-	private Employee tmp;
-	private List<Employee> employees;
+	@Override
+	public Employee find(int id) {
+		Employee employee = new Employee();
+		PreparedStatement ps;
+		ResultSet rs;
 
-	public List<Employee> findAll() {
 
-		employees = new ArrayList<>();
 		try {
-			this.ps = this.con.prepareStatement("Select * from employee");
-			rs = this.ps.executeQuery();
+			ps = conn.prepareStatement("SELECT * FROM employee WHERE id=?");
+			ps.setInt(1, id);
+
+			rs = ps.executeQuery();
+
 			while (rs.next()) {
-				tmp = new Employee(
+				employee.setId(rs.getInt("id"));
+				employee.setName(rs.getString("name"));
+				employee.setSurname(rs.getString("surname"));
+				employee.setPhone(rs.getString("phone"));
+				employee.setColor(rs.getString("color"));
+				employee.setPassword(rs.getString("password"));
+				employee.setRoleId(rs.getInt("roleid"));
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
+		return employee;
+	}
+
+	@Override
+	public List<Employee> findAll() {
+		List<Employee> employees = new ArrayList<Employee>();
+		Employee employee;
+		PreparedStatement ps;
+		ResultSet rs;
+
+		try {
+			ps = conn.prepareStatement("SELECT * FROM employee");
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				employee = new Employee(
 								rs.getInt("id"),
 								rs.getString("name"),
 								rs.getString("surname"),
 								rs.getString("phone"),
 								rs.getString("color"),
 								rs.getString("password"),
-								rs.getInt("roleId"));
-				employees.add(tmp);
+								rs.getInt("roleid")
+				);
+
+				employees.add(employee);
+
 			}
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+		} catch (SQLException ex) {
+			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
 		}
+
 		return employees;
 	}
 
-	public Employee findById(int id) {
-		
+	@Override
+	public int create(Employee e) {
+		int id = -1;
+		PreparedStatement ps;
+		ResultSet rs;
+
 		try {
-			this.ps = this.con.prepareStatement("Select * from employee where id = ?");
-			this.ps.setInt(1, id);
-			rs = this.ps.executeQuery();
+			ps = conn.prepareStatement("INSERT INTO employee (name, surname, phone, color, password, roleid) VALUES (?, ?, ?, ?, ?, ?) RETURNING id");
+			ps.setString(1, e.getName());
+			ps.setString(2, e.getSurname());
+			ps.setString(3, e.getPhone());
+			ps.setString(4, e.getColor());
+			ps.setString(5, e.getPassword());
+			ps.setInt(6, e.getRoleId());
+
+			rs = ps.executeQuery();
+
 			while (rs.next()) {
-				tmp = new Employee(
-								rs.getInt("id"),
-								rs.getString("name"),
-								rs.getString("surname"),
-								rs.getString("phone"),
-								rs.getString("color"),
-								rs.getString("password"),
-								rs.getInt("roleId"));
+				id = rs.getInt("id");
 			}
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+		} catch (SQLException ex) {
+			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		return tmp;
+
+		return id;
 	}
 
-	public Employee findByPhoneNumber(String phoneNumber) {
-		
+	@Override
+	public void update(Employee e) {
+		PreparedStatement ps;
+
 		try {
-			this.ps = this.con.prepareStatement("Select * from employee where phone = ?");
-			this.ps.setString(1, phoneNumber);
-			rs = this.ps.executeQuery();
+			ps = conn.prepareStatement("UPDATE employee set name=?,surname=?,phone=?,color=?,password=?,roleid=? where id=?");
+			ps.setString(1, e.getName());
+			ps.setString(2, e.getSurname());
+			ps.setString(3, e.getPhone());
+			ps.setString(4, e.getColor());
+			ps.setString(5, e.getPassword());
+			ps.setInt(6, e.getRoleId());
+			ps.setInt(7, e.getId());
+			ps.executeUpdate();
+		} catch (SQLException ex) {
+			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+	@Override
+	public void delete(int id) {
+		PreparedStatement ps;
+
+		try {
+			ps = conn.prepareStatement("DELETE FROM employee where id=?");
+			ps.setInt(1, id);
+
+			ps.executeUpdate();
+		} catch (SQLException ex) {
+			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+	public Employee findByPhone(String phoneNumber) {
+		Employee employee = null;
+		PreparedStatement ps;
+		ResultSet rs;
+
+		try {
+			ps = conn.prepareStatement("Select * from employee where phone = ?");
+			ps.setString(1, phoneNumber);
+			rs = ps.executeQuery();
 			while (rs.next()) {
-				tmp = new Employee(
+				employee = new Employee(
 								rs.getInt("id"),
 								rs.getString("name"),
 								rs.getString("surname"),
@@ -85,17 +161,19 @@ public class EmployeeDAO {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		return tmp;
+
+		return employee;
 	}
 
 	public boolean validate(String user, String password) {
-		
+		PreparedStatement ps;
+		ResultSet rs;
+
 		try {
-			System.out.println("PHONE: " + user + " PASSWORD: " + password);
-			this.ps = this.con.prepareStatement("Select phone, password, roleid from employee where phone = ? and password = ?");
-			this.ps.setString(1, user);
-			this.ps.setString(2, password);
-			rs = this.ps.executeQuery();
+			ps = conn.prepareStatement("Select phone, password, roleid from employee where phone = ? and password = ?");
+			ps.setString(1, user);
+			ps.setString(2, password);
+			rs = ps.executeQuery();
 			if (rs.next()) {
 				return true;
 			}
@@ -103,151 +181,8 @@ public class EmployeeDAO {
 			System.out.println("Error -->" + e.getMessage());
 			return false;
 		}
+
 		return false;
 	}
 
-	public List<Employee> getAllEmployeeBySquadId() {
-		
-		employees = new ArrayList<>();
-		try {
-			this.ps = this.con.prepareStatement("Select * from employee left join squad on employee.id = squad.id");
-			rs = this.ps.executeQuery();
-			while (rs.next()) {
-				tmp = new Employee(
-								rs.getInt("id"),
-								rs.getString("name"),
-								rs.getString("surname"),
-								rs.getString("phone"),
-								rs.getString("color"),
-								rs.getString("password"),
-								rs.getInt("roleId"));
-				employees.add(tmp);
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		System.out.println("boyut: " + employees.size());
-		return employees;
-	}
-
-	public List<Employee> findAllEmployeeByWarehouseId() {
-		
-		employees = new ArrayList<>();
-		try {
-			this.ps = this.con.prepareStatement("Select * from employee left join warehouse on employee.id = warehouse.id");
-			rs = this.ps.executeQuery();
-			while (rs.next()) {
-				tmp = new Employee(
-								rs.getInt("id"),
-								rs.getString("name"),
-								rs.getString("surname"),
-								rs.getString("phone"),
-								rs.getString("color"),
-								rs.getString("password"),
-								rs.getInt("roleId"));
-				employees.add(tmp);
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		return employees;
-	}
-
-	public List<Employee> findAllEmployeesByJobId() {
-		
-		employees = new ArrayList<>();
-		try {
-			this.ps = this.con.prepareStatement("Select * from employee left join job on employee.id = job.ownerid");
-			rs = this.ps.executeQuery();
-			while (rs.next()) {
-				tmp = new Employee(
-								rs.getInt("id"),
-								rs.getString("name"),
-								rs.getString("surname"),
-								rs.getString("phone"),
-								rs.getString("color"),
-								rs.getString("password"),
-								rs.getInt("roleId"));
-				employees.add(tmp);
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		return employees;
-	}
-
-	public List<Employee> findAllEmployeesByRoleId() {
-
-		employees = new ArrayList<>();
-		try {
-			this.ps = this.con.prepareStatement("Select * from employee left join job on employee.roleid = role.id");
-			rs = this.ps.executeQuery();
-			while (rs.next()) {
-				tmp = new Employee(
-								rs.getInt("id"),
-								rs.getString("name"),
-								rs.getString("surname"),
-								rs.getString("phone"),
-								rs.getString("color"),
-								rs.getString("password"),
-								rs.getInt("roleId"));
-				employees.add(tmp);
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		System.out.println("ok" + employees.size());
-		return employees;
-	}
-	
-	public void insert(int id, String name, String surname, String phone, String color, String password, int roleId){
-		
-		try {
-			this.ps = this.con.prepareStatement("insert into employee values (id = ? ,name = ?, surname = ?, phone = ?, color = ?, password = ?, roleId = ? )");
-			this.ps.setInt(1, id);
-			this.ps.setString(2, name);
-			this.ps.setString(3, surname);
-			this.ps.setString(4, phone);
-			this.ps.setString(5, color);
-			this.ps.setString(6, password);
-			this.ps.setInt(7, roleId);
-			rs = ps.executeQuery();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	
-	public void deleteById(int id){
-		
-		try {
-			this.ps = this.con.prepareStatement("delete from employee where (id = ?)");
-			this.ps.setInt(1, id);
-			rs = ps.executeQuery();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	
-	public void deleteByNameAndSurname(String name, String surname){
-		
-		try {
-			this.ps = this.con.prepareStatement("delete from employee where (name = ? and surname = ?)");
-			this.ps.setString(1, name);
-			this.ps.setString(2, surname);
-			rs = ps.executeQuery();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	
-	public void deleteByPhone(String phone){
-		
-		try {
-			this.ps = this.con.prepareStatement("delete from employee where (phone = ?)");
-			this.ps.setString(1, phone);
-			rs = ps.executeQuery();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
 }

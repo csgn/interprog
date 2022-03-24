@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	@author csgn
+-->
+<!DOCTYPE html>
+<ui:composition xmlns = "http://www.w3.org/1999/xhtml"   
+								xmlns:composite = "http://xmlns.jcp.org/jsf/composite"
+								xmlns:h = "http://java.sun.com/jsf/html"
+								xmlns:f = "http://java.sun.com/jsf/core"
+								xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+								xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+	<composite:interface>
+		<composite:attribute name="options" />
+		<composite:attribute name="selecttype" />
+		<composite:attribute name="optionLabel" />
+		<composite:attribute name="optionValue" />
+	</composite:interface>
+
+	<composite:implementation>
+		<h:outputStylesheet library="css" name="ip-dropdown.css" />
+		<div class="ip-dropdown_container">
+			<div class="ip-dropdown_menu" id="#{cc.id}">
+				<h:panelGroup>
+					<ui:repeat value="#{cc.attrs.options}" var="o">
+						<div class="ip-dropdown_option" onclick="#{cc.attrs.selecttype == 'multi' ? 'setOption(this, 0)' : 'setOption(this, 1)'}" id="#{cc.id}_#{o.id}">
+							<option value="#{cc.attrs.optionValue}">#{cc.attrs.optionLabel}</option>
+						</div>
+					</ui:repeat>
+				</h:panelGroup>
+				<span class="ip-dropdown_search_error">Couldn't find anything</span>
+			</div>
+		</div>
+		<h:outputScript library="js" name="ip-dropdown.js" />
+	</composite:implementation>
+</ui:composition>

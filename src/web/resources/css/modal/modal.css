@@ -1,0 +1,84 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Mar 12, 2022, 3:46:04 PM
+    Author     : csgn
+*/
+
+.modal-container {
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+	top: 0;
+	right: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+  transition: 300ms;
+	z-index: 99999;
+}
+
+.modal-container.active {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.modal-container.active .modal-content {
+  right: 0;
+}
+
+.modal-content {
+  position: relative;
+  right: -100vw;
+  overflow: hidden;
+  background-color: #fff;
+  width: 50%;
+  height: 100%;
+  transition: right 400ms;
+	overflow-y: scroll;
+}
+
+.modal-header {
+  padding: 1.12rem 1rem;
+  border-bottom: 0.5px #ddd solid;
+	display: flex;
+	align-items: center;
+}
+
+.modal-header ion-icon {
+	margin-left: auto;
+	color: var(--text-primary);
+}
+
+.modal-header ion-icon:hover {
+	opacity: 0.8;
+	cursor: pointer;
+}
+
+
+.modal-context {
+  height: fit-content;
+  padding: 1rem 1rem;
+}
+
+.modal-footer {
+	position: fixed;
+	bottom: 0;
+  width: 100%;
+	height: fit-content;
+  padding: 0.3rem 0.3rem;
+  border-top: 0.5px #ddd solid;
+	background: var(--bg-primary);
+}
+
+.modal-empty {
+	visibility: invisible;
+	width: 50%;
+	height: 100%;
+}

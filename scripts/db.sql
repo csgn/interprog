@@ -11,65 +11,68 @@ CREATE TYPE activityType AS ENUM (
 
 CREATE TABLE IF NOT EXISTS Squad
 (
-    id   serial PRIMARY KEY,
-    name varchar(255) NOT NULL
+    id   serial UNIQUE PRIMARY KEY,
+    name varchar(255) UNIQUE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Role
 (
-    id   serial PRIMARY KEY,
-    name varchar(255) NOT NULL
+    id   serial UNIQUE PRIMARY KEY,
+    name varchar(255) UNIQUE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS AccountType
 (
-    id   serial PRIMARY KEY,
-    name varchar(255) NOT NULL
+    id   serial UNIQUE PRIMARY KEY,
+    name varchar(255) UNIQUE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Warehouse
 (
-    id   serial PRIMARY KEY,
+    id   serial UNIQUE PRIMARY KEY,
     name varchar(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Address
 (
-    id         serial  NOT NULL,
+    id         serial UNIQUE NOT NULL,
     title      varchar,
-    context    varchar NOT NULL,
-    region     varchar NOT NULL,
-    district   varchar NOT NULL,
+    context    varchar       NOT NULL,
+    region     varchar       NOT NULL,
+    district   varchar       NOT NULL,
     directions varchar,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS Status
 (
-    id serial NOT NULL,
-    name varchar not null,
+    id    serial UNIQUE  NOT NULL,
+    name  varchar UNIQUE NOT NULL,
     color varchar,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS Customer
 (
-    id            serial  NOT NULL,
-    phone         varchar NOT NULL,
-    email         varchar NOT NULL,
+    id            serial UNIQUE  NOT NULL,
+    accountTypeId int            NOT NULL,
+    phone         varchar UNIQUE NOT NULL,
+    email         varchar UNIQUE NOT NULL,
     addressId     int,
-    accountTypeId int     NOT NULL,
     CONSTRAINT fk_address
         FOREIGN KEY (addressId)
             REFERENCES Address (id)
             ON UPDATE CASCADE
             ON DELETE CASCADE,
+    CONSTRAINT fk_accountType
+        FOREIGN KEY (accountTypeId)
+            REFERENCES AccountType (id)
+            ON UPDATE CASCADE,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS CorporateCustomer
 (
-    id                serial PRIMARY KEY,
     companyTitle      varchar NOT NULL,
     authorizedPerson  varchar(255),
     taxNumber         varchar(255),
@@ -78,7 +81,6 @@ CREATE TABLE IF NOT EXISTS CorporateCustomer
 
 CREATE TABLE IF NOT EXISTS IndividualCustomer
 (
-    id           serial PRIMARY KEY,
     companyTitle varchar,
     name         varchar NOT NULL,
     surname      varchar NOT NULL
@@ -86,25 +88,25 @@ CREATE TABLE IF NOT EXISTS IndividualCustomer
 
 CREATE TABLE IF NOT EXISTS Employee
 (
-    id       serial PRIMARY KEY,
-    name     varchar NOT NULL,
-    surname  varchar NOT NULL,
-    phone    varchar NOT NULL,
+    id       serial UNIQUE PRIMARY KEY,
+    name     varchar        NOT NULL,
+    surname  varchar        NOT NULL,
+    phone    varchar UNIQUE NOT NULL,
     color    varchar,
-    password varchar NOT NULL,
-    roleId   int     NOT NULL,
+    password varchar        NOT NULL,
+    roleId   int            NOT NULL,
     FOREIGN KEY (roleId) REFERENCES Role (id)
 );
 
 CREATE TABLE IF NOT EXISTS Job
 (
-    id           serial    NOT NULL,
-    creationDate timestamp NOT NULL DEFAULT NOW(),
-    description  varchar   NOT NULL,
-    date         timestamp NOT NULL,
+    id           serial UNIQUE NOT NULL,
+    creationDate timestamp     NOT NULL DEFAULT NOW(),
+    description  varchar       NOT NULL,
+    date         timestamp     NOT NULL,
     files        varchar[],
-    statusId     int       NOT NULL DEFAULT 1,
-    ownerId      int       NOT NULL DEFAULT 1,
+    statusId     int           NOT NULL DEFAULT 1,
+    ownerId      int           NOT NULL DEFAULT 1,
     customerId   int,
     FOREIGN KEY (statusId)
         REFERENCES Status (id)
@@ -120,9 +122,9 @@ CREATE TABLE IF NOT EXISTS Job
 
 CREATE TABLE IF NOT EXISTS Product
 (
-    id            serial PRIMARY KEY,
+    id            serial UNIQUE PRIMARY KEY,
     name          varchar NOT NULL,
-    serialNumber  varchar,
+    serialNumber  varchar UNIQUE,
     unit          varchar NOT NULL,
     purchasePrice int     NOT NULL,
     salePrice     int     NOT NULL,
@@ -136,13 +138,13 @@ CREATE TABLE IF NOT EXISTS Product
 
 CREATE TABLE IF NOT EXISTS Activity
 (
-    id      serial       NOT NULL,
-    date    timestamp    NOT NULL DEFAULT NOW(),
-    msg     varchar      NOT NULL,
+    id      serial UNIQUE NOT NULL,
+    date    timestamp     NOT NULL DEFAULT NOW(),
+    msg     varchar       NOT NULL,
     info    varchar,
-    type    activityType NOT NULL,
-    ownerId int          NOT NULL,
-    jobId   int          NOT NULL,
+    type    activityType  NOT NULL,
+    ownerId int           NOT NULL,
+    jobId   int           NOT NULL,
     FOREIGN KEY (ownerId)
         REFERENCES Employee (id)
         ON UPDATE CASCADE,
@@ -215,8 +217,6 @@ CREATE TABLE IF NOT EXISTS EmployeeXWarehouse
 /* END MANY TO MANY TABLES */
 
 
-
-
 /* ACTIVITY FUNCTIONS */
 CREATE OR REPLACE FUNCTION add_activity()
     RETURNS TRIGGER
@@ -241,9 +241,10 @@ BEGIN
         activity_type := 'job_status_changed';
         activity_msg := (SELECT FORMAT('%s was changed the job status', owner));
         activity_info := (SELECT FORMAT('New Status: %s', (
-            SELECT name from Status
-                WHERE id = new.statusId
-            ) ));
+            SELECT name
+            FROM Status
+            WHERE id = new.statusId
+        )));
     ELSEIF old.files <> new.files THEN
         activity_type := 'new_file_added';
         activity_msg := (SELECT FORMAT('%s added a new file', owner));
@@ -260,10 +261,6 @@ BEGIN
 END;
 $$;
 /* END ACTIVITY FUNCTIONS */
-
-
-
-
 
 
 /* ACTIVITY TRIGGERS */

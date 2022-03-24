@@ -4,8 +4,6 @@
  */
 package Model;
 
-import DAO.CustomerDAO;
-
 /**
  *
  * @author Aykut

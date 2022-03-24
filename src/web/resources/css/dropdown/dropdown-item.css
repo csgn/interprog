@@ -3,7 +3,7 @@
     Author     : csgn
 */
 
-.dd-item a {
+.dd-item * {
 	height: 50px;
 	display: flex;
 	align-items: center;
@@ -13,6 +13,7 @@
 	text-transform: uppercase;
 	color: var(--text-secondary);
 	letter-spacing: 0.1ch;
+	text-decoration: none
 }
 
 .dd-item a:hover {
@@ -20,7 +21,6 @@
 	cursor: pointer;
 }
 
-.dd-item a ion-icon {
+.dd-item * ion-icon {
 	color: var(--text-secondary);
-	margin-right: 1rem;
 }

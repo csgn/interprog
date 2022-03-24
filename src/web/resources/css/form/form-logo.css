@@ -21,7 +21,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .fm-logo ion-icon {
   width: 96px;
   height: 96px;
-  color: #333;
+  color: var(--text-secondary);
 }
 
 
@@ -29,6 +29,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   font-weight: bold;
   font-size: 24px;
   text-transform: uppercase;
-  color: #333;
+  color: var(--text-secondary);
   letter-spacing: 0.3ch;
 }

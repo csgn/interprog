@@ -25,6 +25,8 @@
 }
 
 .top-item:first-child {
+	pointer-events: none;
+	user-select: none;
   margin-right: auto;
   z-index: 1000;
   font-weight: bold;

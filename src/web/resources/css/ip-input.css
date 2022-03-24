@@ -1,0 +1,48 @@
+/* 
+    Created on : Mar 7, 2022, 7:43:11 PM
+    Author     : csgn
+*/
+
+.ip-input {
+  width: 100%;
+	position: relative;
+  height: 57px;;
+  outline: none;
+	padding: 1.1rem 1.1rem;
+  color: var(--text-secondary);
+  border: 0.5px var(--border-primary) solid;
+  border-radius: 4px;
+  overflow: hidden;
+	position: relative;
+	transition: border var(--transition-time);
+}
+
+.ip-input:focus {
+  box-shadow: 0 0 0.5px 0.5px #444;
+  border: 2px #333 solid;
+}
+
+.ip-input_placeholder {
+  position: relative;
+  pointer-events: none;
+  background: transparent;
+  transition: var(--transition-time);
+  opacity: 0.5;
+  top: -2.4rem;
+  left: 1rem;
+  user-select: none;
+  border-radius: 25px;
+  letter-spacing: 0.1ch;
+	text-transform: capitalize;
+	padding: 0.3rem 0.3rem;
+}
+
+.ip-input:focus ~ .ip-input_placeholder,
+.ip-input:not(:focus):valid ~ .ip-input_placeholder {
+  opacity: 1;
+  color: #333;
+  font-weight: bold;
+  top: -4.1rem;
+  left: 0.4rem;
+  background: var(--bg-primary);
+}

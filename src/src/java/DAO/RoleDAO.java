@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package DAO;
 
 import Model.Role;
@@ -12,91 +9,92 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author Aykut
+ * @author csgn
  */
-public class RoleDAO {
+public class RoleDAO implements IDAO<Role> {
+	Connection conn = PGConn.getConnection();
 
-	private final Connection con = PGConn.getConnection();
-	private PreparedStatement ps;
-	private ResultSet rs;
-	private Role tmp;
-	private List<Role> roles;
+	@Override
+	public Role find(int id) {
+		Role role = new Role();
+		PreparedStatement ps;
+		ResultSet rs;
 
-	public List<Role> findAll() {
 
-		roles = new ArrayList<>();
 		try {
-			this.ps = this.con.prepareStatement("Select * from role");
+			ps = conn.prepareStatement("SELECT * FROM role WHERE id=?");
+			ps.setInt(1, id);
+
 			rs = ps.executeQuery();
+
 			while (rs.next()) {
-				tmp = new Role(
-								rs.getInt("id"),
-								rs.getString("name"));
-				roles.add(tmp);
+				role.setId(rs.getInt("id"));
+				role.setName(rs.getString("name"));
 			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+		} catch (SQLException ex) {
+			Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
 		}
+		
+		return role;
+	}
+
+	@Override
+	public List<Role> findAll() {
+		List<Role> roles = new ArrayList<Role>();
+		Role role;
+		PreparedStatement ps;
+		ResultSet rs;
+
+		try {
+			ps = conn.prepareStatement("SELECT * FROM role");
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				role = new Role(
+								rs.getInt("id"),
+								rs.getString("name")
+				);
+
+				roles.add(role);
+
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
 		return roles;
 	}
 
-	public Role findById(int id) {
+	@Override
+	public int create(Role e) {
+		int id = -1;
+		PreparedStatement ps;
+		ResultSet rs;
 
 		try {
-			this.ps = this.con.prepareStatement("Select * fRoleole where id =?");
-			this.ps.setInt(1, id);
+			ps = conn.prepareStatement("INSERT INTO role (name) VALUES (?) RETURNING id");
 			rs = ps.executeQuery();
+
 			while (rs.next()) {
-				tmp = new Role(
-								rs.getInt("id"),
-								rs.getString("name"));
+				System.out.println(rs.getMetaData());
 			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+		} catch (SQLException ex) {
+			Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		return tmp;
+
+		return id;
 	}
 
-	public Role findByName(String name) {
+	@Override
+	public void update(Role e) {
+	}
 
-		try {
-			this.ps = this.con.prepareStatement("Select * from role where name =?");
-			this.ps.setString(1, name);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				tmp = new Role(
-								rs.getInt("id"),
-								rs.getString("name"));
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		return tmp;
-	}
-	
-	public void insert(int id, String name){
-		
-		try{
-			this.ps= this.con.prepareStatement("insert into role values (id = ?, name = ?)");
-			this.ps.setInt(1, id);
-			this.ps.setString(2, name);
-			rs = ps.executeQuery();
-		}catch(Exception e){
-			System.out.println(e.getMessage());
-		}
-	}
-	
-	public void deleteById(int id){
-		
-		try{
-			this.ps= this.con.prepareStatement("delete from role where (id = ?)");
-			this.ps.setInt(1, id);
-			rs = ps.executeQuery();
-		}catch(Exception e){
-			System.out.println(e.getMessage());
-		}
+	@Override
+	public void delete(int id) {
 	}
 }

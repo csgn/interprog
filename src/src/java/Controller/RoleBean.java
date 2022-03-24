@@ -19,43 +19,31 @@ import java.util.List;
 @SessionScoped
 public class RoleBean implements Serializable{
 
-	private RoleDAO roleDAO;
-	private Role roleModel;
-	private List<Role> roleList;
+	private RoleDAO dao;
+	private Role model;
 	
 	public RoleBean() {
+		dao = new RoleDAO();
 	}
 
-	public RoleDAO getRoleDAO() {
-		if(this.roleDAO == null){
-			this.roleDAO = new RoleDAO();
-		}
-		return roleDAO;
+	public Role getModel() {
+		return model;
 	}
 
-	public void setRoleDAO(RoleDAO roleDAO) {
-		this.roleDAO = roleDAO;
+	public void create() {
 	}
 
-	public Role getRoleModel() {
-		if(this.roleModel == null){
-			this.roleModel = new Role();
-		}
-		return roleModel;
+	public void delete() {
+
 	}
 
-	public void setRoleModel(Role roleModel) {
-		this.roleModel = roleModel;
+	public void update() {
+
 	}
 
-	public List<Role> getRoleList() {
-		return roleList;
+	public List<Role> findAll() {
+		return dao.findAll();
 	}
 
-	public void setRoleList(List<Role> roleList) {
-		this.roleList = roleList;
-	}
-	
-	
 	
 }
