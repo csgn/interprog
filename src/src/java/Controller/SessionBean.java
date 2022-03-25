@@ -3,7 +3,7 @@ package Controller;
 import DAO.EmployeeDAO;
 import Model.Employee;
 import Utils.Session;
-import jakarta.enterprise.context.SessionScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import jakarta.servlet.http.HttpSession;
@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @author Metin
  */
 @Named("sessionBean")
-@SessionScoped
+@ApplicationScoped
 public class SessionBean implements Serializable {
 
 	private String phoneNumber;
@@ -28,8 +28,6 @@ public class SessionBean implements Serializable {
 	public SessionBean() {
 		this.employeeDAO = new EmployeeDAO();
 		EmployeeDAO e = new EmployeeDAO();
-
-		
 	}
 
 	public String getPassword() {
@@ -50,6 +48,14 @@ public class SessionBean implements Serializable {
 
 	public String getSessionId() {
 		return sessionId;
+	}
+
+	public HttpSession getSessionCreated() {
+		return sessionCreated;
+	}
+
+	public void setSessionCreated(HttpSession sessionCreated) {
+		this.sessionCreated = sessionCreated;
 	}
 
 	public Employee getEmployee() {
@@ -107,7 +113,7 @@ public class SessionBean implements Serializable {
 		} else {
 			redirect = "success";
 		}
-
+		
 		return redirect;
 	}
 

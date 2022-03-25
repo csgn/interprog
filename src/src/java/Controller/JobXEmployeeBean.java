@@ -17,17 +17,17 @@ import java.util.List;
  */
 @Named(value = "jobXEmployeeBean")
 @SessionScoped
-public class JobXEmployeeBean {
+public class JobXEmployeeBean implements Serializable {
 
 	private JobXEmployeeDAO jobXEmployeeDAO;
 	private JobXEmployee jobXEmployeeModel;
 	private List<JobXEmployee> jobXEmployeeList;
-	
+
 	public JobXEmployeeBean() {
 	}
 
 	public JobXEmployeeDAO getJobXEmployeeDAO() {
-		if(this.jobXEmployeeDAO == null){
+		if (this.jobXEmployeeDAO == null) {
 			this.jobXEmployeeDAO = new JobXEmployeeDAO();
 		}
 		return jobXEmployeeDAO;
@@ -38,7 +38,7 @@ public class JobXEmployeeBean {
 	}
 
 	public JobXEmployee getJobXEmployeeModel() {
-		if(this.jobXEmployeeModel == null){
+		if (this.jobXEmployeeModel == null) {
 			this.jobXEmployeeModel = new JobXEmployee();
 		}
 		return jobXEmployeeModel;
@@ -55,6 +55,5 @@ public class JobXEmployeeBean {
 	public void setJobXEmployeeList(List<JobXEmployee> jobXEmployeeList) {
 		this.jobXEmployeeList = jobXEmployeeList;
 	}
-	
-	
+
 }
