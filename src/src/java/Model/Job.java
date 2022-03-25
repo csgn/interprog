@@ -5,6 +5,7 @@
 package Model;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -16,7 +17,7 @@ public class Job {
 	private Date creationDate;
 	private String description;
 	private Date date;
-	private String files;
+	private List<String> files;
 	private int statusId;
 	private int ownerId;
 	private int customerId;
@@ -24,7 +25,7 @@ public class Job {
 	public Job() {
 	}
 
-	public Job(int id, Date creationDate, String description, Date date, String files, int statusId, int ownerId, int customerId) {
+	public Job(int id, Date creationDate, String description, Date date, List<String> files, int statusId, int ownerId, int customerId) {
 		this.id = id;
 		this.creationDate = creationDate;
 		this.description = description;
@@ -67,11 +68,11 @@ public class Job {
 		this.date = date;
 	}
 
-	public String getFiles() {
+	public List<String> getFiles() {
 		return files;
 	}
 
-	public void setFiles(String files) {
+	public void setFiles(List<String> files) {
 		this.files = files;
 	}
 

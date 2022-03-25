@@ -7,17 +7,22 @@
 								xmlns:h = "http://java.sun.com/jsf/html"
 								xmlns:f = "http://java.sun.com/jsf/core"
 								xmlns:fm="http://xmlns.jcp.org/jsf/composite/composite/form"
+								xmlns:ez="http://xmlns.jcp.org/jsf/composite/composite"
 								xmlns:composite = "http://xmlns.jcp.org/jsf/composite"
 								xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<composite:interface>
-		<composite:attribute name="placeholder" default="Date &amp; Time" />
-		<composite:attribute name="required" default="true" />
+		<composite:attribute name='value'/>
+		<composite:attribute name='autofocus' />
+		<composite:attribute name='placeholder' required="true" />
+		<composite:attribute name='required' />
+		<composite:attribute name='onfocus' />
+		<composite:attribute name='onblur' />
 	</composite:interface>
 
 	<composite:implementation>
-		<fm:form-input type="text" placeholder="#{cc.attrs.placeholder}" required="#{cc.attrs.required}" onfocus="(this.type = 'date')" onblur="if (!this.value)
-					this.type = 'text'" />
+		<ez:ip-input id='#{cc.id}' type="text" placeholder="#{cc.attrs.placeholder}" required="#{cc.attrs.required}" onfocus="(this.type = 'date')" onblur="if (!this.value)
+					this.type = 'text'" autofocus='#{cc.attrs.autofocus}' value="#{cc.attrs.value}"/>
 	</composite:implementation>
 </ui:composition>
 

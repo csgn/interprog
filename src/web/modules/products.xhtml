@@ -3,6 +3,73 @@
  @author csgn
 -->
 <!DOCTYPE html>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui='http://xmlns.jcp.org/jsf/facelets'>
-		<h1>PRODUCTS</h1>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+								xmlns:ui='http://xmlns.jcp.org/jsf/facelets'
+								xmlns:h="http://xmlns.jcp.org/jsf/html"
+								xmlns:md="http://xmlns.jcp.org/jsf/composite/composite/modal"
+								xmlns:fm="http://xmlns.jcp.org/jsf/composite/composite/form"
+								xmlns:ez="http://xmlns.jcp.org/jsf/composite/composite"
+								xmlns:f="http://xmlns.jcp.org/jsf/core"
+								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	<md:modal id="createProductModal" title="ADD PRODUCT">
+		<h:panelGroup id="createProductModalGroup">
+			<h:form>
+				<div>
+					<ez:ip-input type="text" placeholder="product name" required="true" />
+				</div>
+				<div>
+					<ez:ip-input type="text" placeholder="serial number" required="true" />
+				</div>
+				<div>
+					<ez:ip-input type="text" placeholder="name" required="true" />
+				</div>
+				<div>
+					<ez:ip-input type="number" placeholder="purchase price" required="true" />
+				</div>
+				<div>
+					<ez:ip-input type="number" placeholder="sale price" required="true" />
+				</div>
+				<div>
+					<ez:ip-input type="text" placeholder="tags" required="true" />
+				</div>
+				<div>
+					<ez:ip-input type="number" placeholder="quantity" required="true" />
+				</div>
+				<div>
+					<h:selectOneMenu>
+						<f:selectItems value="#{['w1', 'w2']}" var="c" itemLabel="#{c}" itemValue="#{c}" />
+					</h:selectOneMenu>
+				</div>
+				<div>
+					<h:selectOneMenu>
+						<f:selectItems value="#{['kg', 'number', 'box', 'dozen', 'barrel', 'package', 'bag', 'roll']}" var="c" itemLabel="#{c}" itemValue="#{c}" />
+					</h:selectOneMenu>
+				</div>
+				<div>
+					<h:selectOneMenu>
+						<f:selectItems value="#{['18', '8', '1', '0']}" var="c" itemLabel="#{c}%" itemValue="#{c}" />
+					</h:selectOneMenu>
+				</div>
+				<div>
+					<ez:ip-file-input />
+				</div>
+				<div class="modal-footer">
+					<h:commandButton class="button" value="Save"/>
+				</div>
+			</h:form>
+		</h:panelGroup>
+	</md:modal>
+
+	<div style="display: flex; flex-direction: column;">
+		<div class="header" style="display: flex;">
+			<h1>PRODUCTS</h1>
+		</div>
+		<div style="display: flex">
+			<h:form>
+				<h:commandButton class="button" onclick="toggle('createProductModal', 0)" value="ADD A NEW PRODUCT">
+					<f:ajax execute="@this" render="createProductModal:createProductModalGroup" />
+				</h:commandButton>
+			</h:form>
+		</div>
+	</div>
 </ui:composition>

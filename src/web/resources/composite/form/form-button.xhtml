@@ -17,10 +17,8 @@
 		<composite:attribute name="value" type="java.lang.String" />
 	</composite:interface>
 	<composite:implementation>
-
 		<h:outputStylesheet library="css" name="form/form-button.css" />
-		<h:commandButton p:class="fm-button" value="#{cc.attrs.value}" action="#{cc.attrs.bean[cc.attrs.method]}" />
-
+		<h:commandButton p:class="button fm-button" value="#{cc.attrs.value}" action="#{cc.attrs.bean[cc.attrs.method]}" />
 	</composite:implementation>
 </ui:composition>
 

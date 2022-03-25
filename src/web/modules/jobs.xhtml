@@ -3,6 +3,67 @@
  @author csgn
 -->
 <!DOCTYPE html>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui='http://xmlns.jcp.org/jsf/facelets'>
-	<h1>JOBS</h1>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+								xmlns:ui='http://xmlns.jcp.org/jsf/facelets'
+								xmlns:h="http://xmlns.jcp.org/jsf/html"
+								xmlns:md="http://xmlns.jcp.org/jsf/composite/composite/modal"
+								xmlns:fm="http://xmlns.jcp.org/jsf/composite/composite/form"
+								xmlns:ez="http://xmlns.jcp.org/jsf/composite/composite"
+								xmlns:f="http://xmlns.jcp.org/jsf/core"
+								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	<md:modal id="createJobModal" title="Create New Job">
+		<h:panelGroup id="createJobModalGroup">
+			<h:form>
+				<div>
+					<h:selectOneMenu>
+						<f:selectItems value="#{['customer 1', 'customer 2', 'customer 3']}" var="c" itemLabel="#{c}" itemValue="#{c}" />
+					</h:selectOneMenu>
+				</div>	
+				<div>
+					<textarea style="min-width: 500px; max-width: 500px; min-height: 120px; max-height: 120px;" />
+				</div>
+
+				<div>
+					<input type='date' />
+				</div>
+
+				<div>
+					<h:selectManyMenu style='height: 50px; width: 150px;'>
+						<f:selectItems value="#{['product 1', 'product 2', 'product 3']}" var="c" itemLabel="#{c}" itemValue="#{c}" />
+					</h:selectManyMenu>
+				</div>
+
+
+
+				<div>
+					<h:selectManyMenu style='height: 50px; width: 150px'>
+						<f:selectItems value="#{['employee 1', 'employee 2', 'employee 3']}" var="c" itemLabel="#{c}" itemValue="#{c}" />
+					</h:selectManyMenu>
+				</div>
+
+				<div>
+					<input type='file' />
+				</div>
+
+
+
+				<div class="modal-footer">
+					<h:commandButton class="button" action="#{jobBean.create}" value="Save"/>
+				</div>
+			</h:form>
+		</h:panelGroup>
+	</md:modal>
+
+	<div style="display: flex; flex-direction: column;">
+		<div class="header" style="display: flex;">
+			<h1>JOBS</h1>
+		</div>
+		<div style="display: flex">
+			<h:form>
+				<h:commandButton class="button" onclick="toggle('createJobModal', 0)" action="#{jobBean.clearModel}" value="ORDER A NEW JOB">
+					<f:ajax execute="@this" render="createJobModal:createJobModalGroup" />
+				</h:commandButton>
+			</h:form>
+		</div>
+	</div>
 </ui:composition>

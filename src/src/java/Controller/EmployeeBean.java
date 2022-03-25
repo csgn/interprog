@@ -14,47 +14,54 @@ import java.util.List;
 /**
  *
  * @author Aykut
+ * @author Sergen
  */
-@Named(value = "employeeBean")
+@Named("employeeBean")
 @SessionScoped
 public class EmployeeBean implements Serializable {
+	private Employee model;
+	private EmployeeDAO dao;
 
-	private EmployeeDAO employeeDAO;
-	private Employee employeeModel;
-	private List<Employee> employeeList;
-	
 	public EmployeeBean() {
+		model = new Employee();
+		dao = new EmployeeDAO();
 	}
 
-	public EmployeeDAO getEmployeeDAO() {
-		if(this.employeeDAO == null){
-			this.employeeDAO = new EmployeeDAO();
-		}
-		return employeeDAO;
+	public Employee find(int id) {
+		return dao.find(id);
 	}
 
-	public void setEmployeeDAO(EmployeeDAO employeeDAO) {
-		this.employeeDAO = employeeDAO;
+	public List<Employee> findAll() {
+		return dao.findAll();
 	}
 
-	public Employee getEmployeeModel() {
-		if(this.employeeModel == null){
-			this.employeeModel = new Employee();
-		}
-		return employeeModel;
+	public void create() {
+		int id = dao.create(model);
+		this.clearModel();
+
+		System.out.println("CREATED ID: " + id);
 	}
 
-	public void setEmployeeModel(Employee employeeModel) {
-		this.employeeModel = employeeModel;
+	public void delete(int id) {
+		dao.delete(id);
+		this.clearModel();
 	}
 
-	public List<Employee> getEmployeeList() {
-		return employeeList;
+	public void update() {
+		dao.update(model);
+		this.clearModel();
 	}
 
-	public void setEmployeeList(List<Employee> employeeList) {
-		this.employeeList = employeeList;
+	public Employee getModel() {
+		return model;
 	}
 	
-	
+	public void clearModel() {
+		model = new Employee();
+	}
+
+	public void editForm(Employee e) {
+		model = e;
+	}
+
 }

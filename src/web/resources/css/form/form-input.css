@@ -8,15 +8,15 @@
   outline: none;
   padding-left: 1rem;
   padding-right: 1rem;
-  color: #333;
-  border: 0.5px #ddd solid;
+  color: var(--text-secondary);
+  border: 0.5px var(--border-primary) solid;
   border-radius: 4px;
   overflow: hidden;
 }
 
 .fm-input:focus {
-  box-shadow: 0 0 0.5px 0.5px #555;
-  border: 2px #555 solid;
+  box-shadow: 0 0 0.5px 0.5px #444;
+  border: 2px #333 solid;
 }
 
 .fm-input:focus ~ .placeholder,
@@ -28,4 +28,18 @@
   left: 0.4rem;
   padding-left: 0.3rem;
   padding-right: 0.3rem;
+}
+
+.placeholder {
+  position: relative;
+  pointer-events: none;
+  background: var(--bg-primary);
+  transition: var(--transition-time);
+  opacity: 0.5;
+  top: -2.4rem;
+  left: 1rem;
+  user-select: none;
+  border-radius: 25px;
+  letter-spacing: 0.1ch;
+	text-transform: capitalize;
 }

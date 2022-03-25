@@ -3,6 +3,34 @@
  @author csgn
 -->
 <!DOCTYPE html>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui='http://xmlns.jcp.org/jsf/facelets'>
-		<h1>CUSTOMERS</h1>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+								xmlns:ui='http://xmlns.jcp.org/jsf/facelets'
+								xmlns:h="http://xmlns.jcp.org/jsf/html"
+								xmlns:md="http://xmlns.jcp.org/jsf/composite/composite/modal"
+								xmlns:fm="http://xmlns.jcp.org/jsf/composite/composite/form"
+								xmlns:ez="http://xmlns.jcp.org/jsf/composite/composite"
+								xmlns:f="http://xmlns.jcp.org/jsf/core"
+								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	<md:modal id="createCustomerModal" title="ADD CUSTOMER">
+		<h:panelGroup id="createCustomerModalGroup">
+			<h:form>
+				<div class="modal-footer">
+					<h:commandButton class="button" value="Save"/>
+				</div>
+			</h:form>
+		</h:panelGroup>
+	</md:modal>
+
+	<div style="display: flex; flex-direction: column;">
+		<div class="header" style="display: flex;">
+			<h1>CUSTOMERS</h1>
+		</div>
+		<div style="display: flex">
+			<h:form>
+				<h:commandButton class="button" onclick="toggle('createCustomerModal', 0)" value="ADD A NEW CUSTOMER">
+					<f:ajax execute="@this" render="createCustomerModal:createCustomerModalGroup" />
+				</h:commandButton>
+			</h:form>
+		</div>
+	</div>
 </ui:composition>
