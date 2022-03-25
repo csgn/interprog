@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSF/JSFManagedBean.java to edit this template
- */
 package Controller;
 
 import DAO.SquadDAO;
@@ -19,42 +15,48 @@ import java.util.List;
 @SessionScoped
 public class SquadBean implements Serializable{
 
-	private SquadDAO squadDAO;
-	private Squad squadModel;
-	private List<Squad> squadList;
+	private Squad model;
+	private final SquadDAO dao;
 	
 	public SquadBean() {
+		model = new Squad();
+		dao = new SquadDAO();
 	}
 
-	public SquadDAO getSquadDAO() {
-		if(this.squadDAO == null){
-			this.squadDAO = new SquadDAO();
-		}
-		return squadDAO;
+	public Squad find(int id) {
+		return dao.find(id);
 	}
 
-	public void setSquadDAO(SquadDAO squadDAO) {
-		this.squadDAO = squadDAO;
+	public List<Squad> findAll() {
+		return dao.findAll();
 	}
 
-	public Squad getSquadModel() {
-		if(this.squadModel == null){
-			this.squadModel = new Squad();
-		}
-		return squadModel;
+	public void create() {
+		int id = dao.create(model);
+		this.clearModel();
+
+		System.out.println("CREATED ID: " + id);
 	}
 
-	public void setSquadModel(Squad squadModel) {
-		this.squadModel = squadModel;
+	public void delete(int id) {
+		dao.delete(id);
+		this.clearModel();
 	}
 
-	public List<Squad> getSquadList() {
-		return squadList;
+	public void update() {
+		dao.update(model);
+		this.clearModel();
 	}
 
-	public void setSquadList(List<Squad> squadList) {
-		this.squadList = squadList;
+	public Squad getModel() {
+		return model;
 	}
 	
-	
+	public void clearModel() {
+		model = new Squad();
+	}
+
+	public void editForm(Squad s) {
+		model = s;
+	}
 }

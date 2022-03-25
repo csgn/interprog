@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAO;
 
 import Model.Address;
@@ -12,196 +8,258 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Aykut
+ * @author Metin
  */
-public class AddressDAO {
+public class AddressDAO implements IDAO<Address> {
 
-	private final Connection con = PGConn.getConnection();
-	private PreparedStatement ps;
-	private ResultSet rs;
-	private Address tmp;
-	private List<Address> addresses;
+	Connection conn = PGConn.getConnection();
 
-	public List<Address> findAll() {
+	@Override
+	public Address find(int id) {
+		Address address = new Address();
+		PreparedStatement ps;
+		ResultSet rs;
 
-		addresses = new ArrayList<>();
 		try {
-			this.ps = this.con.prepareStatement("Select * from address");
+			ps = conn.prepareStatement("SELECT * FROM address WHERE id=?");
+			ps.setInt(1, id);
+
 			rs = ps.executeQuery();
+
 			while (rs.next()) {
-				tmp = new Address(
-								rs.getInt("id"),
-								rs.getString("title"),
-								rs.getString("context"),
-								rs.getString("region"),
-								rs.getString("district"),
-								rs.getString("directions"));
-				addresses.add(tmp);
+				address.setId(rs.getInt("id"));
+				address.setContext(rs.getString("context"));
+				address.setDirections(rs.getString("directions"));
+				address.setDistrict(rs.getString("district"));
+				address.setRegion(rs.getString("region"));
+				address.setTitle(rs.getString("title"));
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			Logger.getLogger(AddressDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
+
+		return address;
+	}
+
+	@Override
+	public List<Address> findAll() {
+		List<Address> addresses = new ArrayList<>();
+		Address address;
+		PreparedStatement ps;
+		ResultSet rs;
+
+		try {
+			ps = conn.prepareStatement("SELECT * FROM address");
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				address = new Address(
+								rs.getInt("id"),
+								rs.getString("title"),
+								rs.getString("context"),
+								rs.getString("region"),
+								rs.getString("district"),
+								rs.getString("directions")
+				);
+
+				addresses.add(address);
+			}
+		} catch (SQLException e) {
+			Logger.getLogger(AddressDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+
 		return addresses;
 	}
 
-	public Address findById(int id) {
+	@Override
+	public int create(Address a) {
+		int id = -1;
+		PreparedStatement ps;
+		ResultSet rs;
 
 		try {
-			this.ps = this.con.prepareStatement("Select * from address where id = ?");
-			this.ps.setInt(1, id);
+			ps = conn.prepareStatement("INSERT INTO address (title, context, region, district, directions) VALUES (?, ?, ?, ?, ?) RETURNING id");
+			ps.setString(1, a.getTitle());
+			ps.setString(2, a.getContext());
+			ps.setString(3, a.getRegion());
+			ps.setString(4, a.getDistrict());
+			ps.setString(5, a.getDirections());
+
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				tmp = new Address(
-								rs.getInt("id"),
-								rs.getString("title"),
-								rs.getString("context"),
-								rs.getString("region"),
-								rs.getString("district"),
-								rs.getString("directions"));
+				id = rs.getInt("id");
 			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+		} catch (SQLException e) {
+			Logger.getLogger(AddressDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
-		return tmp;
+
+		return id;
 	}
 
-	public List<Address> findByTitle(String title) {
-
-		addresses = new ArrayList<>();
-		try {
-			this.ps = this.con.prepareStatement("Select * from address where title = ?");
-			this.ps.setString(1, title);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				tmp = new Address(
-								rs.getInt("id"),
-								rs.getString("title"),
-								rs.getString("context"),
-								rs.getString("region"),
-								rs.getString("district"),
-								rs.getString("directions"));
-				addresses.add(tmp);
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		return addresses;
-	}
-
-	public Address findByContext(String context) {
+	@Override
+	public void update(Address a) {
+		PreparedStatement ps;
 
 		try {
-			this.ps = this.con.prepareStatement("Select * from address where context = ?");
-			this.ps.setString(1, context);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				tmp = new Address(
-								rs.getInt("id"),
-								rs.getString("title"),
-								rs.getString("context"),
-								rs.getString("region"),
-								rs.getString("district"),
-								rs.getString("directions"));
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			ps = conn.prepareStatement("UPDATE address SET title=?, context=?, region=?, district=?, directions=?");
+			ps.setString(1, a.getTitle());
+			ps.setString(2, a.getContext());
+			ps.setString(3, a.getRegion());
+			ps.setString(4, a.getDistrict());
+			ps.setString(5, a.getDirections());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			Logger.getLogger(AddressDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
-		return tmp;
 	}
 
-	public List<Address> findByRegion(String region) {
+	@Override
+	public void delete(int id) {
+		PreparedStatement ps;
 
-		addresses = new ArrayList<>();
 		try {
-			this.ps = this.con.prepareStatement("Select * from address where region = ?");
-			this.ps.setString(1, region);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				tmp = new Address(
-								rs.getInt("id"),
-								rs.getString("title"),
-								rs.getString("context"),
-								rs.getString("region"),
-								rs.getString("district"),
-								rs.getString("directions"));
-				addresses.add(tmp);
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			ps = conn.prepareStatement("DELETE FROM address where id=?");
+			ps.setInt(1, id);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			Logger.getLogger(AddressDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
-		return addresses;
 	}
-
-	public List<Address> findByDistrict(String district) {
-
-		addresses = new ArrayList<>();
-		try {
-			this.ps = this.con.prepareStatement("Select * from address where district = ?");
-			this.ps.setString(1, district);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				tmp = new Address(
-								rs.getInt("id"),
-								rs.getString("title"),
-								rs.getString("context"),
-								rs.getString("region"),
-								rs.getString("district"),
-								rs.getString("directions"));
-				addresses.add(tmp);
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		return addresses;
-	}
-
+	
 	public List<Address> findByDirections(String directions) {
-
-		addresses = new ArrayList<>();
+		List<Address> addresses = new ArrayList<>();
+		Address address;
+		PreparedStatement ps;
+		ResultSet rs;
+		
 		try {
-			this.ps = this.con.prepareStatement("Select * from address where directions = ?");
-			this.ps.setString(1, directions);
+			ps = conn.prepareStatement("SELECT * FROM address WHERE directions = ?");
+			ps.setString(1, directions);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				tmp = new Address(
+				address = new Address(
 								rs.getInt("id"),
 								rs.getString("title"),
 								rs.getString("context"),
 								rs.getString("region"),
 								rs.getString("district"),
 								rs.getString("directions"));
-				addresses.add(tmp);
+				addresses.add(address);
 			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+		} catch (SQLException e) {
+			Logger.getLogger(AddressDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return addresses;
 	}
-
-	public void insert(int id, String title, String context, String region, String district, String directions) {
+	
+	public List<Address> findByDistrict(String district) {
+		List<Address> addresses = new ArrayList<>();
+		Address address;
+		PreparedStatement ps;
+		ResultSet rs;
+		
 		try {
-			this.ps = this.con.prepareStatement("insert into accounttype values (id = ? ,title = ?, region = ?, district = ?, directions = ?)");
-			this.ps.setInt(1, id);
-			this.ps.setString(2, title);
-			this.ps.setString(3, region);
-			this.ps.setString(4, district);
-			this.ps.setString(5, directions);
+			ps = conn.prepareStatement("SELECT * FROM address WHERE district = ?");
+			ps.setString(1, district);
 			rs = ps.executeQuery();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			while (rs.next()) {
+				address = new Address(
+								rs.getInt("id"),
+								rs.getString("title"),
+								rs.getString("context"),
+								rs.getString("region"),
+								rs.getString("district"),
+								rs.getString("directions"));
+				addresses.add(address);
+			}
+		} catch (SQLException e) {
+			Logger.getLogger(AddressDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
+		return addresses;
 	}
-
-	public void deleteById(int id) {
+	
+	public List<Address> findByRegion(String region) {
+		List<Address> addresses = new ArrayList<>();
+		Address address;
+		PreparedStatement ps;
+		ResultSet rs;
+		
 		try {
-			this.ps = this.con.prepareStatement("delete from accounttype values (id = ?)");
-			this.ps.setInt(1, id);
+			ps = conn.prepareStatement("SELECT * FROM address WHERE region = ?");
+			ps.setString(1, region);
 			rs = ps.executeQuery();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			while (rs.next()) {
+				address = new Address(
+								rs.getInt("id"),
+								rs.getString("title"),
+								rs.getString("context"),
+								rs.getString("region"),
+								rs.getString("district"),
+								rs.getString("directions"));
+				addresses.add(address);
+			}
+		} catch (SQLException e) {
+			Logger.getLogger(AddressDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
+		return addresses;
+	}
+	
+	public List<Address> findByContext(String context) {
+		List<Address> addresses = new ArrayList<>();
+		Address address;
+		PreparedStatement ps;
+		ResultSet rs;
+		
+		try {
+			ps = conn.prepareStatement("SELECT * FROM address WHERE context = ?");
+			ps.setString(1, context);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				address = new Address(
+								rs.getInt("id"),
+								rs.getString("title"),
+								rs.getString("context"),
+								rs.getString("region"),
+								rs.getString("district"),
+								rs.getString("directions"));
+				addresses.add(address);
+			}
+		} catch (SQLException e) {
+			Logger.getLogger(AddressDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+		return addresses;
+	}
+	
+	public List<Address> findByTitle(String title) {
+		List<Address> addresses = new ArrayList<>();
+		Address address;
+		PreparedStatement ps;
+		ResultSet rs;
+		
+		try {
+			ps = conn.prepareStatement("SELECT * FROM address WHERE title = ?");
+			ps.setString(1, title);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				address = new Address(
+								rs.getInt("id"),
+								rs.getString("title"),
+								rs.getString("context"),
+								rs.getString("region"),
+								rs.getString("district"),
+								rs.getString("directions"));
+				addresses.add(address);
+			}
+		} catch (SQLException e) {
+			Logger.getLogger(AddressDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+		return addresses;
 	}
 }

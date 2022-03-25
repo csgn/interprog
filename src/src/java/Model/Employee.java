@@ -109,6 +109,4 @@ public class Employee {
 	public String toString() {
 		return name + " " + surname;
 	}
-
-	
 }

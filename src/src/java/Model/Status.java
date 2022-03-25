@@ -2,19 +2,21 @@ package Model;
 
 /**
  *
- * @author Aykut
+ * @author Metin
  */
-public class Squad {
+public class Status {
 
 	private int id;
 	private String name;
+	private String color;
 
-	public Squad() {
+	public Status() {
 	}
 
-	public Squad(int id, String name) {
+	public Status(int id, String name, String color) {
 		this.id = id;
 		this.name = name;
+		this.color = color;
 	}
 
 	public int getId() {
@@ -33,10 +35,18 @@ public class Squad {
 		this.name = name;
 	}
 
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
 	@Override
 	public int hashCode() {
-		int hash = 7;
-		hash = 67 * hash + this.id;
+		int hash = 3;
+		hash = 23 * hash + this.id;
 		return hash;
 	}
 
@@ -51,12 +61,12 @@ public class Squad {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final Squad other = (Squad) obj;
+		final Status other = (Status) obj;
 		return this.id == other.id;
 	}
 
 	@Override
 	public String toString() {
-		return name;
+		return "name=" + name + ", color=" + color;
 	}
 }
