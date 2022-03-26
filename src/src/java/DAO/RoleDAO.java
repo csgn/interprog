@@ -1,4 +1,3 @@
-
 package DAO;
 
 import Model.Role;
@@ -15,8 +14,10 @@ import java.util.logging.Logger;
 /**
  *
  * @author csgn
+ * @author Metin
  */
 public class RoleDAO implements IDAO<Role> {
+
 	Connection conn = PGConn.getConnection();
 
 	@Override
@@ -24,7 +25,6 @@ public class RoleDAO implements IDAO<Role> {
 		Role role = new Role();
 		PreparedStatement ps;
 		ResultSet rs;
-
 
 		try {
 			ps = conn.prepareStatement("SELECT * FROM role WHERE id=?");
@@ -36,16 +36,16 @@ public class RoleDAO implements IDAO<Role> {
 				role.setId(rs.getInt("id"));
 				role.setName(rs.getString("name"));
 			}
-		} catch (SQLException ex) {
-			Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (SQLException e) {
+			Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
-		
+
 		return role;
 	}
 
 	@Override
 	public List<Role> findAll() {
-		List<Role> roles = new ArrayList<Role>();
+		List<Role> roles = new ArrayList<>();
 		Role role;
 		PreparedStatement ps;
 		ResultSet rs;
@@ -59,42 +59,79 @@ public class RoleDAO implements IDAO<Role> {
 								rs.getInt("id"),
 								rs.getString("name")
 				);
-
 				roles.add(role);
-
 			}
-		} catch (SQLException ex) {
-			Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (SQLException e) {
+			Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
 
 		return roles;
 	}
 
 	@Override
-	public int create(Role e) {
+	public int create(Role r) {
 		int id = -1;
 		PreparedStatement ps;
 		ResultSet rs;
 
 		try {
 			ps = conn.prepareStatement("INSERT INTO role (name) VALUES (?) RETURNING id");
+			ps.setString(1, r.getName());
+			
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				System.out.println(rs.getMetaData());
+				id = rs.getInt("id");
 			}
-		} catch (SQLException ex) {
-			Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (SQLException e) {
+			Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
 
 		return id;
 	}
 
 	@Override
-	public void update(Role e) {
+	public void update(Role r) {
+		PreparedStatement ps;
+
+		try {
+			ps = conn.prepareStatement("UPDATE role SET name=?");
+			ps.setString(1, r.getName());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
 	}
 
 	@Override
 	public void delete(int id) {
+		PreparedStatement ps;
+
+		try {
+			ps = conn.prepareStatement("DELETE FROM role WHERE id=?");
+			ps.setInt(1, id);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+	}
+	
+	public Role findByName(String name) {
+		PreparedStatement ps;
+		ResultSet rs;
+		Role role = new Role();
+		
+		try {
+			ps = conn.prepareStatement("SELECT * FROM role WHERE name =?");
+			ps.setString(1, name);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				role.setId(rs.getInt("id"));
+				role.setName(rs.getString("name"));
+			}
+		} catch (SQLException e) {
+			Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+		return role;
 	}
 }

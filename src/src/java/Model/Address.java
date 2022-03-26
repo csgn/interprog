@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Model;
 
 /**
@@ -76,7 +72,31 @@ public class Address {
 	public void setDirections(String directions) {
 		this.directions = directions;
 	}
-	
-	
-	
+
+	@Override
+	public int hashCode() {
+		int hash = 3;
+		hash = 41 * hash + this.id;
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Address other = (Address) obj;
+		return this.id == other.id;
+	}
+
+	@Override
+	public String toString() {
+		return id + title + context + region + district + directions;
+	}
 }

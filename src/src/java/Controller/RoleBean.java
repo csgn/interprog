@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSF/JSFManagedBean.java to edit this template
- */
 package Controller;
 
 import DAO.RoleDAO;
@@ -19,31 +15,48 @@ import java.util.List;
 @SessionScoped
 public class RoleBean implements Serializable{
 
-	private RoleDAO dao;
 	private Role model;
+	private final RoleDAO dao;
 	
 	public RoleBean() {
 		dao = new RoleDAO();
+		model = new Role();
 	}
 
-	public Role getModel() {
-		return model;
-	}
-
-	public void create() {
-	}
-
-	public void delete() {
-
-	}
-
-	public void update() {
-
+	public Role find(int id) {
+		return dao.find(id);
 	}
 
 	public List<Role> findAll() {
 		return dao.findAll();
 	}
 
+	public void create() {
+		int id = dao.create(model);
+		this.clearModel();
+
+		System.out.println("CREATED ID: " + id);
+	}
+
+	public void delete(int id) {
+		dao.delete(id);
+		this.clearModel();
+	}
+
+	public void update() {
+		dao.update(model);
+		this.clearModel();
+	}
+
+	public Role getModel() {
+		return model;
+	}
 	
+	public void clearModel() {
+		model = new Role();
+	}
+
+	public void editForm(Role r) {
+		model = r;
+	}
 }

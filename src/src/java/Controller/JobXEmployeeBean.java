@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSF/JSFManagedBean.java to edit this template
- */
 package Controller;
 
 import DAO.JobXEmployeeDAO;
@@ -22,12 +18,12 @@ public class JobXEmployeeBean implements Serializable {
 	private JobXEmployeeDAO jobXEmployeeDAO;
 	private JobXEmployee jobXEmployeeModel;
 	private List<JobXEmployee> jobXEmployeeList;
-	
+
 	public JobXEmployeeBean() {
 	}
 
 	public JobXEmployeeDAO getJobXEmployeeDAO() {
-		if(this.jobXEmployeeDAO == null){
+		if (this.jobXEmployeeDAO == null) {
 			this.jobXEmployeeDAO = new JobXEmployeeDAO();
 		}
 		return jobXEmployeeDAO;
@@ -38,7 +34,7 @@ public class JobXEmployeeBean implements Serializable {
 	}
 
 	public JobXEmployee getJobXEmployeeModel() {
-		if(this.jobXEmployeeModel == null){
+		if (this.jobXEmployeeModel == null) {
 			this.jobXEmployeeModel = new JobXEmployee();
 		}
 		return jobXEmployeeModel;
@@ -55,6 +51,5 @@ public class JobXEmployeeBean implements Serializable {
 	public void setJobXEmployeeList(List<JobXEmployee> jobXEmployeeList) {
 		this.jobXEmployeeList = jobXEmployeeList;
 	}
-	
-	
+
 }
