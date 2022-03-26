@@ -21,7 +21,6 @@ public class EmployeeXWarehouseBean implements Serializable {
 
 	private EmployeeXWarehouseDAO employeeXWarehouseDAO;
 	private EmployeeXWarehouse employeeXWarehouseModel;
-	private List<EmployeeXWarehouse> employeeXWarehouseList;
 	
 
 	public EmployeeXWarehouseBean() {
@@ -49,13 +48,4 @@ public class EmployeeXWarehouseBean implements Serializable {
 		this.employeeXWarehouseModel = employeeXWarehouseModel;
 	}
 
-	public List<EmployeeXWarehouse> getEmployeeXWarehouseList() {
-		return employeeXWarehouseList;
-	}
-
-	public void setEmployeeXWarehouseList(List<EmployeeXWarehouse> employeeXWarehouseList) {
-		this.employeeXWarehouseList = employeeXWarehouseList;
-	}
-	
-	
 }

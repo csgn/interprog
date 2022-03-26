@@ -19,42 +19,58 @@ import java.util.List;
 @SessionScoped
 public class AddressBean implements Serializable {
 
-	private AddressDAO addressDAO;
-	private Address entity;
-	private List<Address> addressList;
+	private AddressDAO dao;
+	private Address model;
 
 	public AddressBean() {
+		model = new Address();
+		dao = new AddressDAO();
+	}
+	
+	public Address find(int id) {
+		return dao.find(id);
+	}
+
+	public List<Address> findAll() {
+		return dao.findAll();
+	}
+
+	public void create() {
+		int id = dao.create(model);
+		this.clearModel();
+
+		System.out.println("CREATED ID: " + id);
+	}
+
+	public void delete(int id) {
+		dao.delete(id);
+		this.clearModel();
+	}
+
+	public void update() {
+		dao.update(model);
+		this.clearModel();
 	}
 
 	public AddressDAO getDao() {
-		if(this.addressDAO == null){
-			this.addressDAO = new AddressDAO();
+		if(this.dao == null){
+			this.dao = new AddressDAO();
 		}
-		return addressDAO;
+		return dao;
 	}
 
-	public void setDao(AddressDAO dao) {
-		this.addressDAO = dao;
-	}
-
-	public Address getEntity() {
-		if(this.entity==null){
-			this.entity = new Address();
+	public Address getModel() {
+		if(this.model==null){
+			this.model = new Address();
 		}
-		return entity;
-	}
-
-	public void setEntity(Address entity) {
-		this.entity = entity;
-	}
-
-	public List<Address> getAddressList() {
-		return addressList;
-	}
-
-	public void setAddressList(List<Address> addressList) {
-		this.addressList = addressList;
+		return model;
 	}
 	
-	
+	public void clearModel() {
+		model = new Address();
+	}
+
+	public void editForm(Address e) {
+		model = e;
+	}
 }

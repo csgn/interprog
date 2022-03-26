@@ -4,8 +4,8 @@
  */
 package Controller;
 
-import DAO.AccountTypeDAO;
-import Model.AccountType;
+import DAO.JobXProductDAO;
+import Model.JobXProduct;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -15,33 +15,41 @@ import java.util.List;
  *
  * @author Aykut
  */
-@Named(value= "accountTypeBean")
+@Named(value = "jobXProductBean")
 @SessionScoped
-public class AccountTypeBean implements Serializable {
-	
-	private AccountTypeDAO dao;
-	private AccountType model;
+public class JobXProductBean {
+		
+	private JobXProductDAO dao;
+	private JobXProduct model;
 
-	public AccountTypeBean() {
-		model = new AccountType();
-		dao = new AccountTypeDAO();
+	public JobXProductBean() {
+		model = new JobXProduct();
+		dao = new JobXProductDAO();
+	}
+
+	public JobXProductDAO getDao() {
+		return dao;
+	}
+
+	public JobXProduct getModel() {
+		return model;
 	}
 	
-	public AccountType find(int id){
-		return dao.find(id);
+	public JobXProduct find(int jobId) {
+		return dao.find(jobId);
 	}
-	
-	public List<AccountType> findAll(){
+
+	public List<JobXProduct> findAll() {
 		return dao.findAll();
 	}
-	
+
 	public void create() {
 		int id = dao.create(model);
 		this.clearModel();
 
 		System.out.println("CREATED ID: " + id);
 	}
-	
+
 	public void delete(int id) {
 		dao.delete(id);
 		this.clearModel();
@@ -52,25 +60,11 @@ public class AccountTypeBean implements Serializable {
 		this.clearModel();
 	}
 	
-	public AccountTypeDAO getDao() {
-		if (this.dao == null){
-			this.dao = new AccountTypeDAO();
-		}
-		return dao;
-	}
-
-	public AccountType getModel() {
-		if (this.model == null){
-			this.model = new AccountType();
-		}
-		return model;
-	}
-
 	public void clearModel() {
-		model = new AccountType();
+		model = new JobXProduct();
 	}
 
-	public void editForm(AccountType a) {
-		model = a;
+	public void editForm(JobXProduct e) {
+		model = e;
 	}
 }

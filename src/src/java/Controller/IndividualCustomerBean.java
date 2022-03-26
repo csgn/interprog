@@ -4,44 +4,43 @@
  */
 package Controller;
 
-import DAO.AccountTypeDAO;
-import Model.AccountType;
+import DAO.IndividualCustomerDAO;
+import Model.IndividualCustomer;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
-
 /**
  *
  * @author Aykut
  */
-@Named(value= "accountTypeBean")
+@Named(value = "individualCustomerBean")
 @SessionScoped
-public class AccountTypeBean implements Serializable {
-	
-	private AccountTypeDAO dao;
-	private AccountType model;
+public class IndividualCustomerBean implements Serializable {
 
-	public AccountTypeBean() {
-		model = new AccountType();
-		dao = new AccountTypeDAO();
+	private IndividualCustomerDAO dao;
+	private IndividualCustomer model;
+	
+	public IndividualCustomerBean() {
+		model = new IndividualCustomer();
+		dao = new IndividualCustomerDAO();
 	}
 	
-	public AccountType find(int id){
+	public IndividualCustomer find(int id) {
 		return dao.find(id);
 	}
-	
-	public List<AccountType> findAll(){
+
+	public List<IndividualCustomer> findAll() {
 		return dao.findAll();
 	}
-	
+
 	public void create() {
 		int id = dao.create(model);
 		this.clearModel();
 
 		System.out.println("CREATED ID: " + id);
 	}
-	
+
 	public void delete(int id) {
 		dao.delete(id);
 		this.clearModel();
@@ -52,25 +51,28 @@ public class AccountTypeBean implements Serializable {
 		this.clearModel();
 	}
 	
-	public AccountTypeDAO getDao() {
-		if (this.dao == null){
-			this.dao = new AccountTypeDAO();
-		}
+	public IndividualCustomerDAO getDao() {
 		return dao;
 	}
 
-	public AccountType getModel() {
-		if (this.model == null){
-			this.model = new AccountType();
-		}
+	public void setDao(IndividualCustomerDAO dao) {
+		this.dao = dao;
+	}
+
+	public IndividualCustomer getModel() {
 		return model;
 	}
 
+	public void setModel(IndividualCustomer model) {
+		this.model = model;
+	}
+	
 	public void clearModel() {
-		model = new AccountType();
+		model = new IndividualCustomer();
 	}
 
-	public void editForm(AccountType a) {
-		model = a;
+	public void editForm(IndividualCustomer e) {
+		model = e;
 	}
+	
 }

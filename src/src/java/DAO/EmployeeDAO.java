@@ -24,7 +24,6 @@ public class EmployeeDAO implements IDAO<Employee> {
 		PreparedStatement ps;
 		ResultSet rs;
 
-
 		try {
 			ps = conn.prepareStatement("SELECT * FROM employee WHERE id=?");
 			ps.setInt(1, id);
@@ -128,7 +127,6 @@ public class EmployeeDAO implements IDAO<Employee> {
 	@Override
 	public void delete(int id) {
 		PreparedStatement ps;
-
 		try {
 			ps = conn.prepareStatement("DELETE FROM employee where id=?");
 			ps.setInt(1, id);

@@ -12,12 +12,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Aykut
  */
-public class AddressDAO {
+public class AddressDAO implements IDAO<Address> {
 
 	private final Connection con = PGConn.getConnection();
 	private PreparedStatement ps;
@@ -181,27 +183,78 @@ public class AddressDAO {
 		return addresses;
 	}
 
-	public void insert(int id, String title, String context, String region, String district, String directions) {
+	@Override
+	public Address find(int id) {
+		Address address = new Address();
+		
 		try {
-			this.ps = this.con.prepareStatement("insert into accounttype values (id = ? ,title = ?, region = ?, district = ?, directions = ?)");
-			this.ps.setInt(1, id);
-			this.ps.setString(2, title);
-			this.ps.setString(3, region);
-			this.ps.setString(4, district);
-			this.ps.setString(5, directions);
+			ps = con.prepareStatement("SELECT * FROM address WHERE id=?");
+			ps.setInt(1, id);
+
 			rs = ps.executeQuery();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+
+			while (rs.next()) {
+				address.setId(rs.getInt("id"));
+				address.setTitle(rs.getString("title"));
+				address.setContext(rs.getString("context"));
+				address.setRegion(rs.getString("region"));
+				address.setDistrict(rs.getString("district"));
+				address.setDirections(rs.getString("directions"));	
+			}
+		} catch (SQLException e) {
+			java.util.logging.Logger.getLogger(AddressDAO.class.getName()).log(java.util.logging.Level.SEVERE, null, e);
+		}	
+		return address;
+	}
+
+	@Override
+	public int create(Address a) {
+		
+		int id = -1;
+		try {
+			ps = con.prepareStatement("INSERT INTO address (title, context, region, district, directions) VALUES (?, ?, ?, ?, ?) RETURNING id");
+			ps.setString(1, a.getTitle());
+			ps.setString(2, a.getContext());
+			ps.setString(3, a.getRegion());
+			ps.setString(4, a.getDistrict());
+			ps.setString(5, a.getDirections());
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				id = rs.getInt("id");
+			}
+		} catch (SQLException e) {
+			Logger.getLogger(AddressDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+		return id;
+	}
+
+	@Override
+	public void update(Address a) {
+		
+		try {
+			ps = con.prepareStatement("UPDATE adress set title=?,context=?,region=?,district=?,directions=? where id=?");
+			ps.setString(1, a.getTitle());
+			ps.setString(2, a.getContext());
+			ps.setString(3, a.getRegion());
+			ps.setString(4, a.getDistrict());
+			ps.setString(5, a.getDirections());
+			ps.setInt(6, a.getId());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 
-	public void deleteById(int id) {
+	@Override
+	public void delete(int id) {
+		
 		try {
-			this.ps = this.con.prepareStatement("delete from accounttype values (id = ?)");
-			this.ps.setInt(1, id);
-			rs = ps.executeQuery();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			ps = con.prepareStatement("DELETE FROM address where id=?");
+			ps.setInt(1, id);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			Logger.getLogger(AddressDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 }

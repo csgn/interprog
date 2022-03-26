@@ -4,44 +4,43 @@
  */
 package Controller;
 
-import DAO.AccountTypeDAO;
-import Model.AccountType;
+import DAO.CorporateCustomerDAO;
+import Model.CorporateCustomer;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
-
 /**
  *
  * @author Aykut
  */
-@Named(value= "accountTypeBean")
+@Named(value = "corporateCustomerBean")
 @SessionScoped
-public class AccountTypeBean implements Serializable {
+public class CorporateCustomerBean implements Serializable{
 	
-	private AccountTypeDAO dao;
-	private AccountType model;
-
-	public AccountTypeBean() {
-		model = new AccountType();
-		dao = new AccountTypeDAO();
+	private CorporateCustomerDAO dao;
+	private CorporateCustomer model;
+	
+	public CorporateCustomerBean() {
+		model = new CorporateCustomer();
+		dao = new CorporateCustomerDAO();
 	}
 	
-	public AccountType find(int id){
+	public CorporateCustomer find(int id) {
 		return dao.find(id);
 	}
-	
-	public List<AccountType> findAll(){
+
+	public List<CorporateCustomer> findAll() {
 		return dao.findAll();
 	}
-	
+
 	public void create() {
 		int id = dao.create(model);
 		this.clearModel();
 
 		System.out.println("CREATED ID: " + id);
 	}
-	
+
 	public void delete(int id) {
 		dao.delete(id);
 		this.clearModel();
@@ -52,25 +51,19 @@ public class AccountTypeBean implements Serializable {
 		this.clearModel();
 	}
 	
-	public AccountTypeDAO getDao() {
-		if (this.dao == null){
-			this.dao = new AccountTypeDAO();
-		}
+	public CorporateCustomerDAO getDao() {
 		return dao;
 	}
 
-	public AccountType getModel() {
-		if (this.model == null){
-			this.model = new AccountType();
-		}
+	public CorporateCustomer getModel() {
 		return model;
 	}
 
 	public void clearModel() {
-		model = new AccountType();
+		model = new CorporateCustomer();
 	}
 
-	public void editForm(AccountType a) {
-		model = a;
+	public void editForm(CorporateCustomer e) {
+		model = e;
 	}
 }
