@@ -32,4 +32,32 @@ public class EmployeeXWarehouse {
 	public void setWarehouseId(int warehouseId) {
 		this.warehouseId = warehouseId;
 	}
+
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		hash = 59 * hash + this.employeeId;
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final EmployeeXWarehouse other = (EmployeeXWarehouse) obj;
+		return this.employeeId == other.employeeId;
+	}
+
+	@Override
+	public String toString() {
+		return "EmployeeXWarehouse{" + "employeeId=" + employeeId + '}';
+	}
+	
 }

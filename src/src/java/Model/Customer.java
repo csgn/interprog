@@ -62,4 +62,33 @@ public class Customer {
 	public void setAccountTypeId(int accountTypeId) {
 		this.accountTypeId = accountTypeId;
 	}
+
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		hash = 97 * hash + this.id;
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Customer other = (Customer) obj;
+		return this.id == other.id;
+	}
+
+	@Override
+	public String toString() {
+		return "Customer{" + "id=" + id + '}';
+	}
+	
+	
 }
