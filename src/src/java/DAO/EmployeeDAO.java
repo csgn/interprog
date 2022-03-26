@@ -109,7 +109,6 @@ public class EmployeeDAO implements IDAO<Employee> {
 	@Override
 	public void update(Employee e) {
 		PreparedStatement ps;
-
 		try {
 			ps = conn.prepareStatement("UPDATE employee SET name=?,surname=?,phone=?,color=?,password=?,roleid=? where id=?");
 			ps.setString(1, e.getName());
@@ -128,7 +127,6 @@ public class EmployeeDAO implements IDAO<Employee> {
 	@Override
 	public void delete(int id) {
 		PreparedStatement ps;
-
 		try {
 			ps = conn.prepareStatement("DELETE FROM employee where id=?");
 			ps.setInt(1, id);

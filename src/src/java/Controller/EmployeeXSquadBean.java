@@ -15,42 +15,52 @@ import java.util.List;
 @SessionScoped
 public class EmployeeXSquadBean implements Serializable {
 
-	private EmployeeXSquadDAO employeeXSquadDAO;
-	private EmployeeXSquad employeeXSquadModel;
-	private List<EmployeeXSquad> employeeXSquadList;
+	private EmployeeXSquadDAO dao;
+	private EmployeeXSquad model;
 	
 	public EmployeeXSquadBean() {
+		dao = new EmployeeXSquadDAO();
+		model = new EmployeeXSquad();
 	}
 
-	public EmployeeXSquadDAO getEmployeeXSquadDAO() {
-		if(this.employeeXSquadDAO == null){
-			this.employeeXSquadDAO = new EmployeeXSquadDAO();
-		}
-		return employeeXSquadDAO;
+	public EmployeeXSquadDAO getDao() {	
+		return dao;
 	}
 
-	public void setEmployeeXSquadDAO(EmployeeXSquadDAO employeeXSquadDAO) {
-		this.employeeXSquadDAO = employeeXSquadDAO;
-	}
-
-	public EmployeeXSquad getEmployeeXSquadModel() {
-		if(employeeXSquadModel == null){
-			this.employeeXSquadModel = new EmployeeXSquad();
-	}
-		return employeeXSquadModel;
-	}
-
-	public void setEmployeeXSquadModel(EmployeeXSquad employeeXSquadModel) {
-		this.employeeXSquadModel = employeeXSquadModel;
-	}
-
-	public List<EmployeeXSquad> getEmployeeXSquadList() {
-		return employeeXSquadList;
-	}
-
-	public void setEmployeeXSquadList(List<EmployeeXSquad> employeeXSquadList) {
-		this.employeeXSquadList = employeeXSquadList;
+	public EmployeeXSquad getModel() {
+		return model;
 	}
 	
+	public EmployeeXSquad find(int id) {
+		return dao.find(id);
+	}
+
+	public List<EmployeeXSquad> findAll() {
+		return dao.findAll();
+	}
+
+	public void create() {
+		int id = dao.create(model);
+		this.clearModel();
+
+		System.out.println("CREATED ID: " + id);
+	}
+
+	public void delete(int id) {
+		dao.delete(id);
+		this.clearModel();
+	}
+
+	public void update() {
+		dao.update(model);
+		this.clearModel();
+	}
 	
+	public void clearModel() {
+		model = new EmployeeXSquad();
+	}
+
+	public void editForm(EmployeeXSquad e) {
+		model = e;
+	}
 }

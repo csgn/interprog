@@ -8,6 +8,8 @@ public class IndividualCustomer extends Customer {
 
 	private String name;
 	private String surname;
+	private String companyTitle;
+	
 
 	public IndividualCustomer() {
 		super();
@@ -34,4 +36,14 @@ public class IndividualCustomer extends Customer {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
+
+	public String getCompanyTitle() {
+		return companyTitle;
+	}
+
+	public void setCompanyTitle(String companyTitle) {
+		this.companyTitle = companyTitle;
+	}
+
+
 }
