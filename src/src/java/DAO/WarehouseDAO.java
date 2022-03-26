@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAO;
 
 import Model.Warehouse;
@@ -9,104 +5,134 @@ import Utils.PGConn;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Aykut
+ * @author Metin
  */
-public class WarehouseDAO {
+public class WarehouseDAO implements IDAO<Warehouse>{
 
-	private final Connection con = PGConn.getConnection();
-	private PreparedStatement ps;
-	private ResultSet rs;
-	private Warehouse tmp;
-	private List<Warehouse> warehouses;
+	Connection conn = PGConn.getConnection();
+	
 
-	public List<Warehouse> findAll() {
-
-		warehouses = new ArrayList<>();
+	@Override
+	public Warehouse find(int id) {
+		Warehouse warehouse = new Warehouse();
+		PreparedStatement ps;
+		ResultSet rs;
+		
 		try {
-			this.ps = this.con.prepareStatement("Select * from warehouse");
+			ps = conn.prepareStatement("SELECT * FROM warehouse WHERE id=?");
+			ps.setInt(1, id);
+
 			rs = ps.executeQuery();
+
 			while (rs.next()) {
-				tmp = new Warehouse(
-								rs.getInt("id"),
-								rs.getString("name"));
-				warehouses.add(tmp);
+				warehouse.setId(rs.getInt("id"));
+				warehouse.setName(rs.getString("name"));
 			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+		} catch (SQLException e) {
+			Logger.getLogger(WarehouseDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
+		
+		return warehouse;
+	}
+
+	@Override
+	public List<Warehouse> findAll() {
+		List<Warehouse> warehouses = new ArrayList<>();
+		Warehouse warehouse;
+		PreparedStatement ps;
+		ResultSet rs;
+		
+		try {
+			ps = conn.prepareStatement("SELECT * FROM warehouse");
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				warehouse = new Warehouse(
+								rs.getInt("id"),
+								rs.getString("name")
+				);
+				warehouses.add(warehouse);
+			}
+		} catch (SQLException e) {
+			Logger.getLogger(WarehouseDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+		
 		return warehouses;
 	}
 
-	public Warehouse findById(int id) {
+	@Override
+	public int create(Warehouse w) {
+		int id = -1;
+		PreparedStatement ps;
+		ResultSet rs;
 
 		try {
-			this.ps = this.con.prepareStatement("Select * from warehouse where id =?");
-			this.ps.setInt(1, id);
+			ps = conn.prepareStatement("INSERT INTO warehouse (name) VALUES (?) RETURNING id");
+			ps.setString(1, w.getName());
+			
 			rs = ps.executeQuery();
+
 			while (rs.next()) {
-				tmp = new Warehouse(
-								rs.getInt("id"),
-								rs.getString("name"));
+				id = rs.getInt("id");
 			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+		} catch (SQLException e) {
+			Logger.getLogger(WarehouseDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
-		return tmp;
+
+		return id;
 	}
 
+	@Override
+	public void update(Warehouse w) {
+		PreparedStatement ps;
+
+		try {
+			ps = conn.prepareStatement("UPDATE warehouse SET name=?");
+			ps.setString(1, w.getName());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			Logger.getLogger(WarehouseDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+	}
+
+	@Override
+	public void delete(int id) {
+		PreparedStatement ps;
+
+		try {
+			ps = conn.prepareStatement("DELETE FROM warehouse WHERE id=?");
+			ps.setInt(1, id);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			Logger.getLogger(WarehouseDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+	}
+	
 	public Warehouse findByName(String name) {
-
+		Warehouse warehouse = new Warehouse();
+		PreparedStatement ps;
+		ResultSet rs;
+		
 		try {
-			this.ps = this.con.prepareStatement("Select * from warehouse where name =?");
-			this.ps.setString(1, name);
+			ps = conn.prepareStatement("SELECT * FROM warehouse WHERE name =?");
+			ps.setString(1, name);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				tmp = new Warehouse(
-								rs.getInt("id"),
-								rs.getString("name"));
+				warehouse.setId(rs.getInt("id"));
+				warehouse.setName(rs.getString("name"));
 			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+		} catch (SQLException e) {
+			Logger.getLogger(WarehouseDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
-		return tmp;
-	}
-	
-	public void insert(int id, String name){
-		
-		try{
-			this.ps= this.con.prepareStatement("insert into warehouse values (id = ?, name = ?)");
-			this.ps.setInt(1, id);
-			this.ps.setString(2, name);
-			rs = ps.executeQuery();
-		}catch(Exception e){
-			System.out.println(e.getMessage());
-		}
-	}
-	
-	public void deleteById(int id){
-		
-		try{
-			this.ps= this.con.prepareStatement("delete from warehouse where (id = ?)");
-			this.ps.setInt(1, id);
-			rs = ps.executeQuery();
-		}catch(Exception e){
-			System.out.println(e.getMessage());
-		}
-	}
-	
-	public void deleteBySquad(String name){
-		
-		try{
-			this.ps= this.con.prepareStatement("delete from warehouse where (name = ?)");
-			this.ps.setString(1, name);
-			rs = ps.executeQuery();
-		}catch(Exception e){
-			System.out.println(e.getMessage());
-		}
+		return warehouse;
 	}
 }

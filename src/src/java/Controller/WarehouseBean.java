@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSF/JSFManagedBean.java to edit this template
- */
 package Controller;
 
 import DAO.WarehouseDAO;
@@ -17,42 +13,50 @@ import java.util.List;
  */
 @Named(value = "warehouseBean")
 @SessionScoped
-public class WarehouseBean implements Serializable{
+public class WarehouseBean implements Serializable {
 
-	private WarehouseDAO warehouseDAO;
-	private Warehouse warehouseModel;
-	private List<Warehouse> warehouseList;
-	
+	private Warehouse model;
+	private final WarehouseDAO dao;
+
 	public WarehouseBean() {
+		model = new Warehouse();
+		dao = new WarehouseDAO();
 	}
 
-	public WarehouseDAO getWarehouseDAO() {
-		if(this.warehouseDAO == null){
-			this.warehouseDAO = new WarehouseDAO();
-		}
-		return warehouseDAO;
+	public Warehouse find(int id) {
+		return dao.find(id);
 	}
 
-	public void setWarehouseDAO(WarehouseDAO warehouseDAO) {
-		this.warehouseDAO = warehouseDAO;
+	public List<Warehouse> findAll() {
+		return dao.findAll();
 	}
 
-	public Warehouse getWarehouseModel() {
-		if(this.warehouseModel == null){
-			this.warehouseModel = new Warehouse();
-		}
-		return warehouseModel;
+	public void create() {
+		int id = dao.create(model);
+		this.clearModel();
+
+		System.out.println("CREATED ID: " + id);
 	}
 
-	public void setWarehouseModel(Warehouse warehouseModel) {
-		this.warehouseModel = warehouseModel;
+	public void delete(int id) {
+		dao.delete(id);
+		this.clearModel();
 	}
 
-	public List<Warehouse> getWarehouseList() {
-		return warehouseList;
+	public void update() {
+		dao.update(model);
+		this.clearModel();
 	}
 
-	public void setWarehouseList(List<Warehouse> warehouseList) {
-		this.warehouseList = warehouseList;
+	public Warehouse getModel() {
+		return model;
+	}
+
+	public void clearModel() {
+		model = new Warehouse();
+	}
+
+	public void editForm(Warehouse w) {
+		model = w;
 	}
 }

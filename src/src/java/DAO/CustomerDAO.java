@@ -2,6 +2,8 @@ package DAO;
 
 import Model.Customer;
 import Utils.PGConn;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -193,21 +195,71 @@ public class CustomerDAO implements IDAO<Customer>{
 
 	@Override
 	public Customer find(int id) {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		Customer customer = new Customer();
+		
+		try {
+			ps = con.prepareStatement("SELECT * FROM customer WHERE id=?");
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				customer.setId(rs.getInt("id"));
+				customer.setPhone(rs.getString("phone"));
+				customer.setEmail(rs.getString("email"));
+				customer.setAddressId(rs.getInt("addressId"));
+				customer.setAccountTypeId(rs.getInt("accountTypeId"));
+			}
+		} catch (SQLException e) {
+			Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+
+		return customer;
+		
 	}
 
 	@Override
-	public int create(Customer t) {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	public int create(Customer c) {
+		int id = -1;
+
+		try {
+			ps = con.prepareStatement("INSERT INTO customer (phone, email, addressid, accounttypeid) VALUES (?, ?, ?, ?) RETURNING id");
+			ps.setString(1, c.getPhone());
+			ps.setString(2, c.getEmail());
+			ps.setInt(3, c.getAddressId());
+			ps.setInt(4, c.getAccountTypeId());
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				id = rs.getInt("id");
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return id;
 	}
 
 	@Override
-	public void update(Customer t) {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	public void update(Customer c) {
+		try {
+			ps = con.prepareStatement("UPDATE customer SET phone=?,email=?,addressId=?,accounttypeid=?,where id=?");
+			ps.setString(1, c.getPhone());
+			ps.setString(2, c.getEmail());
+			ps.setInt(3, c.getAddressId());
+			ps.setInt(4, c.getAccountTypeId());
+			ps.setInt(5, c.getId());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
 	}
 
 	@Override
 	public void delete(int id) {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		try {
+			ps = con.prepareStatement("DELETE FROM customer where id=?");
+			ps.setInt(1, id);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
 	}
 }

@@ -16,6 +16,7 @@ import java.util.logging.Logger;
  * @author csgn
  */
 public class EmployeeDAO implements IDAO<Employee> {
+
 	Connection conn = PGConn.getConnection();
 
 	@Override
@@ -42,13 +43,13 @@ public class EmployeeDAO implements IDAO<Employee> {
 		} catch (SQLException ex) {
 			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		
+
 		return employee;
 	}
 
 	@Override
 	public List<Employee> findAll() {
-		List<Employee> employees = new ArrayList<Employee>();
+		List<Employee> employees = new ArrayList<>();
 		Employee employee;
 		PreparedStatement ps;
 		ResultSet rs;
@@ -108,9 +109,8 @@ public class EmployeeDAO implements IDAO<Employee> {
 	@Override
 	public void update(Employee e) {
 		PreparedStatement ps;
-
 		try {
-			ps = conn.prepareStatement("UPDATE employee set name=?,surname=?,phone=?,color=?,password=?,roleid=? where id=?");
+			ps = conn.prepareStatement("UPDATE employee SET name=?,surname=?,phone=?,color=?,password=?,roleid=? where id=?");
 			ps.setString(1, e.getName());
 			ps.setString(2, e.getSurname());
 			ps.setString(3, e.getPhone());
@@ -143,7 +143,7 @@ public class EmployeeDAO implements IDAO<Employee> {
 		ResultSet rs;
 
 		try {
-			ps = conn.prepareStatement("Select * from employee where phone = ?");
+			ps = conn.prepareStatement("SELECT * FROM employee WHERE phone = ?");
 			ps.setString(1, phoneNumber);
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -168,7 +168,7 @@ public class EmployeeDAO implements IDAO<Employee> {
 		ResultSet rs;
 
 		try {
-			ps = conn.prepareStatement("Select phone, password, roleid from employee where phone = ? and password = ?");
+			ps = conn.prepareStatement("SELECT phone, password, roleid FROM employee WHERE phone = ? AND password = ?");
 			ps.setString(1, user);
 			ps.setString(2, password);
 			rs = ps.executeQuery();

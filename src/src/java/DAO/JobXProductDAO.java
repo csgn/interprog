@@ -67,7 +67,7 @@ public class JobXProductDAO implements IDAO<JobXProduct> {
 	public int create(JobXProduct j) {
 		int jobId = -1;
 		try {
-			ps = con.prepareStatement("INSERT INTO address (jobid, productid) VALUES (?, ?) RETURNING jobid");
+			ps = con.prepareStatement("INSERT INTO jobxproduct (jobid, productid) VALUES (?, ?) RETURNING jobid");
 			ps.setInt(1, j.getJobId());
 			ps.setInt(2, j.getProductId());
 			rs = ps.executeQuery();

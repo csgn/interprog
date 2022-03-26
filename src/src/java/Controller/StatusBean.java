@@ -1,33 +1,33 @@
 package Controller;
 
-import DAO.EmployeeDAO;
-import Model.Employee;
-import jakarta.inject.Named;
+import DAO.StatusDAO;
+import Model.Status;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 
 /**
  *
- * @author Aykut
- * @author Sergen
+ * @author Metin
  */
-@Named("employeeBean")
+
+@Named("statusBean")
 @SessionScoped
-public class EmployeeBean implements Serializable {
-	private Employee model;
-	private EmployeeDAO dao;
-
-	public EmployeeBean() {
-		model = new Employee();
-		dao = new EmployeeDAO();
+public class StatusBean implements Serializable {
+	private Status model;
+	private final StatusDAO dao;
+	
+	public StatusBean() {
+		model = new Status();
+		dao = new StatusDAO();
 	}
-
-	public Employee find(int id) {
+	
+	public Status find(int id) {
 		return dao.find(id);
 	}
 
-	public List<Employee> findAll() {
+	public List<Status> findAll() {
 		return dao.findAll();
 	}
 
@@ -48,15 +48,15 @@ public class EmployeeBean implements Serializable {
 		this.clearModel();
 	}
 
-	public Employee getModel() {
+	public Status getModel() {
 		return model;
 	}
 	
 	public void clearModel() {
-		model = new Employee();
+		model = new Status();
 	}
 
-	public void editForm(Employee e) {
-		model = e;
+	public void editForm(Status s) {
+		model = s;
 	}
 }

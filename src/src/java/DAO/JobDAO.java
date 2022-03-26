@@ -2,7 +2,6 @@ package DAO;
 
 import Model.Job;
 import Utils.PGConn;
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;

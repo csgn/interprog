@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSF/JSFManagedBean.java to edit this template
- */
 package Controller;
 
 import DAO.JobXEmployeeDAO;
@@ -19,42 +15,53 @@ import java.util.List;
 @SessionScoped
 public class JobXEmployeeBean implements Serializable {
 
-	private JobXEmployeeDAO jobXEmployeeDAO;
-	private JobXEmployee jobXEmployeeModel;
-	private List<JobXEmployee> jobXEmployeeList;
+	private JobXEmployeeDAO dao;
+	private JobXEmployee model;
 	
+
 	public JobXEmployeeBean() {
+		dao = new JobXEmployeeDAO();
+		model = new JobXEmployee();
 	}
 
-	public JobXEmployeeDAO getJobXEmployeeDAO() {
-		if(this.jobXEmployeeDAO == null){
-			this.jobXEmployeeDAO = new JobXEmployeeDAO();
-		}
-		return jobXEmployeeDAO;
+	public JobXEmployeeDAO getDao() {
+		return dao;
 	}
 
-	public void setJobXEmployeeDAO(JobXEmployeeDAO jobXEmployeeDAO) {
-		this.jobXEmployeeDAO = jobXEmployeeDAO;
-	}
-
-	public JobXEmployee getJobXEmployeeModel() {
-		if(this.jobXEmployeeModel == null){
-			this.jobXEmployeeModel = new JobXEmployee();
-		}
-		return jobXEmployeeModel;
-	}
-
-	public void setJobXEmployeeModel(JobXEmployee jobXEmployeeModel) {
-		this.jobXEmployeeModel = jobXEmployeeModel;
-	}
-
-	public List<JobXEmployee> getJobXEmployeeList() {
-		return jobXEmployeeList;
-	}
-
-	public void setJobXEmployeeList(List<JobXEmployee> jobXEmployeeList) {
-		this.jobXEmployeeList = jobXEmployeeList;
+	public JobXEmployee getModel() {
+		return model;
 	}
 	
+	public JobXEmployee find(int id) {
+		return dao.find(id);
+	}
+
+	public List<JobXEmployee> findAll() {
+		return dao.findAll();
+	}
+
+	public void create() {
+		int jobId = dao.create(model);
+		this.clearModel();
+
+		System.out.println("CREATED ID: " + jobId);
+	}
+
+	public void delete(int jobId) {
+		dao.delete(jobId);
+		this.clearModel();
+	}
+
+	public void update() {
+		dao.update(model);
+		this.clearModel();
+	}
 	
+	public void clearModel() {
+		model = new JobXEmployee();
+	}
+
+	public void editForm(JobXEmployee j) {
+		model = j;
+	}
 }

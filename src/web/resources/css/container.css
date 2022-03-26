@@ -37,7 +37,7 @@
 
 .container-content::-webkit-scrollbar {
 	width: 0;
-	background: #eee;
+	background: transparent;
 }
 
 .container-header {
@@ -70,10 +70,12 @@
   transition: var(--transition-time);
 	user-select: none;
 	border-radius: 5px;
+	padding: 1rem 1rem;
 }
 
 .container-row:hover {
 	background: var(--bg-secondary);
+	box-shadow: 0 0 5px 5px #eee;
 }
 
 .container-column {
@@ -98,6 +100,7 @@
 }
 
 .disable, .disable:hover {
+	box-shadow: 0 0 2px 2px #eee;
 	height: 40px;
 	background: var(--bg-secondary);
 	border-bottom: none;
@@ -118,4 +121,12 @@
 .checkbox:hover {
 	box-shadow: 0 0 1px 2px #ddd;
 	cursor: pointer;
+}
+
+.container-footer {
+	padding: 10px 10px;
+	height: 300px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
