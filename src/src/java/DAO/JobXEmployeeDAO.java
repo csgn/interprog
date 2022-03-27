@@ -20,6 +20,10 @@ public class JobXEmployeeDAO implements IDAO<JobXEmployee> {
 	private JobXEmployee tmp;
 	private List<JobXEmployee> jobXEmployees;
 
+	private JobDAO jobDAO;
+	private EmployeeDAO employeeDAO;
+	private ProductDAO productDAO;
+
 	public List<JobXEmployee> findAll() {
 
 		jobXEmployees = new ArrayList<>();
@@ -28,8 +32,9 @@ public class JobXEmployeeDAO implements IDAO<JobXEmployee> {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				tmp = new JobXEmployee(
-								rs.getInt("employeeId"),
-								rs.getInt("jobId"));
+								getJobDAO().find(rs.getInt("jobId")),
+								getEmployeeDAO().find(rs.getInt("employeeId"))
+				);
 				jobXEmployees.add(tmp);
 			}
 		} catch (SQLException e) {
@@ -46,8 +51,8 @@ public class JobXEmployeeDAO implements IDAO<JobXEmployee> {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				tmp = new JobXEmployee(
-								rs.getInt("jobId"),
-								rs.getInt("employeeId"));
+								getJobDAO().find(rs.getInt("jobId")),
+								getEmployeeDAO().find(rs.getInt("employeeId")));
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -63,8 +68,8 @@ public class JobXEmployeeDAO implements IDAO<JobXEmployee> {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				tmp = new JobXEmployee(
-								rs.getInt("jobId"),
-								rs.getInt("employeeId"));
+								getJobDAO().find(rs.getInt("jobId")),
+								getEmployeeDAO().find(rs.getInt("employeeId")));
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -72,40 +77,7 @@ public class JobXEmployeeDAO implements IDAO<JobXEmployee> {
 		return tmp;
 	}
 	
-	public void insert(int jobId, int employeeId){
-		
-		try{
-			this.ps = this.conn.prepareStatement("insert into jobxemployee values (jobid = ?, employeeid = ?)");
-			this.ps.setInt(1,jobId);
-			this.ps.setInt(2, employeeId);
-			rs = ps.executeQuery();
-		}catch(Exception e){
-			System.out.println(e.getMessage());
-		}
-	}
 	
-	public void deleteByJobId(int jobId){
-		
-		try {
-			this.ps = this.conn.prepareStatement("delete from jobxemployee where (jobid = ?)");
-			this.ps.setInt(1, jobId);
-			rs = ps.executeQuery();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	
-	public void deleteByEmployeeId(int employeeId){
-		
-		try {
-			this.ps = this.conn.prepareStatement("delete from employeexwarehouse where (employeeid = ?)");
-			this.ps.setInt(1, employeeId);
-			rs = ps.executeQuery();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
-
 	@Override
 	public JobXEmployee find(int jobId) {
 		JobXEmployee jobXEmployee = new JobXEmployee();
@@ -115,7 +87,7 @@ public class JobXEmployeeDAO implements IDAO<JobXEmployee> {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				jobXEmployee.setJobId(rs.getInt("id"));
+				jobXEmployee.setJob(getJobDAO().find(rs.getInt("id")));
 			}
 		} catch (SQLException e) {
 			Logger.getLogger(JobXEmployee.class.getName()).log(Level.SEVERE, null, e);
@@ -128,8 +100,8 @@ public class JobXEmployeeDAO implements IDAO<JobXEmployee> {
 		int jobId = -1;
 		try {
 			ps = conn.prepareStatement("INSERT INTO jobxemployee (jobid, employeeid) VALUES (?, ?) RETURNING jobid");
-			ps.setInt(1, j.getJobId());
-			ps.setInt(2, j.getEmployeeId());
+			ps.setInt(1, j.getJob().getId());
+			ps.setInt(2, j.getEmployee().getId());
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				jobId = rs.getInt("jobId");
@@ -155,4 +127,29 @@ public class JobXEmployeeDAO implements IDAO<JobXEmployee> {
 			Logger.getLogger(JobXEmployee.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
+
+	public EmployeeDAO getEmployeeDAO() {
+		if (employeeDAO == null)
+			employeeDAO = new EmployeeDAO();
+
+		return employeeDAO;
+	}
+
+	public ProductDAO getProductDAO() {
+		if (productDAO == null)
+			productDAO = new ProductDAO();
+
+		return productDAO;
+	}
+
+	public JobDAO getJobDAO() {
+		if (jobDAO == null) 
+			jobDAO = new JobDAO();
+
+		return jobDAO;
+	}
+
+
+
+	
 }

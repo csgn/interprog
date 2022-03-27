@@ -57,6 +57,6 @@ public class Squad {
 
 	@Override
 	public String toString() {
-		return name;
+		return String.valueOf(id);
 	}
 }

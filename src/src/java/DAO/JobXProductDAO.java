@@ -24,6 +24,9 @@ public class JobXProductDAO implements IDAO<JobXProduct> {
 	private JobXProduct tmp;
 	private List<JobXProduct> jobXProducts;
 
+	private JobDAO jobDAO;
+	private ProductDAO productDAO;
+
 	@Override
 	public JobXProduct find(int jobId) {
 		JobXProduct jobXProduct = new JobXProduct();
@@ -33,7 +36,7 @@ public class JobXProductDAO implements IDAO<JobXProduct> {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				jobXProduct.setJobId(rs.getInt("id"));
+				jobXProduct.setJob(getJobDAO().find(rs.getInt("id")));
 
 			}
 		} catch (SQLException e) {
@@ -50,8 +53,8 @@ public class JobXProductDAO implements IDAO<JobXProduct> {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				tmp = new JobXProduct(
-								rs.getInt("jobId"),
-								rs.getInt("productId"));
+								getJobDAO().find(rs.getInt("jobId")),
+								getProductDAO().find(rs.getInt("productId")));
 				jobXProducts.add(tmp);
 			}
 		} catch (SQLException e) {
@@ -65,8 +68,8 @@ public class JobXProductDAO implements IDAO<JobXProduct> {
 		int jobId = -1;
 		try {
 			ps = conn.prepareStatement("INSERT INTO jobxproduct (jobid, productid) VALUES (?, ?) RETURNING jobid");
-			ps.setInt(1, j.getJobId());
-			ps.setInt(2, j.getProductId());
+			ps.setInt(1, j.getJob().getId());
+			ps.setInt(2, j.getProduct().getId());
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				jobId = rs.getInt("jobId");
@@ -93,4 +96,20 @@ public class JobXProductDAO implements IDAO<JobXProduct> {
 			Logger.getLogger(JobXProduct.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
+
+	public JobDAO getJobDAO() {
+		if (jobDAO == null)
+			jobDAO = new JobDAO();
+
+		return jobDAO;
+	}
+
+	public ProductDAO getProductDAO() {
+		if (productDAO == null)
+			productDAO = new ProductDAO();
+
+		return productDAO;
+	}
+
+
 }

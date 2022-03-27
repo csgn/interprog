@@ -1,42 +1,47 @@
 package Model;
 
+import java.util.Objects;
+
 /**
  *
  * @author Aykut
  */
 public class JobXEmployee {
 
-	private int jobId;
-	private int employeeId;
+	private Job job;
+	private Employee employee;
 
 	public JobXEmployee() {
+		job = new Job();
+		employee = new Employee();
 	}
 
-	public JobXEmployee(int jobId, int employeeId) {
-		this.jobId = jobId;
-		this.employeeId = employeeId;
+	public JobXEmployee(Job job, Employee employee) {
+		this.job = job;
+		this.employee = employee;
 	}
 
-	public int getJobId() {
-		return jobId;
+	public Job getJob() {
+		return job;
 	}
 
-	public void setJobId(int jobId) {
-		this.jobId = jobId;
+	public void setJob(Job job) {
+		this.job = job;
 	}
 
-	public int getEmployeeId() {
-		return employeeId;
+	public Employee getEmployee() {
+		return employee;
 	}
 
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
 	@Override
 	public int hashCode() {
-		int hash = 3;
-		hash = 37 * hash + this.jobId;
+		int hash = 5;
+		hash = 89 * hash + Objects.hashCode(this.job);
+		hash = 89 * hash + Objects.hashCode(this.employee);
 		return hash;
 	}
 
@@ -52,12 +57,15 @@ public class JobXEmployee {
 			return false;
 		}
 		final JobXEmployee other = (JobXEmployee) obj;
-		return this.jobId == other.jobId;
+		if (!Objects.equals(this.job, other.job)) {
+			return false;
+		}
+		return Objects.equals(this.employee, other.employee);
 	}
 
 	@Override
 	public String toString() {
-		return "JobXEmployee{" + "jobId=" + jobId + '}';
+		return String.valueOf(job.getId() + " " + employee.getId());
 	}
 	
 }

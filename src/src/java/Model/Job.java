@@ -13,22 +13,24 @@ public class Job {
 	private Date creationDate;
 	private String description;
 	private Date date;
-	private List<String> files;
-	private int statusId;
-	private int ownerId;
-	private int customerId;
+	private Status status;
+	private Employee owner;
+	private Customer customer;
 
 	public Job() {
+		status = new Status();
+		owner = new Employee();
+		customer = new Customer();
 	}
 
-	public Job(int id, Date creationDate, String description, Date date, int statusId, int ownerId, int customerId) {
+	public Job(int id, Date creationDate, String description, Date date, Status status, Employee owner, Customer customer) {
 		this.id = id;
 		this.creationDate = creationDate;
 		this.description = description;
 		this.date = date;
-		this.statusId = statusId;
-		this.ownerId = ownerId;
-		this.customerId = customerId;
+		this.status = status;
+		this.owner = owner;
+		this.customer = customer;
 	}
 
 	public int getId() {
@@ -63,28 +65,28 @@ public class Job {
 		this.date = date;
 	}
 
-	public int getStatusId() {
-		return statusId;
+	public Status getStatus() {
+		return status;
 	}
 
-	public void setStatusId(int statusId) {
-		this.statusId = statusId;
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
-	public int getOwnerId() {
-		return ownerId;
+	public Employee getOwner() {
+		return owner;
 	}
 
-	public void setOwnerId(int ownerId) {
-		this.ownerId = ownerId;
+	public void setOwner(Employee ownerId) {
+		this.owner = owner;
 	}
 
-	public int getCustomerId() {
-		return customerId;
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	@Override
@@ -111,7 +113,7 @@ public class Job {
 
 	@Override
 	public String toString() {
-		return "Job{" + "id=" + id + '}';
+		return String.valueOf(id);
 	}
-	
+
 }
