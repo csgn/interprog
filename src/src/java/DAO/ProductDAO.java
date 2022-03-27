@@ -12,12 +12,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Aykut
  */
-public class ProductDAO {
+public class ProductDAO implements IDAO<Product> {
 	
 	private final Connection con = PGConn.getConnection();
 	private PreparedStatement ps;
@@ -50,5 +52,88 @@ public class ProductDAO {
 			System.out.println(e.getMessage());
 		}
 		return products;
+	}
+
+	@Override
+	public Product find(int id) {
+		Product product = new Product();
+		try {
+			ps = con.prepareStatement("SELECT * FROM product WHERE id=?");
+			ps.setInt(1, id);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				product.setId(rs.getInt("id"));
+				product.setName(rs.getString("name"));
+				product.setSerialNumber(rs.getString("serialNumber"));
+				product.setSalePrice(rs.getInt("salePrice"));
+				product.setVat(rs.getInt("vat"));
+				product.setTags(rs.getString("tags"));
+				product.setQuantitiy(rs.getInt("quantitiy"));
+				product.setFiles(rs.getString("files"));
+				product.setWarehouseId(rs.getInt("warehouseId"));
+				
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		return product;
+	}
+
+	@Override
+	public int create(Product p) {
+		int id = -1;
+		try {
+			ps = con.prepareStatement("INSERT INTO product (name, serialnumber, saleprice, vat, tags, quantitiy, files, warehouseid) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id");
+			ps.setString(1, p.getName());
+			ps.setString(2, p.getSerialNumber());
+			ps.setInt(3, p.getSalePrice());
+			ps.setInt(4, p.getVat());
+			ps.setString(5, p.getTags());
+			ps.setInt(6, p.getQuantitiy());
+			ps.setString(7, p.getFiles());
+			ps.setInt(8, p.getWarehouseId());
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				id = rs.getInt("id");
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return id;
+	}
+
+	@Override
+	public void update(Product p) {
+		try {
+			ps = con.prepareStatement("UPDATE product SET name=?,serialnumber=?,saleprice=?,vat=?,tags=?,quantity=?,files=?,warehouseid=? where id=?");
+			ps.setString(1, p.getName());
+			ps.setString(2, p.getSerialNumber());
+			ps.setInt(3, p.getSalePrice());
+			ps.setInt(4, p.getVat());
+			ps.setString(5, p.getTags());
+			ps.setInt(6, p.getQuantitiy());
+			ps.setString(7, p.getFiles());
+			ps.setInt(8, p.getWarehouseId());
+			ps.setInt(9, p.getId());
+			ps.executeUpdate();
+		} catch (SQLException ex) {
+			Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+	@Override
+	public void delete(int id) {
+		try {
+			ps = con.prepareStatement("DELETE FROM product where id=?");
+			ps.setInt(1, id);
+
+			ps.executeUpdate();
+		} catch (SQLException ex) {
+			Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 }

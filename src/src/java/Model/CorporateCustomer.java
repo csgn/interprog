@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Objects;
+
 /**
  *
  * @author Aykut
@@ -54,4 +56,32 @@ public class CorporateCustomer extends Customer {
 	public void setTaxAdministration(String taxAdministration) {
 		this.taxAdministration = taxAdministration;
 	}
+
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		hash = 53 * hash + Objects.hashCode(this.companyTitle);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final CorporateCustomer other = (CorporateCustomer) obj;
+		return Objects.equals(this.companyTitle, other.companyTitle);
+	}
+
+	@Override
+	public String toString() {
+		return "CorporateCustomer{" + "companyTitle=" + companyTitle + '}';
+	}
+	
 }
