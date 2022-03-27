@@ -24,6 +24,7 @@ public class JobBean implements Serializable {
 
 	public JobBean() {
 		dao = new JobDAO();
+		model = new Job();
 	}
 
 	public Job find(int id) {
@@ -37,6 +38,16 @@ public class JobBean implements Serializable {
 	public void create() {
 			int id = dao.create(model);
 			System.out.println("id: " + id);
+	}
+	
+	public void delete(int id) {
+		dao.delete(id);
+		this.clearModel();
+	}
+
+	public void update() {
+		dao.update(model);
+		this.clearModel();
 	}
 
 	public Job getModel() {
@@ -53,5 +64,9 @@ public class JobBean implements Serializable {
 
 	public void clearModel() {
 		model = new Job();
+	}
+	
+	public void editForm(Job j) {
+		model = j;
 	}
 }
