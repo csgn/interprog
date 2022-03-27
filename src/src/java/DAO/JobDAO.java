@@ -24,6 +24,7 @@ public class JobDAO implements IDAO<Job> {
 	private StatusDAO statusDAO;
 	private EmployeeDAO employeeDAO;
 	private CustomerDAO customerDAO;
+	private ProductDAO productDAO;
 
 	@Override
 	public Job find(int id) {
@@ -58,18 +59,19 @@ public class JobDAO implements IDAO<Job> {
 		try {
 			ps = conn.prepareStatement("SELECT * FROM job");
 			rs = ps.executeQuery();
+			job = new Job();
 
 			while (rs.next()) {
 				job = new Job(
-								rs.getInt("id"),
-								rs.getDate("creationDate"),
-								rs.getString("description"),
-								rs.getDate("date"),
-								getStatusDAO().find(rs.getInt("statusId")),
-								getEmployeeDAO().find(rs.getInt("ownerId")),
-								getCustomerDAO().find(rs.getInt("customerId"))
-				);
-
+				rs.getInt("id"),
+				rs.getDate("creationDate"),
+				rs.getString("description"),
+				rs.getDate("date"),
+				getStatusDAO().find(rs.getInt("statusId")),
+				getEmployeeDAO().find(rs.getInt("ownerId")),
+				getCustomerDAO().find(rs.getInt("customerId")),
+				getEmployeeDAO().getJobEmployees(job.getId()),
+				getProductDAO().getJobProducts(job.getId()));
 				jobs.add(job);
 			}
 		} catch (SQLException ex) {
@@ -105,7 +107,7 @@ public class JobDAO implements IDAO<Job> {
 	@Override
 	public void update(Job j) {
 		try {
-			ps = conn.prepareStatement("UPDATE job SET creationdate=?,description=?,date=?,statusid=?,ownerid=?, customerid where id=?");
+			ps = conn.prepareStatement("UPDATE job SET creationdate=?,description=?,date=?,statusid=?,ownerid=?, customerid=? where id=?");
 			ps.setDate(1, (Date) j.getCreationDate());
 			ps.setString(2, j.getDescription());
 			ps.setDate(3, (Date) j.getDate());
@@ -150,6 +152,13 @@ public class JobDAO implements IDAO<Job> {
 			customerDAO = new CustomerDAO();
 
 		return customerDAO;
+	}
+
+	public ProductDAO getProductDAO() {
+		if (productDAO == null)
+			productDAO = new ProductDAO();
+		
+		return productDAO;
 	}
 
 }

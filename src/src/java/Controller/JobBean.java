@@ -1,6 +1,8 @@
 package Controller;
 
+import DAO.EmployeeDAO;
 import DAO.JobDAO;
+import DAO.ProductDAO;
 import Model.Job;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
@@ -19,9 +21,14 @@ public class JobBean implements Serializable {
 	private Job model;
 	private JobDAO dao;
 
+	private EmployeeDAO employeeDAO;
+	private ProductDAO productDAO;
+
 	public JobBean() {
 		dao = new JobDAO();
 		model = new Job();
+		employeeDAO = new EmployeeDAO();
+		productDAO = new ProductDAO();
 	}
 
 	public Job find(int id) {
@@ -33,10 +40,12 @@ public class JobBean implements Serializable {
 	}
 
 	public void create() {
-		int id = dao.create(model);
+		//int id = dao.create(model);
 
-		System.out.println("id: " + id);
-		this.clearModel();
+		//if (id == -1) return;
+
+		//System.out.println("id: " + id);
+		//this.clearModel();
 	}
 
 	public void delete(int id) {
@@ -60,4 +69,5 @@ public class JobBean implements Serializable {
 	public void editForm(Job j) {
 		model = j;
 	}
+
 }

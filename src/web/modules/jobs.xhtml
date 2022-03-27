@@ -13,20 +13,37 @@
 								xmlns:ib="http://xmlns.jcp.org/jsf/composite/composite/icon-button"
 								xmlns:f="http://xmlns.jcp.org/jsf/core"
 								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-	<md:modal id="createJobModal" title="Order A New Job">
+	<md:modal id="createJobModal" title="Create New Job">
 		<h:panelGroup id="createJobModalGroup">
 			<h:form>
 				<div>
-					<h:selectOneMenu value="#{jobBean.model.customer}" converter="customerConverter">
+					<h:selectOneMenu>
 						<f:selectItems value="#{customerBean.findAll()}" var="c" itemLabel="#{c.name} #{c.surname}" itemValue="#{c}" />
 					</h:selectOneMenu>
 				</div>	
 				<div>
-					<textarea style="min-width: 500px; max-width: 500px; min-height: 120px; max-height: 120px;" value="#{jobBean.model.description}"/>
+					<textarea style="min-width: 500px; max-width: 500px; min-height: 120px; max-height: 120px;" />
 				</div>
+
 				<div>
-					<input type='date' value="#{jobBean.model.date}" />
+					<input type='date' />
 				</div>
+
+				<div>
+					<h:selectManyMenu style='height: 50px; width: 150px;' value="#{jobBean.model.jobProducts}">
+						<f:selectItems value="#{productBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
+					</h:selectManyMenu>
+				</div>
+
+
+
+				<div>
+					<h:selectManyMenu style='height: 50px; width: 150px' value="#{jobBean.model.jobEmployees}">
+						<f:selectItems value="#{employeeBean.findAll()}" var="c" itemLabel="#{c.name} #{c.surname}" itemValue="#{c}" />
+					</h:selectManyMenu>
+				</div>
+
+
 				<div class="modal-footer">
 					<h:commandButton class="button" action="#{jobBean.create}" value="Save"/>
 				</div>
@@ -51,11 +68,13 @@
 		<div class="container-row disable">
 			<div class="container-column checkbox" style="width: 20px;"></div>
 			<div class="container-column">CREATION DATE</div>
-			<div class="container-column">CUSTOMER NAME</div>
 			<div class="container-column">DESCRIPTION</div>
-			<div class="container-column">EMPLOYEE</div>
 			<div class="container-column">STATUS</div>
 			<div class="container-column">OWNER</div>
+			<div class="container-column">CUSTOMER</div>
+			<div class="container-column">EMPLOYEE(S)</div>
+			<div class="container-column">PRODUCT(S)</div>
+
 			<div class="container-column">OPTIONS</div>
 		</div>
 		<h:panelGroup id="egroup">
@@ -63,11 +82,12 @@
 				<div class='container-row'>
 					<div class="container-column checkbox" style="width: 20px;"></div>
 					<div class='container-column'>#{e.creationDate}</div>
-					<div class='container-column'>#{e.customer.name} #{e.customer.surname}</div>
 					<div class='container-column'>#{e.description}</div>
-					<div class='container-column'></div>
 					<div class='container-column'>#{e.status.name}</div>
-					<div class='container-column'>#{e.owner.name} #{e.owner.surname}</div>
+					<div class='container-column'>#{e.owner.name}</div>
+					<div class='container-column'>#{e.customer.name} #{e.customer.surname}</div>
+					<div class='container-column'>#{e.jobEmployees.size()}</div>
+					<div class='container-column'>#{e.jobProducts.size()}</div>
 					<div class="container-column">
 						<dd:dropdown>
 							<ib:icon-button name="ellipsis-vertical" />
@@ -97,28 +117,37 @@
 					<h:panelGroup id="modalgroup">
 						<h:form>
 							<div>
-								<h:selectOneMenu value="#{jobBean.model.customer}" converter="customerConverter">
+								<h:selectOneMenu>
 									<f:selectItems value="#{customerBean.findAll()}" var="c" itemLabel="#{c.name} #{c.surname}" itemValue="#{c}" />
 								</h:selectOneMenu>
 							</div>	
 							<div>
 								<textarea style="min-width: 500px; max-width: 500px; min-height: 120px; max-height: 120px;" />
 							</div>
+
 							<div>
 								<input type='date' />
 							</div>
+
 							<div>
-								<h:selectManyMenu style='height: 250px; width: 150px;' converter="productConverter">
+								<h:selectManyMenu style='height: 50px; width: 150px;'>
 									<f:selectItems value="#{productBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 								</h:selectManyMenu>
 							</div>
+
+
+
 							<div>
-								<h:selectManyMenu style='height: 250px; width: 150px' converter="employeeConverter">
+								<h:selectManyMenu style='height: 50px; width: 150px'>
 									<f:selectItems value="#{employeeBean.findAll()}" var="c" itemLabel="#{c.name} #{c.surname}" itemValue="#{c}" />
 								</h:selectManyMenu>
 							</div>
+
+
 							<div class="modal-footer">
-								<h:commandButton class="button" action="#{jobBean.create}" value="Save"/>
+								<h:commandButton class="button" action="#{jobBean.update}" value="Save">
+									<f:ajax execute="@this" render="egroup" />
+								</h:commandButton>
 							</div>
 						</h:form>
 					</h:panelGroup>
@@ -128,4 +157,6 @@
 		<div class="container-footer">
 		</div>
 	</div>
+
+
 </ui:composition>
