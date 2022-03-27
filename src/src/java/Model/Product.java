@@ -4,6 +4,8 @@
  */
 package Model;
 
+import java.util.List;
+
 /**
  *
  * @author Aykut
@@ -17,15 +19,13 @@ public class Product {
 	private int purchasePrice;
 	private int salePrice;
 	private int vat;
-	private String tags;
-	private int quantitiy;
-	private String files;
+	private int quantity;
 	private int warehouseId;
 
 	public Product() {
 	}
 
-	public Product(int id, String name, String serialNumber, String unit, int purchasePrice, int salePrice, int vat, String tags, int quantitiy, String files, int warehouseId) {
+	public Product(int id, String name, String serialNumber, String unit, int purchasePrice, int salePrice, int vat, int quantity, int warehouseId) {
 		this.id = id;
 		this.name = name;
 		this.serialNumber = serialNumber;
@@ -33,9 +33,7 @@ public class Product {
 		this.purchasePrice = purchasePrice;
 		this.salePrice = salePrice;
 		this.vat = vat;
-		this.tags = tags;
-		this.quantitiy = quantitiy;
-		this.files = files;
+		this.quantity = quantity;
 		this.warehouseId = warehouseId;
 	}
 	
@@ -57,7 +55,6 @@ public class Product {
 		this.salePrice = salePrice;
 	}
 
-	
 
 	public String getUnit() {
 		return unit;
@@ -99,28 +96,12 @@ public class Product {
 		this.vat = vat;
 	}
 
-	public String getTags() {
-		return tags;
+	public int getQuantity() {
+		return quantity;
 	}
 
-	public void setTags(String tags) {
-		this.tags = tags;
-	}
-
-	public int getQuantitiy() {
-		return quantitiy;
-	}
-
-	public void setQuantitiy(int quantitiy) {
-		this.quantitiy = quantitiy;
-	}
-
-	public String getFiles() {
-		return files;
-	}
-
-	public void setFiles(String files) {
-		this.files = files;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	public int getWarehouseId() {
@@ -155,9 +136,6 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product{" + "id=" + id + '}';
+		return String.valueOf(id);
 	}
-	
-	
-	
 }

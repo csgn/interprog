@@ -21,12 +21,11 @@ public class Job {
 	public Job() {
 	}
 
-	public Job(int id, Date creationDate, String description, Date date, List<String> files, int statusId, int ownerId, int customerId) {
+	public Job(int id, Date creationDate, String description, Date date, int statusId, int ownerId, int customerId) {
 		this.id = id;
 		this.creationDate = creationDate;
 		this.description = description;
 		this.date = date;
-		this.files = files;
 		this.statusId = statusId;
 		this.ownerId = ownerId;
 		this.customerId = customerId;
@@ -62,14 +61,6 @@ public class Job {
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public List<String> getFiles() {
-		return files;
-	}
-
-	public void setFiles(List<String> files) {
-		this.files = files;
 	}
 
 	public int getStatusId() {

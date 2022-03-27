@@ -9,6 +9,8 @@
 								xmlns:md="http://xmlns.jcp.org/jsf/composite/composite/modal"
 								xmlns:fm="http://xmlns.jcp.org/jsf/composite/composite/form"
 								xmlns:ez="http://xmlns.jcp.org/jsf/composite/composite"
+								xmlns:dd="http://xmlns.jcp.org/jsf/composite/composite/dropdown"
+								xmlns:ib="http://xmlns.jcp.org/jsf/composite/composite/icon-button"
 								xmlns:f="http://xmlns.jcp.org/jsf/core"
 								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 	<md:modal id="createProductModal" title="ADD PRODUCT">
@@ -30,9 +32,6 @@
 					<ez:ip-input type="number" placeholder="sale price" required="true" />
 				</div>
 				<div>
-					<ez:ip-input type="text" placeholder="tags" required="true" />
-				</div>
-				<div>
 					<ez:ip-input type="number" placeholder="quantity" required="true" />
 				</div>
 				<div>
@@ -50,9 +49,6 @@
 						<f:selectItems value="#{['18', '8', '1', '0']}" var="c" itemLabel="#{c}%" itemValue="#{c}" />
 					</h:selectOneMenu>
 				</div>
-				<div>
-					<ez:ip-file-input />
-				</div>
 				<div class="modal-footer">
 					<h:commandButton class="button" value="Save"/>
 				</div>
@@ -60,16 +56,115 @@
 		</h:panelGroup>
 	</md:modal>
 
-	<div style="display: flex; flex-direction: column;">
-		<div class="header" style="display: flex;">
+	<div class='container-header'>
+		<div class='container-title'>
 			<h1>PRODUCTS</h1>
 		</div>
-		<div style="display: flex">
+		<div class='container-button'>
 			<h:form>
-				<h:commandButton class="button" onclick="toggle('createProductModal', 0)" value="ADD A NEW PRODUCT">
+				<h:commandButton class="button" onclick="toggle('createProductModal', 0)" action="#{productBean.clearModel}" value="CREATE A NEW PRODUCT">
 					<f:ajax execute="@this" render="createProductModal:createProductModalGroup" />
 				</h:commandButton>
 			</h:form>
 		</div>
 	</div>
+
+	<div class='container-content'>
+		<div class="container-row disable">
+			<div class="container-column checkbox" style="width: 20px;"></div>
+			<div class="container-column">NAME</div>
+			<div class="container-column">SERIAL NUMBER</div>
+			<div class="container-column">UNIT</div>
+			<div class="container-column">PURCHASE PRC.</div>
+			<div class="container-column">SALE PRICE</div>
+			<div class="container-column">VAT</div>
+			<div class="container-column">QUANTITY</div>
+			<div class="container-column">WAREHOUSE</div>
+			<div class="container-column">OPTIONS</div>
+		</div>
+		<h:panelGroup id="egroup">
+			<c:forEach items="#{productBean.findAll()}" var="e">
+				<div class='container-row'>
+					<div class="container-column checkbox" style="width: 20px;"></div>
+					<div class='container-column'>#{e.name}</div>
+					<div class='container-column'>#{e.serialNumber}</div>
+					<div class='container-column'>#{e.unit}</div>
+					<div class='container-column'>#{e.purchasePrice}</div>
+					<div class='container-column'>#{e.salePrice}</div>
+					<div class='container-column'>#{e.vat}%</div>
+					<div class='container-column'>#{e.quantity}</div>
+					<div class='container-column'>#{warehouseBean.find(e.warehouseId).name}</div>
+					<div class="container-column">
+						<dd:dropdown>
+							<ib:icon-button name="ellipsis-vertical" />
+							<dd:dropdown-menu>
+								<h:form>
+									<dd:dropdown-item>
+										<h:commandLink onclick="toggle('emodal_#{e.id}', 0)" action="#{productBean.editForm(e)}">							
+											<ion-icon name="pencil" size="large"></ion-icon>
+											<span>Edit</span>
+											<f:ajax execute="@this" render="emodal_#{e.id}:modalgroup" />
+										</h:commandLink>
+									</dd:dropdown-item>
+									<c:if test="#{sessionBean.employee.id != e.id}">
+										<dd:dropdown-item>
+											<h:commandLink action="#{productBean.delete(e.id)}">							
+												<ion-icon name="trash" size="large"></ion-icon>
+												<span>Delete</span>
+												<f:ajax execute="@this" render="egroup" />
+											</h:commandLink>
+										</dd:dropdown-item>
+									</c:if>
+								</h:form>
+							</dd:dropdown-menu>
+						</dd:dropdown>
+					</div>
+				</div>
+
+				<md:modal id="emodal_#{e.id}" title="Edit #{e}">
+					<h:panelGroup id="modalgroup">
+						<h:form>
+							<div>
+								<ez:ip-input type="text" placeholder="product name" required="true" value="#{productBean.model.name}" />
+							</div>
+							<div>
+								<ez:ip-input type="number" placeholder="purchase price" required="true" value="#{productBean.model.purchasePrice}"/>
+							</div>
+							<div>
+								<ez:ip-input type="number" placeholder="sale price" required="true" value="#{productBean.model.salePrice}" />
+							</div>
+							<div>
+								<ez:ip-input type="number" placeholder="quantity" required="true" value="#{productBean.model.quantity}" />
+							</div>
+							<div>
+								<h:selectOneMenu value="#{productBean.model.warehouseId}">
+									<f:selectItems value="#{warehouseBean.findAll()}" var="c" itemLabel="#{c}" itemValue="#{c.id}" />
+								</h:selectOneMenu>
+							</div>
+							<div>
+								<h:selectOneMenu>
+									<f:selectItems value="#{['kg', 'number', 'box', 'dozen', 'barrel', 'package', 'bag', 'roll']}" var="c" itemLabel="#{c}" itemValue="#{c}" />
+								</h:selectOneMenu>
+							</div>
+							<div>
+								<h:selectOneMenu>
+									<f:selectItems value="#{['18', '8', '1', '0']}" var="c" itemLabel="#{c}%" itemValue="#{c}" />
+								</h:selectOneMenu>
+							</div>
+
+							<div class="modal-footer">
+								<h:commandButton class="button" action="#{productBean.update}" value="Save">
+									<f:ajax execute="@this" render="egroup" />
+								</h:commandButton>
+							</div>
+						</h:form>
+					</h:panelGroup>
+				</md:modal>
+
+			</c:forEach>
+		</h:panelGroup>
+		<div class="container-footer">
+		</div>
+	</div>
+
 </ui:composition>

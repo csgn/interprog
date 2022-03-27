@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Named("customerBean")
 @SessionScoped
-public class CustomerBean {
+public class CustomerBean implements Serializable {
 		private Customer model;
 		private CustomerDAO dao;
 

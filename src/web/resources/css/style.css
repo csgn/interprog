@@ -12,11 +12,11 @@
 :root {
   font-size: 16px;
   font-family: Poppins, sans-serif;
-  --text-primary: #242424;
+  --text-primary: #1f1c2e;
   --text-secondary: #292929;
   --bg-primary: #fff;
-  --bg-secondary: linear-gradient(90deg, #ffff, #f0f0f0);
-	--bg-secondary-rev: linear-gradient(90deg, #f0f0f0, #fff);
+  --bg-secondary: linear-gradient(90deg, #ffff, #f3f6fd);
+	--bg-secondary-rev: linear-gradient(90deg, #f3f6fd, #fff);
 	--transition-time: 300ms;
 	--border-primary: #ddd;
 	--border-secondary: #eee;

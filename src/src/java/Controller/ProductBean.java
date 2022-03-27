@@ -15,6 +15,7 @@ import java.util.List;
  *
  * @author Aykut
  */
+
 @Named(value= "productBean")
 @SessionScoped
 public class ProductBean implements Serializable {
@@ -38,8 +39,6 @@ public class ProductBean implements Serializable {
 	public void create() {
 		int id = dao.create(model);
 		this.clearModel();
-
-		System.out.println("CREATED ID: " + id);
 	}
 
 	public void delete(int id) {

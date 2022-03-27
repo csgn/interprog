@@ -96,6 +96,5 @@
 }
 
 .nav-link.active ion-icon{
-	width: 42px;
-	height: 42px;
+	transform: scale(1.3);
 }

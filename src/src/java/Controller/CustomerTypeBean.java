@@ -1,7 +1,7 @@
 package Controller;
 
-import DAO.AccountTypeDAO;
-import Model.AccountType;
+import DAO.CustomerTypeDAO;
+import Model.CustomerType;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -11,23 +11,23 @@ import java.util.List;
  *
  * @author Aykut
  */
-@Named(value= "accountTypeBean")
+@Named(value= "customerTypeBean")
 @SessionScoped
-public class AccountTypeBean implements Serializable {
+public class CustomerTypeBean implements Serializable {
 	
-	private AccountTypeDAO dao;
-	private AccountType model;
+	private CustomerTypeDAO dao;
+	private CustomerType model;
 
-	public AccountTypeBean() {
-		model = new AccountType();
-		dao = new AccountTypeDAO();
+	public CustomerTypeBean() {
+		model = new CustomerType();
+		dao = new CustomerTypeDAO();
 	}
 	
-	public AccountType find(int id){
+	public CustomerType find(int id){
 		return dao.find(id);
 	}
 	
-	public List<AccountType> findAll(){
+	public List<CustomerType> findAll(){
 		return dao.findAll();
 	}
 	
@@ -48,25 +48,25 @@ public class AccountTypeBean implements Serializable {
 		this.clearModel();
 	}
 	
-	public AccountTypeDAO getDao() {
+	public CustomerTypeDAO getDao() {
 		if (this.dao == null){
-			this.dao = new AccountTypeDAO();
+			this.dao = new CustomerTypeDAO();
 		}
 		return dao;
 	}
 
-	public AccountType getModel() {
+	public CustomerType getModel() {
 		if (this.model == null){
-			this.model = new AccountType();
+			this.model = new CustomerType();
 		}
 		return model;
 	}
 
 	public void clearModel() {
-		model = new AccountType();
+		model = new CustomerType();
 	}
 
-	public void editForm(AccountType a) {
+	public void editForm(CustomerType a) {
 		model = a;
 	}
 }

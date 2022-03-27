@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 /**
  *
  * @author Aykut
+ * @author Sergen
  */
 public class ProductDAO implements IDAO<Product> {
 	
@@ -28,7 +29,6 @@ public class ProductDAO implements IDAO<Product> {
 	private List<Product> products;
 	
 	public List<Product> findAll() {
-
 		products = new ArrayList<>();
 		try {
 			this.ps = this.con.prepareStatement("Select * from product");
@@ -42,15 +42,14 @@ public class ProductDAO implements IDAO<Product> {
 								rs.getInt("purchasePrice"),
 								rs.getInt("salePrice"),
 								rs.getInt("vat"),
-								rs.getString("tag"),
 								rs.getInt("quantity"),
-								rs.getString("files"),
 								rs.getInt("warehouseId"));
 				products.add(tmp);
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+		
 		return products;
 	}
 
@@ -67,11 +66,11 @@ public class ProductDAO implements IDAO<Product> {
 				product.setId(rs.getInt("id"));
 				product.setName(rs.getString("name"));
 				product.setSerialNumber(rs.getString("serialNumber"));
+				product.setUnit(rs.getString("unit"));
+				product.setPurchasePrice(rs.getInt("purchasePrice"));
 				product.setSalePrice(rs.getInt("salePrice"));
 				product.setVat(rs.getInt("vat"));
-				product.setTags(rs.getString("tags"));
-				product.setQuantitiy(rs.getInt("quantitiy"));
-				product.setFiles(rs.getString("files"));
+				product.setQuantity(rs.getInt("quantity"));
 				product.setWarehouseId(rs.getInt("warehouseId"));
 				
 			}
@@ -86,14 +85,14 @@ public class ProductDAO implements IDAO<Product> {
 	public int create(Product p) {
 		int id = -1;
 		try {
-			ps = con.prepareStatement("INSERT INTO product (name, serialnumber, saleprice, vat, tags, quantitiy, files, warehouseid) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id");
+			ps = con.prepareStatement("INSERT INTO product (name, serialnumber, unit, purchaseprice, saleprice, vat, quantity, warehouseid) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id");
 			ps.setString(1, p.getName());
 			ps.setString(2, p.getSerialNumber());
-			ps.setInt(3, p.getSalePrice());
-			ps.setInt(4, p.getVat());
-			ps.setString(5, p.getTags());
-			ps.setInt(6, p.getQuantitiy());
-			ps.setString(7, p.getFiles());
+			ps.setString(3, p.getUnit());
+			ps.setInt(4, p.getPurchasePrice());
+			ps.setInt(5, p.getSalePrice());
+			ps.setInt(6, p.getVat());
+			ps.setInt(7, p.getQuantity());
 			ps.setInt(8, p.getWarehouseId());
 			rs = ps.executeQuery();
 
@@ -108,15 +107,17 @@ public class ProductDAO implements IDAO<Product> {
 
 	@Override
 	public void update(Product p) {
+		//System.out.println(p.getName() + " " + p.getSerialNumber() + " " + p.getUnit() + " " + p.getPurchasePrice() + " " + p.getSalePrice() + " " + p.getVat());
+
 		try {
-			ps = con.prepareStatement("UPDATE product SET name=?,serialnumber=?,saleprice=?,vat=?,tags=?,quantity=?,files=?,warehouseid=? where id=?");
+			ps = con.prepareStatement("UPDATE product SET name=?,serialnumber=?, unit=?, purchaseprice=?, saleprice=?,vat=?,quantity=?,warehouseid=? where id=?");
 			ps.setString(1, p.getName());
 			ps.setString(2, p.getSerialNumber());
-			ps.setInt(3, p.getSalePrice());
-			ps.setInt(4, p.getVat());
-			ps.setString(5, p.getTags());
-			ps.setInt(6, p.getQuantitiy());
-			ps.setString(7, p.getFiles());
+			ps.setString(3, p.getUnit());
+			ps.setInt(4, p.getPurchasePrice());
+			ps.setInt(5, p.getSalePrice());
+			ps.setInt(6, p.getVat());
+			ps.setInt(7, p.getQuantity());
 			ps.setInt(8, p.getWarehouseId());
 			ps.setInt(9, p.getId());
 			ps.executeUpdate();
