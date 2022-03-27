@@ -44,5 +44,5 @@
   font-weight: bold;
   top: -4.1rem;
   left: 0.4rem;
-  background: var(--bg-primary);
+  background-color: var(--bg-primary);
 }

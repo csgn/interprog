@@ -4,15 +4,15 @@ package Model;
  *
  * @author Aykut
  */
-public class AccountType {
+public class CustomerType {
 
 	private int id;
 	private String name;
 
-	public AccountType() {
+	public CustomerType() {
 	}
 
-	public AccountType(int id, String name) {
+	public CustomerType(int id, String name) {
 		this.id = id;
 		this.name = name;
 	}
@@ -51,13 +51,13 @@ public class AccountType {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final AccountType other = (AccountType) obj;
+		final CustomerType other = (CustomerType) obj;
 		return this.id == other.id;
 	}
 
 	@Override
 	public String toString() {
-		return "AccountType{" + "id=" + id + '}';
+		return String.valueOf(id);
 	}
 	
 	

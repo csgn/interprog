@@ -1,6 +1,6 @@
 package DAO;
 
-import Model.AccountType;
+import Model.CustomerType;
 import Utils.PGConn;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,57 +16,57 @@ import java.util.logging.Logger;
  * @author Aykut
  */
 
-public class AccountTypeDAO implements IDAO<AccountType>{
+public class CustomerTypeDAO implements IDAO<CustomerType>{
 
 	private final Connection con = PGConn.getConnection();
 	private PreparedStatement ps;
 	private ResultSet rs;
-	private AccountType tmp;
-	private List<AccountType> accountTypes;
+	private CustomerType tmp;
+	private List<CustomerType> customerTypes;
 	
 	
-	public AccountType find(int id){
-		AccountType accountType = new AccountType();
+	public CustomerType find(int id){
+		CustomerType customerType = new CustomerType();
 		try{
-			this.ps = con.prepareStatement("SELECT * FROM accounttype WHERE id=?");
+			this.ps = con.prepareStatement("SELECT * FROM customertype WHERE id=?");
 			this.ps.setInt(1,id);
 			rs = ps.executeQuery();
 			
 			while (rs.next()) {
-				accountType.setId(rs.getInt("id"));
-				accountType.setName(rs.getString("name"));
+				customerType.setId(rs.getInt("id"));
+				customerType.setName(rs.getString("name"));
 			}
 		}catch(SQLException e){
-			Logger.getLogger(AccountTypeDAO.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(CustomerTypeDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
-		return accountType;
+		return customerType;
 	}
 
-	public List<AccountType> findAll() {
+	public List<CustomerType> findAll() {
 
 		try {
-			accountTypes = new ArrayList<>();
-			this.ps = this.con.prepareStatement("Select * from accounttype");
+			customerTypes = new ArrayList<>();
+			this.ps = this.con.prepareStatement("Select * from customertype");
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				tmp = new AccountType(
+				tmp = new CustomerType(
 								rs.getInt("id"),
 								rs.getString("name"));
-				accountTypes.add(tmp);
+				customerTypes.add(tmp);
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		return accountTypes;
+		return customerTypes;
 	}
 
-	public AccountType findById(int id) {
+	public CustomerType findById(int id) {
 		try {
-			this.ps = this.con.prepareStatement("Select * from accounttype where id =?");
+			this.ps = this.con.prepareStatement("Select * from customertype where id =?");
 			this.ps.setInt(1, id);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				tmp = new AccountType(
+				tmp = new CustomerType(
 								rs.getInt("id"),
 								rs.getString("name"));
 			}
@@ -76,13 +76,13 @@ public class AccountTypeDAO implements IDAO<AccountType>{
 		return tmp;
 	}
 
-	public AccountType findByName(String name) {
+	public CustomerType findByName(String name) {
 		try {
-			this.ps = this.con.prepareStatement("Select * from accounttype where name =?");
+			this.ps = this.con.prepareStatement("Select * from customertype where name =?");
 			this.ps.setString(1, name);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				tmp = new AccountType(
+				tmp = new CustomerType(
 								rs.getInt("id"),
 								rs.getString("name"));
 			}
@@ -92,10 +92,10 @@ public class AccountTypeDAO implements IDAO<AccountType>{
 		return tmp;
 	}
 
-	public int create(AccountType a) {
+	public int create(CustomerType a) {
 		int id = -1;
 		try {
-			ps = con.prepareStatement("INSERT INTO accounttype (name) VALUES (?) RETURNING id");
+			ps = con.prepareStatement("INSERT INTO customertype (name) VALUES (?) RETURNING id");
 			ps.setString(1, a.getName());
 			rs = ps.executeQuery();
 
@@ -103,37 +103,37 @@ public class AccountTypeDAO implements IDAO<AccountType>{
 				id = rs.getInt("id");
 			}
 		} catch (SQLException e) {
-			Logger.getLogger(AccountTypeDAO.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(CustomerTypeDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return id;
 	}
 	
-	public void update(AccountType a) {
+	public void update(CustomerType a) {
 
 		try {
-			ps = con.prepareStatement("UPDATE accounttype set name=? where id=?");
+			ps = con.prepareStatement("UPDATE customertype set name=? where id=?");
 			ps.setString(1, a.getName());
 			ps.setInt(2, a.getId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			Logger.getLogger(AccountTypeDAO.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(CustomerTypeDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 	
 	public void delete(int id) {
 		try {
-			ps = con.prepareStatement("DELETE FROM accounttype where id=?");
+			ps = con.prepareStatement("DELETE FROM customertype where id=?");
 			ps.setInt(1, id);
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			Logger.getLogger(AccountType.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(CustomerType.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 	
 	
 	public void deleteByName(String name){
 		try {
-			this.ps = this.con.prepareStatement("delete from accounttype where name = ?");
+			this.ps = this.con.prepareStatement("delete from customertype where name = ?");
 			this.ps.setString(1, name);
 			ps.executeQuery();
 		} catch (Exception e) {

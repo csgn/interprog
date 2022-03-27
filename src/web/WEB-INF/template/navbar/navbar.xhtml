@@ -7,7 +7,8 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 								xmlns:h="http://xmlns.jcp.org/jsf/html" 
 								xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-								xmlns:f="http://xmlns.jcp.org/jsf/core">
+								xmlns:f="http://xmlns.jcp.org/jsf/core"
+								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 	<h:form id="navbar">
 		<nav class="navbar">
 			<ul class="navbar-nav">
@@ -30,27 +31,33 @@
 						<f:ajax execute="@this" render=":container-group" onevent="currentContent" />
 					</h:commandLink>
 				</li>
-				<li id="customers" class="nav-item">
-					<h:commandLink action="#{navigation.setContent('customers')}" class='nav-link'>
-						<ion-icon name="person-add" size="large"></ion-icon>
-						<span class="link-text">Customers</span>
-						<f:ajax execute="@this" render=":container-group" onevent="currentContent" />
-					</h:commandLink>
-				</li>
-				<li id="employees" class="nav-item">
-					<h:commandLink action="#{navigation.setContent('employees')}" class='nav-link'>
-						<ion-icon name="people" size="large"></ion-icon>
-						<span class="link-text">Employees</span>
-						<f:ajax execute="@this" render=":container-group" onevent="currentContent" />
-					</h:commandLink>
-				</li>
-				<li id="products" class="nav-item">
-					<h:commandLink action="#{navigation.setContent('products')}" class='nav-link'>
-						<ion-icon name="albums" size="large"></ion-icon>
-						<span class="link-text">Products</span>
-						<f:ajax execute="@this" render=":container-group" onevent="currentContent" />
-					</h:commandLink>
-				</li>
+				<c:if test="#{sessionBean.employee.roleId == 1}">
+					<li id="customers" class="nav-item">
+						<h:commandLink action="#{navigation.setContent('customers')}" class='nav-link'>
+							<ion-icon name="person-add" size="large"></ion-icon>
+							<span class="link-text">Customers</span>
+							<f:ajax execute="@this" render=":container-group" onevent="currentContent" />
+						</h:commandLink>
+					</li>
+				</c:if>
+				<c:if test="#{sessionBean.employee.roleId == 1}">
+					<li id="employees" class="nav-item">
+						<h:commandLink action="#{navigation.setContent('employees')}" class='nav-link'>
+							<ion-icon name="people" size="large"></ion-icon>
+							<span class="link-text">Employees</span>
+							<f:ajax execute="@this" render=":container-group" onevent="currentContent" />
+						</h:commandLink>
+					</li>
+				</c:if>
+				<c:if test="#{sessionBean.employee.roleId == 1}">
+					<li id="products" class="nav-item">
+						<h:commandLink action="#{navigation.setContent('products')}" class='nav-link'>
+							<ion-icon name="albums" size="large"></ion-icon>
+							<span class="link-text">Products</span>
+							<f:ajax execute="@this" render=":container-group" onevent="currentContent" />
+						</h:commandLink>
+					</li>
+				</c:if>
 				<li id="settings" class="nav-item">
 					<h:commandLink action="#{navigation.setContent('settings')}" class='nav-link'>
 						<ion-icon name="settings" size="large"></ion-icon>
