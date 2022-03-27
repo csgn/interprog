@@ -177,4 +177,25 @@ public class EmployeeDAO implements IDAO<Employee> {
 
 		return roleDAO;
 	}
+
+	public List<Employee> getJobEmployees(int jobId) {
+		List<Employee> jobEmployees = new ArrayList<>();
+
+		try {
+			ps = conn.prepareStatement("select * from jobxemployee where jobId = ?");
+			ps.setInt(1, jobId);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				jobEmployees.add(this.find(rs.getInt("employeeId")));
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+
+
+		
+		return jobEmployees;
+	}
 }

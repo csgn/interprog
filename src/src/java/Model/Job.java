@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,13 +18,19 @@ public class Job {
 	private Employee owner;
 	private Customer customer;
 
+	private List<Employee> jobEmployees;
+	private List<Product> jobProducts;
+
 	public Job() {
 		status = new Status();
 		owner = new Employee();
 		customer = new Customer();
+
+		jobEmployees = new ArrayList<>();
+		jobProducts = new ArrayList<>();
 	}
 
-	public Job(int id, Date creationDate, String description, Date date, Status status, Employee owner, Customer customer) {
+	public Job(int id, Date creationDate, String description, Date date, Status status, Employee owner, Customer customer, List<Employee> jobEmployees, List<Product> jobProducts) {
 		this.id = id;
 		this.creationDate = creationDate;
 		this.description = description;
@@ -31,6 +38,8 @@ public class Job {
 		this.status = status;
 		this.owner = owner;
 		this.customer = customer;
+		this.jobEmployees = jobEmployees;
+		this.jobProducts = jobProducts;
 	}
 
 	public int getId() {
@@ -88,6 +97,23 @@ public class Job {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+
+	public List<Employee> getJobEmployees() {
+		return jobEmployees;
+	}
+
+	public void setJobEmployees(List<Employee> jobEmployees) {
+		this.jobEmployees = jobEmployees;
+	}
+
+	public List<Product> getJobProducts() {
+		return jobProducts;
+	}
+
+	public void setJobProducts(List<Product> jobProducts) {
+		this.jobProducts = jobProducts;
+	}
+
 
 	@Override
 	public int hashCode() {
