@@ -4,15 +4,15 @@ package Model;
  *
  * @author Aykut
  */
-public class Role {
+public class CustomerType {
 
 	private int id;
 	private String name;
 
-	public Role() {
+	public CustomerType() {
 	}
 
-	public Role(int id, String name) {
+	public CustomerType(int id, String name) {
 		this.id = id;
 		this.name = name;
 	}
@@ -35,8 +35,8 @@ public class Role {
 
 	@Override
 	public int hashCode() {
-		int hash = 3;
-		hash = 23 * hash + this.id;
+		int hash = 7;
+		hash = 43 * hash + this.id;
 		return hash;
 	}
 
@@ -51,13 +51,14 @@ public class Role {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final Role other = (Role) obj;
+		final CustomerType other = (CustomerType) obj;
 		return this.id == other.id;
 	}
 
 	@Override
 	public String toString() {
-		return name;
+		return String.valueOf(id);
 	}
+	
 	
 }

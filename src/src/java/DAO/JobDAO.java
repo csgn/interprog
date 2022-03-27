@@ -37,7 +37,6 @@ public class JobDAO implements IDAO<Job> {
 				job.setCreationDate(rs.getDate("creationDate"));
 				job.setDescription(rs.getString("description"));
 				job.setDate(rs.getDate("date"));
-				job.setFiles((List<String>) rs.getArray("files"));
 				job.setStatusId(rs.getInt("statusId"));
 				job.setOwnerId(rs.getInt("ownerId"));
 				job.setCustomerId(rs.getInt("customerId"));
@@ -66,7 +65,6 @@ public class JobDAO implements IDAO<Job> {
 								rs.getDate("creationDate"),
 								rs.getString("description"),
 								rs.getDate("date"),
-								(List<String>) rs.getArray("files"),
 								rs.getInt("statusId"),
 								rs.getInt("ownerId"),
 								rs.getInt("customerId")

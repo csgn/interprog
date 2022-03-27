@@ -88,4 +88,33 @@ public class Activity {
 	public void setJobId(int jobId) {
 		this.jobId = jobId;
 	}
+
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		hash = 47 * hash + this.id;
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Activity other = (Activity) obj;
+		return this.id == other.id;
+	}
+
+	@Override
+	public String toString() {
+		return "Activity{" + "id=" + id + '}';
+	}
+	
+	
 }

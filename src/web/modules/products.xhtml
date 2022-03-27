@@ -32,9 +32,6 @@
 					<ez:ip-input type="number" placeholder="sale price" required="true" />
 				</div>
 				<div>
-					<ez:ip-input type="text" placeholder="tags" required="true" />
-				</div>
-				<div>
 					<ez:ip-input type="number" placeholder="quantity" required="true" />
 				</div>
 				<div>
@@ -51,9 +48,6 @@
 					<h:selectOneMenu>
 						<f:selectItems value="#{['18', '8', '1', '0']}" var="c" itemLabel="#{c}%" itemValue="#{c}" />
 					</h:selectOneMenu>
-				</div>
-				<div>
-					<ez:ip-file-input />
 				</div>
 				<div class="modal-footer">
 					<h:commandButton class="button" value="Save"/>
@@ -93,17 +87,20 @@
 				<div class='container-row'>
 					<div class="container-column checkbox" style="width: 20px;"></div>
 					<div class='container-column'>#{e.name}</div>
-					<div class='container-column'>#{e.surname}</div>
-					<div class='container-column'>#{e.phone}</div>
-					<div class='container-column'>#{roleBean.find(e.roleId).name}</div>
-					<div class='container-column'><span class='color-badge' style='background-color: #{e.color}'></span></div>
+					<div class='container-column'>#{e.serialNumber}</div>
+					<div class='container-column'>#{e.unit}</div>
+					<div class='container-column'>#{e.purchasePrice}</div>
+					<div class='container-column'>#{e.salePrice}</div>
+					<div class='container-column'>#{e.vat}%</div>
+					<div class='container-column'>#{e.quantity}</div>
+					<div class='container-column'>#{warehouseBean.find(e.warehouseId).name}</div>
 					<div class="container-column">
 						<dd:dropdown>
 							<ib:icon-button name="ellipsis-vertical" />
 							<dd:dropdown-menu>
 								<h:form>
 									<dd:dropdown-item>
-										<h:commandLink onclick="toggle('emodal_#{e.id}', 0)" action="#{employeeBean.editForm(e)}">							
+										<h:commandLink onclick="toggle('emodal_#{e.id}', 0)" action="#{productBean.editForm(e)}">							
 											<ion-icon name="pencil" size="large"></ion-icon>
 											<span>Edit</span>
 											<f:ajax execute="@this" render="emodal_#{e.id}:modalgroup" />
@@ -111,7 +108,7 @@
 									</dd:dropdown-item>
 									<c:if test="#{sessionBean.employee.id != e.id}">
 										<dd:dropdown-item>
-											<h:commandLink action="#{employeeBean.delete(e.id)}">							
+											<h:commandLink action="#{productBean.delete(e.id)}">							
 												<ion-icon name="trash" size="large"></ion-icon>
 												<span>Delete</span>
 												<f:ajax execute="@this" render="egroup" />
@@ -128,25 +125,42 @@
 					<h:panelGroup id="modalgroup">
 						<h:form>
 							<div>
-								<ez:ip-input type="text" placeholder="name" value="#{employeeBean.model.name}" required="true" />
+								<ez:ip-input type="text" placeholder="product name" required="true" value="#{productBean.model.name}" />
 							</div>
 							<div>
-								<ez:ip-input type="text" placeholder="lastname" value="#{employeeBean.model.surname}" required="true" />
+								<ez:ip-input type="number" placeholder="purchase price" required="true" value="#{productBean.model.purchasePrice}"/>
 							</div>
 							<div>
-								<ez:ip-input type="text" placeholder="phone" value="#{employeeBean.model.phone}" required="true" />
+								<ez:ip-input type="number" placeholder="sale price" required="true" value="#{productBean.model.salePrice}" />
 							</div>
 							<div>
-								<ez:ip-input type="color" placeholder="color" value="#{employeeBean.model.color}" required="true" />
+								<ez:ip-input type="number" placeholder="quantity" required="true" value="#{productBean.model.quantity}" />
 							</div>
+							<div>
+								<h:selectOneMenu value="#{productBean.model.warehouseId}">
+									<f:selectItems value="#{warehouseBean.findAll()}" var="c" itemLabel="#{c}" itemValue="#{c.id}" />
+								</h:selectOneMenu>
+							</div>
+							<div>
+								<h:selectOneMenu>
+									<f:selectItems value="#{['kg', 'number', 'box', 'dozen', 'barrel', 'package', 'bag', 'roll']}" var="c" itemLabel="#{c}" itemValue="#{c}" />
+								</h:selectOneMenu>
+							</div>
+							<div>
+								<h:selectOneMenu>
+									<f:selectItems value="#{['18', '8', '1', '0']}" var="c" itemLabel="#{c}%" itemValue="#{c}" />
+								</h:selectOneMenu>
+							</div>
+
 							<div class="modal-footer">
-								<h:commandButton class="button" action="#{employeeBean.update}" value="Save">
+								<h:commandButton class="button" action="#{productBean.update}" value="Save">
 									<f:ajax execute="@this" render="egroup" />
 								</h:commandButton>
 							</div>
 						</h:form>
 					</h:panelGroup>
 				</md:modal>
+
 			</c:forEach>
 		</h:panelGroup>
 		<div class="container-footer">

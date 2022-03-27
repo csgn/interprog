@@ -81,11 +81,10 @@
 .container-column {
 	font-size: 16px;
 	color: var(--text-primary);
-	width: 160px;
+	width: 190px;
 	padding: 0.5rem 0.5rem;
 	display: flex;
 	justify-content: center;
-	align-items: center;
 }
 
 .container-column:last-child {

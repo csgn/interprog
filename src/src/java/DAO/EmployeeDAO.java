@@ -102,7 +102,6 @@ public class EmployeeDAO implements IDAO<Employee> {
 		} catch (SQLException ex) {
 			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
 		}
-
 		return id;
 	}
 

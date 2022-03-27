@@ -21,12 +21,11 @@ public class Job {
 	public Job() {
 	}
 
-	public Job(int id, Date creationDate, String description, Date date, List<String> files, int statusId, int ownerId, int customerId) {
+	public Job(int id, Date creationDate, String description, Date date, int statusId, int ownerId, int customerId) {
 		this.id = id;
 		this.creationDate = creationDate;
 		this.description = description;
 		this.date = date;
-		this.files = files;
 		this.statusId = statusId;
 		this.ownerId = ownerId;
 		this.customerId = customerId;
@@ -64,14 +63,6 @@ public class Job {
 		this.date = date;
 	}
 
-	public List<String> getFiles() {
-		return files;
-	}
-
-	public void setFiles(List<String> files) {
-		this.files = files;
-	}
-
 	public int getStatusId() {
 		return statusId;
 	}
@@ -95,4 +86,32 @@ public class Job {
 	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
+
+	@Override
+	public int hashCode() {
+		int hash = 5;
+		hash = 59 * hash + this.id;
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Job other = (Job) obj;
+		return this.id == other.id;
+	}
+
+	@Override
+	public String toString() {
+		return "Job{" + "id=" + id + '}';
+	}
+	
 }

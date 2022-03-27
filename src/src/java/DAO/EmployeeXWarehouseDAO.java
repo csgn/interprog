@@ -8,12 +8,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Aykut
  */
-public class EmployeeXWarehouseDAO {
+public class EmployeeXWarehouseDAO implements IDAO<EmployeeXWarehouse>{
 
 	private final Connection con = PGConn.getConnection();
 	private PreparedStatement ps;
@@ -106,4 +108,57 @@ public class EmployeeXWarehouseDAO {
 			System.out.println(e.getMessage());
 		}
 	}
+
+	@Override
+	public EmployeeXWarehouse find(int employeeId) {
+		EmployeeXWarehouse employeeXWarehouse = new EmployeeXWarehouse();
+		try {
+			ps = con.prepareStatement("SELECT * FROM employeexwarehouse WHERE employeeid=?");
+			ps.setInt(1, employeeId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				employeeXWarehouse.setEmployeeId(rs.getInt("employeeId"));
+				employeeXWarehouse.setWarehouseId(rs.getInt("warehouseId"));
+			}
+		} catch (SQLException e) {
+			Logger.getLogger(EmployeeXWarehouse.class.getName()).log(Level.SEVERE, null, e);
+		}
+		return employeeXWarehouse;
+	}
+
+	@Override
+	public int create(EmployeeXWarehouse e) {
+		int employeeId = -1;
+		try {
+			ps = con.prepareStatement("INSERT INTO employeexWarehouse (employeeid, warehouseid) VALUES (?, ?) RETURNING employeeid");
+			ps.setInt(1, e.getEmployeeId());
+			ps.setInt(2, e.getWarehouseId());
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				employeeId = rs.getInt("employeeId");
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(EmployeeXWarehouse.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return employeeId;
+	}
+
+	@Override
+	public void update(EmployeeXWarehouse t) {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	}
+
+	@Override
+	public void delete(int employeeId) {
+	try {
+			ps = con.prepareStatement("DELETE FROM employeexwarehouse where employeeid=?");
+			ps.setInt(1, employeeId);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			Logger.getLogger(EmployeeXWarehouse.class.getName()).log(Level.SEVERE, null, e);
+		}
+	}
+	
+	
 }

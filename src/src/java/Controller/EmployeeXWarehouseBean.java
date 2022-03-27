@@ -15,33 +15,51 @@ import java.util.List;
 @SessionScoped
 public class EmployeeXWarehouseBean implements Serializable {
 
-	private EmployeeXWarehouseDAO employeeXWarehouseDAO;
-	private EmployeeXWarehouse employeeXWarehouseModel;
+	private EmployeeXWarehouseDAO dao;
+	private EmployeeXWarehouse model;
+
+	public EmployeeXWarehouseDAO getDao() {
+		return dao;
+	}
+
+	public EmployeeXWarehouse getModel() {
+		return model;
+	}
 	
-
 	public EmployeeXWarehouseBean() {
+		dao = new EmployeeXWarehouseDAO();
+		model = new EmployeeXWarehouse();
+	}
+	public EmployeeXWarehouse find(int id) {
+		return dao.find(id);
 	}
 
-	public EmployeeXWarehouseDAO getEmployeeXWarehouseDAO() {
-		if(this.employeeXWarehouseDAO == null){
-			this.employeeXWarehouseDAO = new EmployeeXWarehouseDAO();
-		}
-		return employeeXWarehouseDAO;
+	public List<EmployeeXWarehouse> findAll() {
+		return dao.findAll();
 	}
 
-	public void setEmployeeXWarehouseDAO(EmployeeXWarehouseDAO employeeXWarehouseDAO) {
-		this.employeeXWarehouseDAO = employeeXWarehouseDAO;
+	public void create() {
+		int id = dao.create(model);
+		this.clearModel();
+
+		System.out.println("CREATED ID: " + id);
 	}
 
-	public EmployeeXWarehouse getEmployeeXWarehouseModel() {
-		if(this.employeeXWarehouseModel == null){
-			this.employeeXWarehouseModel = new EmployeeXWarehouse();
-		}
-		return employeeXWarehouseModel;
+	public void delete(int id) {
+		dao.delete(id);
+		this.clearModel();
 	}
 
-	public void setEmployeeXWarehouseModel(EmployeeXWarehouse employeeXWarehouseModel) {
-		this.employeeXWarehouseModel = employeeXWarehouseModel;
+	public void update() {
+		dao.update(model);
+		this.clearModel();
+	}
+	
+	public void clearModel() {
+		model = new EmployeeXWarehouse();
 	}
 
+	public void editForm(EmployeeXWarehouse e) {
+		model = e;
+	}
 }

@@ -9,13 +9,46 @@
 								xmlns:md="http://xmlns.jcp.org/jsf/composite/composite/modal"
 								xmlns:fm="http://xmlns.jcp.org/jsf/composite/composite/form"
 								xmlns:ez="http://xmlns.jcp.org/jsf/composite/composite"
+								xmlns:dd="http://xmlns.jcp.org/jsf/composite/composite/dropdown"
+								xmlns:ib="http://xmlns.jcp.org/jsf/composite/composite/icon-button"
 								xmlns:f="http://xmlns.jcp.org/jsf/core"
 								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 	<md:modal id="createCustomerModal" title="ADD CUSTOMER">
 		<h:panelGroup id="createCustomerModalGroup">
 			<h:form>
+				<div>
+					<ez:ip-input type="text" placeholder="name" required="true" value="#{customerBean.model.name}" />
+				</div>
+				<div>
+					<ez:ip-input type="text" placeholder="surname" required="true"  value="#{customerBean.model.surname}"/>
+				</div>
+				<div>
+					<ez:ip-input type="tel" placeholder="phone" required="true"  value="#{customerBean.model.phone}"/>
+				</div>
+				<div>
+					<ez:ip-input type="email" placeholder="email" required="true"  value="#{customerBean.model.email}"/>
+				</div>
+				<div>
+					<ez:ip-input type="text" placeholder="company title" value="#{customerBean.model.companyTitle}"/>
+				</div>
+				<div>
+					<ez:ip-input type="text" placeholder="tax number" value="#{customerBean.model.taxNumber}"/>
+				</div>
+				<div>
+					<ez:ip-input type="text" placeholder="tax administration" value="#{customerBean.model.taxAdministration}"/>
+				</div>
+				<div>
+					<h:selectOneMenu value="#{customerBean.model.customerTypeId}">
+						<f:selectItems value="#{customerTypeBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c.id}" />
+					</h:selectOneMenu>
+				</div>
+				<div>
+					<h:selectOneMenu value="#{customerBean.model.addressId}">
+						<f:selectItems value="#{addressBean.findAll()}" var="c" itemLabel="#{c.context}" itemValue="#{c.id}" />
+					</h:selectOneMenu>
+				</div>
 				<div class="modal-footer">
-					<h:commandButton class="button" value="Save"/>
+					<h:commandButton class="button" value="Save" action="#{customerBean.create}"/>
 				</div>
 			</h:form>
 		</h:panelGroup>
@@ -36,5 +69,106 @@
 
 
 	<div class='container-content'>
+		<div class="container-row disable">
+			<div class="container-column checkbox" style="width: 20px;"></div>
+			<div class="container-column">NAME</div>
+			<div class="container-column">SURNAME</div>
+			<div class="container-column">COMP. TITLE</div>
+			<div class="container-column">CUST. TYPE</div>
+			<div class="container-column">PHONE</div>
+			<div class="container-column">EMAIL</div>
+			<div class="container-column">TAX NUM.</div>
+			<div class="container-column">TAX ADMIN.</div>
+			<div class="container-column">ADDRESS</div>
+			<div class="container-column">OPTIONS</div>
+		</div>
+		<h:panelGroup id="egroup">
+			<c:forEach items="#{customerBean.findAll()}" var="e">
+				<div class='container-row'>
+					<div class="container-column checkbox" style="width: 20px;"></div>
+					<div class='container-column'>#{e.name}</div>
+					<div class='container-column'>#{e.surname}</div>
+					<div class='container-column'>#{e.companyTitle}</div>
+					<div class='container-column'>#{customerTypeBean.find(e.customerTypeId).name}</div>
+					<div class='container-column'>#{e.phone}</div>
+					<div class='container-column'>#{e.email}</div>
+					<div class='container-column'>#{e.taxNumber}</div>
+					<div class='container-column'>#{e.taxAdministration}</div>
+					<div class='container-column'>#{e.addressId}</div>
+					<div class="container-column">
+						<dd:dropdown>
+							<ib:icon-button name="ellipsis-vertical" />
+							<dd:dropdown-menu>
+								<h:form>
+									<dd:dropdown-item>
+										<h:commandLink onclick="toggle('emodal_#{e.id}', 0)" action="#{customerBean.editForm(e)}">							
+											<ion-icon name="pencil" size="large"></ion-icon>
+											<span>Edit</span>
+											<f:ajax execute="@this" render="emodal_#{e.id}:modalgroup" />
+										</h:commandLink>
+									</dd:dropdown-item>
+									<dd:dropdown-item>
+										<h:commandLink action="#{customerBean.delete(e.id)}">							
+											<ion-icon name="trash" size="large"></ion-icon>
+											<span>Delete</span>
+											<f:ajax execute="@this" render="egroup" />
+										</h:commandLink>
+									</dd:dropdown-item>
+								</h:form>
+							</dd:dropdown-menu>
+						</dd:dropdown>
+					</div>
+				</div>
+
+				<md:modal id="emodal_#{e.id}" title="Edit #{e}">
+					<h:panelGroup id="modalgroup">
+						<h:form>
+							<div>
+								<ez:ip-input type="text" placeholder="name" value="#{customerBean.model.name}" />
+							</div>
+							<div>
+								<ez:ip-input type="text" placeholder="surname" value="#{customerBean.model.surname}"/>
+							</div>
+							<div>
+								<ez:ip-input type="tel" placeholder="phone" value="#{customerBean.model.phone}"/>
+							</div>
+							<div>
+								<ez:ip-input type="email" placeholder="email" value="#{customerBean.model.email}"/>
+							</div>
+
+							<div>
+								<ez:ip-input type="text" placeholder="company title" value="#{customerBean.model.companyTitle}"/>
+							</div>
+
+							<div>
+								<ez:ip-input type="text" placeholder="tax number"  value="#{customerBean.model.taxNumber}"/>
+							</div>
+
+							<div>
+								<ez:ip-input type="text" placeholder="tax administration" value="#{customerBean.model.taxAdministration}"/>
+							</div>
+							<div>
+								<h:selectOneMenu value="#{customerBean.model.customerTypeId}">
+									<f:selectItems value="#{customerTypeBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c.id}" />
+								</h:selectOneMenu>
+							</div>
+							<div>
+								<h:selectOneMenu value="#{customerBean.model.addressId}">
+									<f:selectItems value="#{addressBean.findAll()}" var="c" itemLabel="#{c.context}" itemValue="#{c.id}" />
+								</h:selectOneMenu>
+							</div>
+							<div class="modal-footer">
+								<h:commandButton class="button" action="#{customerBean.update}" value="Save">
+									<f:ajax execute="@this" render="egroup" />
+								</h:commandButton>
+							</div>
+
+						</h:form>
+					</h:panelGroup>
+				</md:modal>
+			</c:forEach>
+		</h:panelGroup>
+		<div class="container-footer">
+		</div>
 	</div>
 </ui:composition>
