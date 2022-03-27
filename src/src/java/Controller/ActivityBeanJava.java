@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Named(value = "activityBean")
 @SessionScoped
-public class ActivityBeanJava {
+public class ActivityBeanJava implements Serializable {
 
 	private ActivityDAO dao;
 	private Activity model;

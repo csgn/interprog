@@ -4,16 +4,17 @@
  */
 package Controller;
 
-import javax.inject.Named;
-import javax.enterprise.context.Dependent;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Named;
+import java.io.Serializable;
 
 /**
  *
  * @author Aykut
  */
 @Named(value = "productBean")
-@Dependent
-public class ProductBean {
+@SessionScoped
+public class ProductBean implements Serializable {
 
 	/**
 	 * Creates a new instance of ProductBean

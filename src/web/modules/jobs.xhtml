@@ -54,16 +54,20 @@
 		</h:panelGroup>
 	</md:modal>
 
-	<div style="display: flex; flex-direction: column;">
-		<div class="header" style="display: flex;">
+	<div class='container-header'>
+		<div class='container-title'>
 			<h1>JOBS</h1>
 		</div>
-		<div style="display: flex">
+		<div class='container-button'>
 			<h:form>
 				<h:commandButton class="button" onclick="toggle('createJobModal', 0)" action="#{jobBean.clearModel}" value="ORDER A NEW JOB">
 					<f:ajax execute="@this" render="createJobModal:createJobModalGroup" />
 				</h:commandButton>
 			</h:form>
 		</div>
+	</div>
+
+
+	<div class='container-content'>
 	</div>
 </ui:composition>

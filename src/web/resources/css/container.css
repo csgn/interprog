@@ -79,9 +79,9 @@
 }
 
 .container-column {
-	font-size: 20px;
+	font-size: 16px;
 	color: var(--text-primary);
-	width: 150px;
+	width: 160px;
 	padding: 0.5rem 0.5rem;
 	display: flex;
 	justify-content: center;
