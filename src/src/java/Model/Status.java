@@ -67,6 +67,6 @@ public class Status {
 
 	@Override
 	public String toString() {
-		return "name=" + name + ", color=" + color;
+		return String.valueOf(id); 
 	}
 }

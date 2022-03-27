@@ -1,8 +1,6 @@
 package DAO;
 
 import Model.EmployeeXSquad;
-import Utils.PGConn;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +15,6 @@ import java.util.logging.Logger;
  */
 public class EmployeeXSquadDAO implements IDAO<EmployeeXSquad> {
 
-	private final Connection con = PGConn.getConnection();
 	private PreparedStatement ps;
 	private ResultSet rs;
 	private EmployeeXSquad tmp;
@@ -27,7 +24,7 @@ public class EmployeeXSquadDAO implements IDAO<EmployeeXSquad> {
 
 		employeeXSquads = new ArrayList<>();
 		try {
-			this.ps = this.con.prepareStatement("Select * from employeexsquad");
+			this.ps = this.conn.prepareStatement("Select * from employeexsquad");
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				tmp = new EmployeeXSquad(
@@ -44,7 +41,7 @@ public class EmployeeXSquadDAO implements IDAO<EmployeeXSquad> {
 	public EmployeeXSquad findByEmployeeId(int employeeId) {
 
 		try {
-			this.ps = this.con.prepareStatement("Select * from employeexsquad where employeeid =?");
+			this.ps = this.conn.prepareStatement("Select * from employeexsquad where employeeid =?");
 			this.ps.setInt(1, employeeId);
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -61,7 +58,7 @@ public class EmployeeXSquadDAO implements IDAO<EmployeeXSquad> {
 	public EmployeeXSquad findBySquadId(int squadId) {
 
 		try {
-			this.ps = this.con.prepareStatement("Select * from employeexsquad where squadid =?");
+			this.ps = this.conn.prepareStatement("Select * from employeexsquad where squadid =?");
 			this.ps.setInt(1, squadId);
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -77,7 +74,7 @@ public class EmployeeXSquadDAO implements IDAO<EmployeeXSquad> {
 
 	public void insert(int employeeId, int squadId) {
 		try {
-			this.ps = this.con.prepareStatement("insert into employeexsquad values (employeeid = ?, squadid = ?)");
+			this.ps = this.conn.prepareStatement("insert into employeexsquad values (employeeid = ?, squadid = ?)");
 			this.ps.setInt(1, employeeId);
 			this.ps.setInt(2, squadId);
 			rs = ps.executeQuery();
@@ -89,7 +86,7 @@ public class EmployeeXSquadDAO implements IDAO<EmployeeXSquad> {
 	public void deleteByEmployeeId(int employeeId) {
 
 		try {
-			this.ps = this.con.prepareStatement("delete from employeexsquad where (employeeid = ?)");
+			this.ps = this.conn.prepareStatement("delete from employeexsquad where (employeeid = ?)");
 			this.ps.setInt(1, employeeId);
 			rs = ps.executeQuery();
 		} catch (Exception e) {
@@ -100,7 +97,7 @@ public class EmployeeXSquadDAO implements IDAO<EmployeeXSquad> {
 	public void deleteBySquadId(int squadId) {
 
 		try {
-			this.ps = this.con.prepareStatement("delete from employeexsquad where (squadid = ?)");
+			this.ps = this.conn.prepareStatement("delete from employeexsquad where (squadid = ?)");
 			this.ps.setInt(1, squadId);
 			rs = ps.executeQuery();
 		} catch (Exception e) {
@@ -112,7 +109,7 @@ public class EmployeeXSquadDAO implements IDAO<EmployeeXSquad> {
 	public EmployeeXSquad find(int employeeId) {
 		EmployeeXSquad employeeXSquad = new EmployeeXSquad();
 		try {
-			ps = con.prepareStatement("SELECT * FROM employeexsquad WHERE employeeid=?");
+			ps = conn.prepareStatement("SELECT * FROM employeexsquad WHERE employeeid=?");
 			ps.setInt(1, employeeId);
 
 			rs = ps.executeQuery();
@@ -133,7 +130,7 @@ public class EmployeeXSquadDAO implements IDAO<EmployeeXSquad> {
 
 		int employeeId = -1;
 		try {
-			ps = con.prepareStatement("INSERT INTO employeexsquad (employeeid, squadid) VALUES (?, ?) RETURNING employeeid");
+			ps = conn.prepareStatement("INSERT INTO employeexsquad (employeeid, squadid) VALUES (?, ?) RETURNING employeeid");
 			ps.setInt(1, e.getEmployeeId());
 			ps.setInt(2, e.getSquadId());
 			rs = ps.executeQuery();
@@ -154,7 +151,7 @@ public class EmployeeXSquadDAO implements IDAO<EmployeeXSquad> {
 	@Override
 		public void delete(int employeeId) {
 		try {
-			ps = con.prepareStatement("DELETE FROM employeexsquad where employeeid=?");
+			ps = conn.prepareStatement("DELETE FROM employeexsquad where employeeid=?");
 			ps.setInt(1, employeeId);
 
 			ps.executeUpdate();

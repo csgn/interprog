@@ -97,6 +97,6 @@ public class Address {
 
 	@Override
 	public String toString() {
-		return id + title + context + region + district + directions;
+		return String.valueOf(id);
 	}
 }

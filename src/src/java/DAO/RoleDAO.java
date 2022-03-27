@@ -1,8 +1,6 @@
 package DAO;
 
 import Model.Role;
-import Utils.PGConn;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,8 +15,6 @@ import java.util.logging.Logger;
  * @author Metin
  */
 public class RoleDAO implements IDAO<Role> {
-
-	Connection conn = PGConn.getConnection();
 
 	@Override
 	public Role find(int id) {
@@ -95,8 +91,9 @@ public class RoleDAO implements IDAO<Role> {
 		PreparedStatement ps;
 
 		try {
-			ps = conn.prepareStatement("UPDATE role SET name=?");
+			ps = conn.prepareStatement("UPDATE role SET name=? where id=?");
 			ps.setString(1, r.getName());
+			ps.setInt(2, r.getId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, e);

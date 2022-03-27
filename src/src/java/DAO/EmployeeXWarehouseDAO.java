@@ -1,8 +1,6 @@
 package DAO;
 
 import Model.EmployeeXWarehouse;
-import Utils.PGConn;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +15,6 @@ import java.util.logging.Logger;
  */
 public class EmployeeXWarehouseDAO implements IDAO<EmployeeXWarehouse>{
 
-	private final Connection con = PGConn.getConnection();
 	private PreparedStatement ps;
 	private ResultSet rs;
 	private EmployeeXWarehouse tmp;
@@ -27,7 +24,7 @@ public class EmployeeXWarehouseDAO implements IDAO<EmployeeXWarehouse>{
 
 		employeeXWarehouses = new ArrayList<>();
 		try {
-			this.ps = this.con.prepareStatement("Select * from employeexwarehouse");
+			this.ps = this.conn.prepareStatement("Select * from employeexwarehouse");
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				tmp = new EmployeeXWarehouse(
@@ -44,7 +41,7 @@ public class EmployeeXWarehouseDAO implements IDAO<EmployeeXWarehouse>{
 	public EmployeeXWarehouse findByEmployeeId(int employeeId) {
 
 		try {
-			this.ps = this.con.prepareStatement("Select * from employeexwarehouse where employeeid =?");
+			this.ps = this.conn.prepareStatement("Select * from employeexwarehouse where employeeid =?");
 			this.ps.setInt(1, employeeId);
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -61,7 +58,7 @@ public class EmployeeXWarehouseDAO implements IDAO<EmployeeXWarehouse>{
 	public EmployeeXWarehouse findByWarehouseId(int warehouseId) {
 
 		try {
-			this.ps = this.con.prepareStatement("Select * from employeexswarehouse where warehouseid =?");
+			this.ps = this.conn.prepareStatement("Select * from employeexswarehouse where warehouseid =?");
 			this.ps.setInt(1, warehouseId);
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -78,7 +75,7 @@ public class EmployeeXWarehouseDAO implements IDAO<EmployeeXWarehouse>{
 	public void insert(int employeeId, int warehouseId){
 		
 		try{
-			this.ps = this.con.prepareStatement("insert into employeexwarehouse values (employeeid = ?, warehouseid = ?)");
+			this.ps = this.conn.prepareStatement("insert into employeexwarehouse values (employeeid = ?, warehouseid = ?)");
 			this.ps.setInt(1,employeeId);
 			this.ps.setInt(2, warehouseId);
 			rs = ps.executeQuery();
@@ -90,7 +87,7 @@ public class EmployeeXWarehouseDAO implements IDAO<EmployeeXWarehouse>{
 	public void deleteByEmployeeId(int employeeId){
 		
 		try {
-			this.ps = this.con.prepareStatement("delete from employeexwarehouse where (employeeid = ?)");
+			this.ps = this.conn.prepareStatement("delete from employeexwarehouse where (employeeid = ?)");
 			this.ps.setInt(1, employeeId);
 			rs = ps.executeQuery();
 		} catch (Exception e) {
@@ -101,7 +98,7 @@ public class EmployeeXWarehouseDAO implements IDAO<EmployeeXWarehouse>{
 	public void deleteBySquadId(int warehouseId){
 		
 		try {
-			this.ps = this.con.prepareStatement("delete from employeexwarehouse where (warehouseid = ?)");
+			this.ps = this.conn.prepareStatement("delete from employeexwarehouse where (warehouseid = ?)");
 			this.ps.setInt(1, warehouseId);
 			rs = ps.executeQuery();
 		} catch (Exception e) {
@@ -113,7 +110,7 @@ public class EmployeeXWarehouseDAO implements IDAO<EmployeeXWarehouse>{
 	public EmployeeXWarehouse find(int employeeId) {
 		EmployeeXWarehouse employeeXWarehouse = new EmployeeXWarehouse();
 		try {
-			ps = con.prepareStatement("SELECT * FROM employeexwarehouse WHERE employeeid=?");
+			ps = conn.prepareStatement("SELECT * FROM employeexwarehouse WHERE employeeid=?");
 			ps.setInt(1, employeeId);
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -130,7 +127,7 @@ public class EmployeeXWarehouseDAO implements IDAO<EmployeeXWarehouse>{
 	public int create(EmployeeXWarehouse e) {
 		int employeeId = -1;
 		try {
-			ps = con.prepareStatement("INSERT INTO employeexWarehouse (employeeid, warehouseid) VALUES (?, ?) RETURNING employeeid");
+			ps = conn.prepareStatement("INSERT INTO employeexWarehouse (employeeid, warehouseid) VALUES (?, ?) RETURNING employeeid");
 			ps.setInt(1, e.getEmployeeId());
 			ps.setInt(2, e.getWarehouseId());
 			rs = ps.executeQuery();
@@ -151,7 +148,7 @@ public class EmployeeXWarehouseDAO implements IDAO<EmployeeXWarehouse>{
 	@Override
 	public void delete(int employeeId) {
 	try {
-			ps = con.prepareStatement("DELETE FROM employeexwarehouse where employeeid=?");
+			ps = conn.prepareStatement("DELETE FROM employeexwarehouse where employeeid=?");
 			ps.setInt(1, employeeId);
 
 			ps.executeUpdate();

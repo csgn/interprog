@@ -90,7 +90,7 @@ public class SessionBean implements Serializable {
 
 		// attributes are currently not used
 		session.setAttribute("phoneNumber", this.phoneNumber);
-		session.setAttribute("roleId", this.employee.getRoleId());
+		session.setAttribute("roleId", this.employee.getRole().getId());
 		session.setAttribute("name", this.employee.getName());
 		session.setAttribute("surname", this.employee.getSurname());
 		this.sessionId = session.getId();

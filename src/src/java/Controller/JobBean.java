@@ -1,8 +1,6 @@
 package Controller;
 
 import DAO.JobDAO;
-import Model.Customer;
-import Model.Employee;
 import Model.Job;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
@@ -12,6 +10,7 @@ import java.util.List;
 /**
  *
  * @author Aykut
+ * @author Sergen
  */
 @Named("jobBean")
 @SessionScoped
@@ -19,8 +18,6 @@ public class JobBean implements Serializable {
 
 	private Job model;
 	private JobDAO dao;
-	private Customer customer;
-	private Employee employee;
 
 	public JobBean() {
 		dao = new JobDAO();
@@ -36,10 +33,12 @@ public class JobBean implements Serializable {
 	}
 
 	public void create() {
-			int id = dao.create(model);
-			System.out.println("id: " + id);
+		int id = dao.create(model);
+
+		System.out.println("id: " + id);
+		this.clearModel();
 	}
-	
+
 	public void delete(int id) {
 		dao.delete(id);
 		this.clearModel();
@@ -54,18 +53,10 @@ public class JobBean implements Serializable {
 		return model;
 	}
 
-	public Employee getEmployee() {
-		return employee;
-	}
-
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}
-
 	public void clearModel() {
 		model = new Job();
 	}
-	
+
 	public void editForm(Job j) {
 		model = j;
 	}

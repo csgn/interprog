@@ -3,34 +3,36 @@ package Model;
 /**
  *
  * @author Aykut
+ * @author Sergen
  */
 public class Customer {
 
 	private int id;
 	private String name;
 	private String surname;
-	private int customerTypeId;
+	private CustomerType customerType;
 	private String phone;
 	private String email;
 	private String companyTitle;
 	private String taxNumber;
 	private String taxAdministration;
-	private int addressId;
+	private Address address;
 
 	public Customer() {
+		address = new Address();
 	}
 
-	public Customer(int id, String name, String surname, int customerTypeId, String phone, String email, String companyTitle, String taxNumber, String taxAdministration, int addressId) {
+	public Customer(int id, String name, String surname, CustomerType customerTypeId, String phone, String email, String companyTitle, String taxNumber, String taxAdministration, Address address) {
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
-		this.customerTypeId = customerTypeId;
+		this.customerType = customerType;
 		this.phone = phone;
 		this.email = email;
 		this.companyTitle = companyTitle;
 		this.taxNumber = taxNumber;
 		this.taxAdministration = taxAdministration;
-		this.addressId = addressId;
+		this.address = address;
 	}
 
 	public int getId() {
@@ -57,12 +59,12 @@ public class Customer {
 		this.email = email;
 	}
 
-	public int getAddressId() {
-		return addressId;
+	public Address getAddress() {
+		return address;
 	}
 
-	public void setAddressId(int addressId) {
-		this.addressId = addressId;
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	public String getName() {
@@ -81,12 +83,12 @@ public class Customer {
 		this.surname = surname;
 	}
 
-	public int getCustomerTypeId() {
-		return customerTypeId;
+	public CustomerType getCustomerType() {
+		return customerType;
 	}
 
-	public void setCustomerTypeId(int customerTypeId) {
-		this.customerTypeId = customerTypeId;
+	public void setCustomerType(CustomerType customerType) {
+		this.customerType = customerType;
 	}
 
 	public String getCompanyTitle() {
@@ -138,8 +140,8 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return name + " " + surname;
+		return String.valueOf(id); 
 	}
-	
+
 	
 }

@@ -1,9 +1,7 @@
 package DAO;
 
 import Model.Employee;
-import Utils.PGConn;
 import java.util.List;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,13 +15,15 @@ import java.util.logging.Logger;
  */
 public class EmployeeDAO implements IDAO<Employee> {
 
-	Connection conn = PGConn.getConnection();
+	private Employee employee;
+	List<Employee> employees;
+	private PreparedStatement ps;
+	private ResultSet rs;
+	private RoleDAO roleDAO;
 
 	@Override
 	public Employee find(int id) {
-		Employee employee = new Employee();
-		PreparedStatement ps;
-		ResultSet rs;
+		employee = new Employee();
 
 		try {
 			ps = conn.prepareStatement("SELECT * FROM employee WHERE id=?");
@@ -38,7 +38,7 @@ public class EmployeeDAO implements IDAO<Employee> {
 				employee.setPhone(rs.getString("phone"));
 				employee.setColor(rs.getString("color"));
 				employee.setPassword(rs.getString("password"));
-				employee.setRoleId(rs.getInt("roleid"));
+				employee.setRole(this.getRoleDAO().find(rs.getInt("roleid")));
 			}
 		} catch (SQLException ex) {
 			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -49,10 +49,8 @@ public class EmployeeDAO implements IDAO<Employee> {
 
 	@Override
 	public List<Employee> findAll() {
-		List<Employee> employees = new ArrayList<>();
-		Employee employee;
-		PreparedStatement ps;
-		ResultSet rs;
+		employees = new ArrayList<>();
+		employee = new Employee();
 
 		try {
 			ps = conn.prepareStatement("SELECT * FROM employee");
@@ -66,7 +64,7 @@ public class EmployeeDAO implements IDAO<Employee> {
 								rs.getString("phone"),
 								rs.getString("color"),
 								rs.getString("password"),
-								rs.getInt("roleid")
+								this.getRoleDAO().find(rs.getInt("roleid"))
 				);
 
 				employees.add(employee);
@@ -82,9 +80,6 @@ public class EmployeeDAO implements IDAO<Employee> {
 	@Override
 	public int create(Employee e) {
 		int id = -1;
-		PreparedStatement ps;
-		ResultSet rs;
-
 		try {
 			ps = conn.prepareStatement("INSERT INTO employee (name, surname, phone, color, password, roleid) VALUES (?, ?, ?, ?, ?, ?) RETURNING id");
 			ps.setString(1, e.getName());
@@ -92,7 +87,7 @@ public class EmployeeDAO implements IDAO<Employee> {
 			ps.setString(3, e.getPhone());
 			ps.setString(4, e.getColor());
 			ps.setString(5, e.getPassword());
-			ps.setInt(6, e.getRoleId());
+			ps.setInt(6, e.getRole().getId());
 
 			rs = ps.executeQuery();
 
@@ -107,7 +102,6 @@ public class EmployeeDAO implements IDAO<Employee> {
 
 	@Override
 	public void update(Employee e) {
-		PreparedStatement ps;
 		try {
 			ps = conn.prepareStatement("UPDATE employee SET name=?,surname=?,phone=?,color=?,password=?,roleid=? where id=?");
 			ps.setString(1, e.getName());
@@ -115,7 +109,7 @@ public class EmployeeDAO implements IDAO<Employee> {
 			ps.setString(3, e.getPhone());
 			ps.setString(4, e.getColor());
 			ps.setString(5, e.getPassword());
-			ps.setInt(6, e.getRoleId());
+			ps.setInt(6, e.getRole().getId());
 			ps.setInt(7, e.getId());
 			ps.executeUpdate();
 		} catch (SQLException ex) {
@@ -125,7 +119,6 @@ public class EmployeeDAO implements IDAO<Employee> {
 
 	@Override
 	public void delete(int id) {
-		PreparedStatement ps;
 		try {
 			ps = conn.prepareStatement("DELETE FROM employee where id=?");
 			ps.setInt(1, id);
@@ -137,9 +130,7 @@ public class EmployeeDAO implements IDAO<Employee> {
 	}
 
 	public Employee findByPhone(String phoneNumber) {
-		Employee employee = null;
-		PreparedStatement ps;
-		ResultSet rs;
+		employee = null;
 
 		try {
 			ps = conn.prepareStatement("SELECT * FROM employee WHERE phone = ?");
@@ -153,7 +144,7 @@ public class EmployeeDAO implements IDAO<Employee> {
 								rs.getString("phone"),
 								rs.getString("color"),
 								rs.getString("password"),
-								rs.getInt("roleId"));
+								this.getRoleDAO().find(rs.getInt("roleId")));
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -163,9 +154,6 @@ public class EmployeeDAO implements IDAO<Employee> {
 	}
 
 	public boolean validate(String user, String password) {
-		PreparedStatement ps;
-		ResultSet rs;
-
 		try {
 			ps = conn.prepareStatement("SELECT phone, password, roleid FROM employee WHERE phone = ? AND password = ?");
 			ps.setString(1, user);
@@ -182,4 +170,11 @@ public class EmployeeDAO implements IDAO<Employee> {
 		return false;
 	}
 
+	public RoleDAO getRoleDAO() {
+		if (roleDAO == null) {
+			roleDAO = new RoleDAO();
+		}
+
+		return roleDAO;
+	}
 }

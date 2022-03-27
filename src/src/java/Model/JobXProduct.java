@@ -4,44 +4,46 @@
  */
 package Model;
 
+import java.util.Objects;
+
 /**
  *
  * @author Aykut
  */
 public class JobXProduct {
 	
-	private int jobId;
-	private int productId;
+	private Job job;
+	private Product product;
 
 	public JobXProduct() {
 	}
 
-	public JobXProduct(int jobId, int productId) {
-		this.jobId = jobId;
-		this.productId = productId;
+	public JobXProduct(Job job, Product product) {
+		this.job = job;
+		this.product = product;
 	}
 
-	public int getJobId() {
-		return jobId;
+	public Job getJob() {
+		return job;
 	}
 
-	public void setJobId(int jobId) {
-		this.jobId = jobId;
+	public void setJob(Job job) {
+		this.job = job;
 	}
 
-	public int getProductId() {
-		return productId;
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setProductId(int productId) {
-		this.productId = productId;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 	@Override
 	public int hashCode() {
-		int hash = 3;
-		hash = 41 * hash + this.jobId;
-		hash = 41 * hash + this.productId;
+		int hash = 7;
+		hash = 71 * hash + Objects.hashCode(this.job);
+		hash = 71 * hash + Objects.hashCode(this.product);
 		return hash;
 	}
 
@@ -57,11 +59,18 @@ public class JobXProduct {
 			return false;
 		}
 		final JobXProduct other = (JobXProduct) obj;
-		if (this.jobId != other.jobId) {
+		if (!Objects.equals(this.job, other.job)) {
 			return false;
 		}
-		return this.productId == other.productId;
+		return Objects.equals(this.product, other.product);
 	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(job.getId() +" "+product.getId());
+	}
+
+
 	
 	
 }

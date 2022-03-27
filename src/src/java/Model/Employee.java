@@ -12,19 +12,19 @@ public class Employee {
 	private String phone;
 	private String color;
 	private String password;
-	private int roleId;
+	private Role role;
 
 	public Employee() {
 	}
 	
-	public Employee(int id, String name, String surname, String phone, String color, String password, int roleId) {
+	public Employee(int id, String name, String surname, String phone, String color, String password, Role role) {
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
 		this.phone = phone;
 		this.color = color;
 		this.password = password;
-		this.roleId = roleId;
+		this.role = role;
 	}
 
 	public int getId() {
@@ -75,12 +75,12 @@ public class Employee {
 		this.password = password;
 	}
 
-	public int getRoleId() {
-		return roleId;
+	public Role getRole() {
+		return role;
 	}
 
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	@Override
@@ -107,6 +107,6 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return name + " " + surname;
+		return String.valueOf(id);
 	}
 }

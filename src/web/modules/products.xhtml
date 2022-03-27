@@ -35,8 +35,8 @@
 					<ez:ip-input type="number" placeholder="quantity" required="true" />
 				</div>
 				<div>
-					<h:selectOneMenu>
-						<f:selectItems value="#{['w1', 'w2']}" var="c" itemLabel="#{c}" itemValue="#{c}" />
+					<h:selectOneMenu value="#{productBean.model.warehouse}" converter="warehouseConverter">
+						<f:selectItems value="#{warehouseBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 					</h:selectOneMenu>
 				</div>
 				<div>
@@ -93,7 +93,7 @@
 					<div class='container-column'>#{e.salePrice}</div>
 					<div class='container-column'>#{e.vat}%</div>
 					<div class='container-column'>#{e.quantity}</div>
-					<div class='container-column'>#{warehouseBean.find(e.warehouseId).name}</div>
+					<div class='container-column'>#{e.warehouse.name}</div>
 					<div class="container-column">
 						<dd:dropdown>
 							<ib:icon-button name="ellipsis-vertical" />
@@ -106,15 +106,13 @@
 											<f:ajax execute="@this" render="emodal_#{e.id}:modalgroup" />
 										</h:commandLink>
 									</dd:dropdown-item>
-									<c:if test="#{sessionBean.employee.id != e.id}">
-										<dd:dropdown-item>
-											<h:commandLink action="#{productBean.delete(e.id)}">							
-												<ion-icon name="trash" size="large"></ion-icon>
-												<span>Delete</span>
-												<f:ajax execute="@this" render="egroup" />
-											</h:commandLink>
-										</dd:dropdown-item>
-									</c:if>
+									<dd:dropdown-item>
+										<h:commandLink action="#{productBean.delete(e.id)}">							
+											<ion-icon name="trash" size="large"></ion-icon>
+											<span>Delete</span>
+											<f:ajax execute="@this" render="egroup" />
+										</h:commandLink>
+									</dd:dropdown-item>
 								</h:form>
 							</dd:dropdown-menu>
 						</dd:dropdown>
@@ -137,8 +135,8 @@
 								<ez:ip-input type="number" placeholder="quantity" required="true" value="#{productBean.model.quantity}" />
 							</div>
 							<div>
-								<h:selectOneMenu value="#{productBean.model.warehouseId}">
-									<f:selectItems value="#{warehouseBean.findAll()}" var="c" itemLabel="#{c}" itemValue="#{c.id}" />
+								<h:selectOneMenu value="#{productBean.model.warehouse}" converter="warehouseConverter">
+									<f:selectItems value="#{warehouseBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 								</h:selectOneMenu>
 							</div>
 							<div>

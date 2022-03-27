@@ -4,11 +4,10 @@
  */
 package Model;
 
-import java.util.List;
-
 /**
  *
  * @author Aykut
+ * @author Sergen
  */
 public class Product {
 	
@@ -20,12 +19,12 @@ public class Product {
 	private int salePrice;
 	private int vat;
 	private int quantity;
-	private int warehouseId;
+	private Warehouse warehouse;
 
 	public Product() {
 	}
 
-	public Product(int id, String name, String serialNumber, String unit, int purchasePrice, int salePrice, int vat, int quantity, int warehouseId) {
+	public Product(int id, String name, String serialNumber, String unit, int purchasePrice, int salePrice, int vat, int quantity, Warehouse warehouse) {
 		this.id = id;
 		this.name = name;
 		this.serialNumber = serialNumber;
@@ -34,10 +33,8 @@ public class Product {
 		this.salePrice = salePrice;
 		this.vat = vat;
 		this.quantity = quantity;
-		this.warehouseId = warehouseId;
+		this.warehouse = warehouse;
 	}
-	
-	
 	
 	public int getPurchasePrice() {
 		return purchasePrice;
@@ -54,7 +51,6 @@ public class Product {
 	public void setSalePrice(int salePrice) {
 		this.salePrice = salePrice;
 	}
-
 
 	public String getUnit() {
 		return unit;
@@ -104,12 +100,12 @@ public class Product {
 		this.quantity = quantity;
 	}
 
-	public int getWarehouseId() {
-		return warehouseId;
+	public Warehouse getWarehouse() {
+		return warehouse;
 	}
 
-	public void setWarehouseId(int warehouseId) {
-		this.warehouseId = warehouseId;
+	public void setWarehouse(Warehouse warehouse) {
+		this.warehouse = warehouse;
 	}
 
 	@Override

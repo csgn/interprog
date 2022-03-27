@@ -16,35 +16,21 @@
 	<md:modal id="createCustomerModal" title="ADD CUSTOMER">
 		<h:panelGroup id="createCustomerModalGroup">
 			<h:form>
+				<ez:ip-input type="text" placeholder="name" required="true" value="#{customerBean.model.name}" />
+				<ez:ip-input type="text" placeholder="surname" required="true" value="#{customerBean.model.surname}"/>
+				<ez:ip-input type="email" placeholder="email" required="true" value="#{customerBean.model.email}"/>
+				<ez:ip-input type="tel" placeholder="phone" required="true" value="#{customerBean.model.phone}"/>
+				<ez:ip-input type="text" placeholder="company title" value="#{customerBean.model.companyTitle}"/>
+				<ez:ip-input type="text" placeholder="tax number" value="#{customerBean.model.taxNumber}"/>
+				<ez:ip-input type="text" placeholder="tax administration" value="#{customerBean.model.taxAdministration}"/>
+				<ez:ip-input type="text" placeholder="address title" value="#{customerBean.model.address.title}"/>
+				<ez:ip-input type="text" placeholder="address context" value="#{customerBean.model.address.context}"/>
+				<ez:ip-input type="text" placeholder="region" value="#{customerBean.model.address.region}"/>
+				<ez:ip-input type="text" placeholder="district" value="#{customerBean.model.address.district}"/>
+				<ez:ip-input type="text" placeholder="directions" value="#{customerBean.model.address.directions}"/>
 				<div>
-					<ez:ip-input type="text" placeholder="name" required="true" value="#{customerBean.model.name}" />
-				</div>
-				<div>
-					<ez:ip-input type="text" placeholder="surname" required="true"  value="#{customerBean.model.surname}"/>
-				</div>
-				<div>
-					<ez:ip-input type="tel" placeholder="phone" required="true"  value="#{customerBean.model.phone}"/>
-				</div>
-				<div>
-					<ez:ip-input type="email" placeholder="email" required="true"  value="#{customerBean.model.email}"/>
-				</div>
-				<div>
-					<ez:ip-input type="text" placeholder="company title" value="#{customerBean.model.companyTitle}"/>
-				</div>
-				<div>
-					<ez:ip-input type="text" placeholder="tax number" value="#{customerBean.model.taxNumber}"/>
-				</div>
-				<div>
-					<ez:ip-input type="text" placeholder="tax administration" value="#{customerBean.model.taxAdministration}"/>
-				</div>
-				<div>
-					<h:selectOneMenu value="#{customerBean.model.customerTypeId}">
-						<f:selectItems value="#{customerTypeBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c.id}" />
-					</h:selectOneMenu>
-				</div>
-				<div>
-					<h:selectOneMenu value="#{customerBean.model.addressId}">
-						<f:selectItems value="#{addressBean.findAll()}" var="c" itemLabel="#{c.context}" itemValue="#{c.id}" />
+					<h:selectOneMenu value="#{customerBean.model.customerType}" converter="customerTypeConverter">
+						<f:selectItems value="#{customerTypeBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 					</h:selectOneMenu>
 				</div>
 				<div class="modal-footer">
@@ -89,12 +75,12 @@
 					<div class='container-column'>#{e.name}</div>
 					<div class='container-column'>#{e.surname}</div>
 					<div class='container-column'>#{e.companyTitle}</div>
-					<div class='container-column'>#{customerTypeBean.find(e.customerTypeId).name}</div>
+					<div class='container-column'>#{e.customerType}</div>
 					<div class='container-column'>#{e.phone}</div>
 					<div class='container-column'>#{e.email}</div>
 					<div class='container-column'>#{e.taxNumber}</div>
 					<div class='container-column'>#{e.taxAdministration}</div>
-					<div class='container-column'>#{e.addressId}</div>
+					<div class='container-column'>#{e.address.context}</div>
 					<div class="container-column">
 						<dd:dropdown>
 							<ib:icon-button name="ellipsis-vertical" />
@@ -123,38 +109,22 @@
 				<md:modal id="emodal_#{e.id}" title="Edit #{e}">
 					<h:panelGroup id="modalgroup">
 						<h:form>
-							<div>
 								<ez:ip-input type="text" placeholder="name" value="#{customerBean.model.name}" />
-							</div>
-							<div>
 								<ez:ip-input type="text" placeholder="surname" value="#{customerBean.model.surname}"/>
-							</div>
-							<div>
 								<ez:ip-input type="tel" placeholder="phone" value="#{customerBean.model.phone}"/>
-							</div>
-							<div>
 								<ez:ip-input type="email" placeholder="email" value="#{customerBean.model.email}"/>
-							</div>
-
-							<div>
 								<ez:ip-input type="text" placeholder="company title" value="#{customerBean.model.companyTitle}"/>
-							</div>
-
-							<div>
 								<ez:ip-input type="text" placeholder="tax number"  value="#{customerBean.model.taxNumber}"/>
-							</div>
+								<ez:ip-input type="text" placeholder="tax administration" value="#{customerBean.model.taxAdministration}"/>
+								<ez:ip-input type="text" placeholder="address title" value="#{customerBean.model.address.title}"/>
+								<ez:ip-input type="text" placeholder="address context" value="#{customerBean.model.address.context}"/>
+								<ez:ip-input type="text" placeholder="region" value="#{customerBean.model.address.region}"/>
+								<ez:ip-input type="text" placeholder="district" value="#{customerBean.model.address.district}"/>
+								<ez:ip-input type="text" placeholder="directions" value="#{customerBean.model.address.directions}"/>
 
 							<div>
-								<ez:ip-input type="text" placeholder="tax administration" value="#{customerBean.model.taxAdministration}"/>
-							</div>
-							<div>
-								<h:selectOneMenu value="#{customerBean.model.customerTypeId}">
-									<f:selectItems value="#{customerTypeBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c.id}" />
-								</h:selectOneMenu>
-							</div>
-							<div>
-								<h:selectOneMenu value="#{customerBean.model.addressId}">
-									<f:selectItems value="#{addressBean.findAll()}" var="c" itemLabel="#{c.context}" itemValue="#{c.id}" />
+								<h:selectOneMenu value="#{customerBean.model.customerType}" converter="customerTypeConverter">
+									<f:selectItems value="#{customerTypeBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 								</h:selectOneMenu>
 							</div>
 							<div class="modal-footer">

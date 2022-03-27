@@ -1,8 +1,6 @@
 package DAO;
 
 import Model.Squad;
-import Utils.PGConn;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,9 +15,6 @@ import java.util.logging.Logger;
  * @author Metin
  */
 public class SquadDAO implements IDAO<Squad> {
-
-	Connection conn = PGConn.getConnection();
-
 	@Override
 	public Squad find(int id) {
 		Squad squad = new Squad();
@@ -96,8 +91,9 @@ public class SquadDAO implements IDAO<Squad> {
 		PreparedStatement ps;
 
 		try {
-			ps = conn.prepareStatement("UPDATE squad SET name=?");
+			ps = conn.prepareStatement("UPDATE squad SET name=? where id=?");
 			ps.setString(1, s.getName());
+			ps.setInt(2, s.getId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			Logger.getLogger(SquadDAO.class.getName()).log(Level.SEVERE, null, e);

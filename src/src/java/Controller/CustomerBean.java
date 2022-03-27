@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import DAO.AddressDAO;
 import DAO.CustomerDAO;
 import Model.Customer;
 import jakarta.inject.Named;
@@ -20,10 +21,12 @@ import java.util.List;
 public class CustomerBean implements Serializable {
 		private Customer model;
 		private CustomerDAO dao;
+		private AddressDAO addressDAO;
 
 	public CustomerBean() {
 		model = new Customer();
 		dao = new CustomerDAO();
+		addressDAO = new AddressDAO();
 	}
 
 	public Customer getModel() {
@@ -42,10 +45,18 @@ public class CustomerBean implements Serializable {
 	}
 
 	public void create() {
-		int id = dao.create(model);
-		this.clearModel();
+		int addressId = addressDAO.create(model.getAddress());
+		System.out.println("ADDRESS ID:" + addressId);
+		int modelId = -1;
 
-		System.out.println("CREATED ID: " + id);
+		if (addressId != -1) {
+			model.getAddress().setId(addressId);
+			modelId = dao.create(model);
+		}
+
+		System.out.println("CREATED ID: " + modelId);
+
+		this.clearModel();
 	}
 
 	public void delete(int id) {
@@ -54,6 +65,7 @@ public class CustomerBean implements Serializable {
 	}
 
 	public void update() {
+		addressDAO.update(model.getAddress());
 		dao.update(model);
 		this.clearModel();
 	}

@@ -1,8 +1,6 @@
 package DAO;
 
 import Model.Warehouse;
-import Utils.PGConn;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,9 +15,6 @@ import java.util.logging.Logger;
  * @author Metin
  */
 public class WarehouseDAO implements IDAO<Warehouse>{
-
-	Connection conn = PGConn.getConnection();
-	
 
 	@Override
 	public Warehouse find(int id) {
@@ -96,8 +91,9 @@ public class WarehouseDAO implements IDAO<Warehouse>{
 		PreparedStatement ps;
 
 		try {
-			ps = conn.prepareStatement("UPDATE warehouse SET name=?");
+			ps = conn.prepareStatement("UPDATE warehouse SET name=? where id=?");
 			ps.setString(1, w.getName());
+			ps.setInt(2, w.getId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			Logger.getLogger(WarehouseDAO.class.getName()).log(Level.SEVERE, null, e);
