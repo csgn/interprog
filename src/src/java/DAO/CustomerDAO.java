@@ -22,7 +22,7 @@ public class CustomerDAO implements IDAO<Customer>{
 	private ResultSet rs;
 	private Customer tmp;
 	private List<Customer> customers;
-
+	
 	public List<Customer> findAll() {
 
 		customers = new ArrayList<>();

@@ -2,6 +2,7 @@ package DAO;
 
 import Model.Job;
 import Utils.PGConn;
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -88,28 +89,55 @@ public class JobDAO implements IDAO<Job> {
 		ResultSet rs;
 
 		try {
-			ps = conn.prepareStatement("INSERT INTO job (description,date,customerId) VALUES (?, ?, ?) RETURNING id");
-			ps.setString(1, j.getDescription());
-			ps.setDate(2, new Date(j.getDate().getTime()));
-			ps.setInt(3, j.getCustomerId());
+			ps = conn.prepareStatement("INSERT INTO job (creationdate, description, date, files, statusid, ownerid, customerid) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING id");
+			ps.setDate(1, (Date) j.getCreationDate());
+			ps.setString(2, j.getDescription());
+			ps.setDate(3, (Date) j.getDate());
+			ps.setArray(4, (Array) j.getFiles());
+			ps.setInt(5, j.getStatusId());
+			ps.setInt(6, j.getOwnerId());
+			ps.setInt(7, j.getCustomerId());
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				id = rs.getInt("id");
 			}
 		} catch (SQLException ex) {
-			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
 		}
-
 		return id;
 	}
 
 	@Override
 	public void update(Job j) {
+		PreparedStatement ps;
+		try {
+			ps = conn.prepareStatement("UPDATE job SET creationdate=?,description=?,date=?,files=?,statusid=?,ownerid=?, customerid where id=?");
+			ps.setDate(1, (Date) j.getCreationDate());
+			ps.setString(2, j.getDescription());
+			ps.setDate(3, (Date) j.getDate());
+			ps.setArray(4, (Array) j.getFiles());
+			ps.setInt(5, j.getStatusId());
+			ps.setInt(6, j.getOwnerId());
+			ps.setInt(7, j.getCustomerId());
+			ps.setInt(8, j.getId());
+			ps.executeUpdate();
+		} catch (SQLException ex) {
+			Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 
 	@Override
 	public void delete(int id) {
+		PreparedStatement ps;
+		try {
+			ps = conn.prepareStatement("DELETE FROM job where id=?");
+			ps.setInt(1, id);
+
+			ps.executeUpdate();
+		} catch (SQLException ex) {
+			Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 
 }
