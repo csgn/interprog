@@ -5,8 +5,6 @@
 package DAO;
 
 import Model.JobXProduct;
-import Utils.PGConn;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,7 +19,6 @@ import java.util.logging.Logger;
  */
 public class JobXProductDAO implements IDAO<JobXProduct> {
 
-	private final Connection con = PGConn.getConnection();
 	private PreparedStatement ps;
 	private ResultSet rs;
 	private JobXProduct tmp;
@@ -31,7 +28,7 @@ public class JobXProductDAO implements IDAO<JobXProduct> {
 	public JobXProduct find(int jobId) {
 		JobXProduct jobXProduct = new JobXProduct();
 		try {
-			this.ps = con.prepareStatement("SELECT * FROM jobXProduct WHERE jobid=?");
+			this.ps = conn.prepareStatement("SELECT * FROM jobXProduct WHERE jobid=?");
 			this.ps.setInt(1, jobId);
 			rs = ps.executeQuery();
 
@@ -49,7 +46,7 @@ public class JobXProductDAO implements IDAO<JobXProduct> {
 	public List<JobXProduct> findAll() {
 		try {
 			jobXProducts = new ArrayList<>();
-			this.ps = this.con.prepareStatement("Select * from jobxproduct");
+			this.ps = this.conn.prepareStatement("Select * from jobxproduct");
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				tmp = new JobXProduct(
@@ -67,7 +64,7 @@ public class JobXProductDAO implements IDAO<JobXProduct> {
 	public int create(JobXProduct j) {
 		int jobId = -1;
 		try {
-			ps = con.prepareStatement("INSERT INTO jobxproduct (jobid, productid) VALUES (?, ?) RETURNING jobid");
+			ps = conn.prepareStatement("INSERT INTO jobxproduct (jobid, productid) VALUES (?, ?) RETURNING jobid");
 			ps.setInt(1, j.getJobId());
 			ps.setInt(2, j.getProductId());
 			rs = ps.executeQuery();
@@ -88,7 +85,7 @@ public class JobXProductDAO implements IDAO<JobXProduct> {
 	@Override
 	public void delete(int jobId) {
 		try {
-			ps = con.prepareStatement("DELETE FROM jobxproduct where jobId=?");
+			ps = conn.prepareStatement("DELETE FROM jobxproduct where jobId=?");
 			ps.setInt(1, jobId);
 
 			ps.executeUpdate();

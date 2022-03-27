@@ -32,8 +32,8 @@
 					<ez:ip-input type="color" placeholder="color" value="#{employeeBean.model.color}" required="true" />
 				</div>
 				<div>
-					<h:selectOneMenu value="#{employeeBean.model.roleId}">
-						<f:selectItems value="#{roleBean.findAll()}" var="c" itemLabel="#{c}" itemValue="#{c.id}" />
+					<h:selectOneMenu value="#{employeeBean.model.role}" converter="roleConverter">
+						<f:selectItems value="#{roleBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 					</h:selectOneMenu>
 				</div>
 				<div class="modal-footer">
@@ -74,7 +74,7 @@
 					<div class='container-column'>#{e.name}</div>
 					<div class='container-column'>#{e.surname}</div>
 					<div class='container-column'>#{e.phone}</div>
-					<div class='container-column'>#{roleBean.find(e.roleId).name}</div>
+					<div class='container-column'>#{e.role.name}</div>
 					<div class='container-column'><span class='color-badge' style='background-color: #{e.color}'></span></div>
 					<div class="container-column">
 						<dd:dropdown>

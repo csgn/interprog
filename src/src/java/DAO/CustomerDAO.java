@@ -1,10 +1,8 @@
 package DAO;
 
 import Model.Customer;
-import Utils.PGConn;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,33 +12,35 @@ import java.util.List;
 /**
  *
  * @author Aykut
+ * @author Sergen
  */
 public class CustomerDAO implements IDAO<Customer> {
 
-	private final Connection con = PGConn.getConnection();
 	private PreparedStatement ps;
 	private ResultSet rs;
 	private Customer tmp;
 	private List<Customer> customers;
+	private CustomerTypeDAO customerTypeDAO;
+	private AddressDAO addressDAO;
 
 	@Override
 	public Customer find(int id) {
 		Customer customer = new Customer();
 
 		try {
-			ps = con.prepareStatement("SELECT * FROM customer WHERE id=?");
+			ps = conn.prepareStatement("SELECT * FROM customer WHERE id=?");
 			ps.setInt(1, id);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				customer.setId(rs.getInt("id"));
 				customer.setName(rs.getString("name"));
 				customer.setSurname(rs.getString("surname"));
-				customer.setCustomerTypeId(rs.getInt("customerTypeId"));
+				customer.setCustomerType(this.getCustomerTypeDAO().find(rs.getInt("customerTypeId")));
 				customer.setPhone(rs.getString("phone"));
 				customer.setCompanyTitle(rs.getString("companyTitle"));
 				customer.setTaxNumber(rs.getString("taxNumber"));
 				customer.setTaxAdministration(rs.getString("taxAdministration"));
-				customer.setAddressId(rs.getInt("addressId"));
+				customer.setAddress(this.getAddressDAO().find(rs.getInt("addressId")));
 			}
 		} catch (SQLException e) {
 			Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, e);
@@ -53,20 +53,20 @@ public class CustomerDAO implements IDAO<Customer> {
 
 		customers = new ArrayList<>();
 		try {
-			this.ps = this.con.prepareStatement("Select * from customer");
+			this.ps = this.conn.prepareStatement("Select * from customer");
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				tmp = new Customer(
 								rs.getInt("id"),
 								rs.getString("name"),
 								rs.getString("surname"),
-								rs.getInt("customerTypeId"),
+								this.getCustomerTypeDAO().find(rs.getInt("customerTypeId")),
 								rs.getString("phone"),
 								rs.getString("email"),
 								rs.getString("companyTitle"),
 								rs.getString("taxNumber"),
 								rs.getString("taxAdministration"),
-								rs.getInt("addressId"));
+								this.getAddressDAO().find(rs.getInt("addressId")));
 				customers.add(tmp);
 			}
 		} catch (SQLException e) {
@@ -77,7 +77,7 @@ public class CustomerDAO implements IDAO<Customer> {
 
 	public Customer findByPhone(String phone) {
 		try {
-			this.ps = this.con.prepareStatement("Select * from customer where phone =?");
+			this.ps = this.conn.prepareStatement("Select * from customer where phone =?");
 			this.ps.setString(1, phone);
 			rs = ps.executeQuery();
 
@@ -86,13 +86,13 @@ public class CustomerDAO implements IDAO<Customer> {
 								rs.getInt("id"),
 								rs.getString("name"),
 								rs.getString("surname"),
-								rs.getInt("customerTypeId"),
+								this.getCustomerTypeDAO().find(rs.getInt("customerTypeId")),
 								rs.getString("phone"),
 								rs.getString("email"),
 								rs.getString("companyTitle"),
 								rs.getString("taxNumber"),
 								rs.getString("taxAdministration"),
-								rs.getInt("addressId"));
+								this.getAddressDAO().find(rs.getInt("addressId")));
 			}
 
 		} catch (Exception e) {
@@ -104,7 +104,7 @@ public class CustomerDAO implements IDAO<Customer> {
 	public Customer findByEmail(String email) {
 
 		try {
-			this.ps = this.con.prepareStatement("Select * from customer where email =?");
+			this.ps = this.conn.prepareStatement("Select * from customer where email =?");
 			this.ps.setString(1, email);
 			rs = ps.executeQuery();
 
@@ -113,13 +113,13 @@ public class CustomerDAO implements IDAO<Customer> {
 								rs.getInt("id"),
 								rs.getString("name"),
 								rs.getString("surname"),
-								rs.getInt("customerTypeId"),
+								this.getCustomerTypeDAO().find(rs.getInt("customerTypeId")),
 								rs.getString("phone"),
 								rs.getString("email"),
 								rs.getString("companyTitle"),
 								rs.getString("taxNumber"),
 								rs.getString("taxAdministration"),
-								rs.getInt("addressId"));
+								this.getAddressDAO().find(rs.getInt("addressId")));
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -129,7 +129,7 @@ public class CustomerDAO implements IDAO<Customer> {
 
 	public Customer findByAddressId(int addressId) {
 		try {
-			this.ps = this.con.prepareStatement("Select * from customer where addressId =?");
+			this.ps = this.conn.prepareStatement("Select * from customer where addressId =?");
 			this.ps.setInt(1, addressId);
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -137,13 +137,13 @@ public class CustomerDAO implements IDAO<Customer> {
 								rs.getInt("id"),
 								rs.getString("name"),
 								rs.getString("surname"),
-								rs.getInt("customerTypeId"),
+								this.getCustomerTypeDAO().find(rs.getInt("customerTypeId")),
 								rs.getString("phone"),
 								rs.getString("email"),
 								rs.getString("companyTitle"),
 								rs.getString("taxNumber"),
 								rs.getString("taxAdministration"),
-								rs.getInt("addressId"));
+								this.getAddressDAO().find(rs.getInt("addressId")));
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -154,7 +154,7 @@ public class CustomerDAO implements IDAO<Customer> {
 	public List<Customer> findByCustomerType(int customerTypeId) {
 		customers = new ArrayList<>();
 		try {
-			this.ps = this.con.prepareStatement("Select * from customer where customerTypeId =?");
+			this.ps = this.conn.prepareStatement("Select * from customer where customerTypeId =?");
 			this.ps.setInt(1, customerTypeId);
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -162,13 +162,13 @@ public class CustomerDAO implements IDAO<Customer> {
 								rs.getInt("id"),
 								rs.getString("name"),
 								rs.getString("surname"),
-								rs.getInt("customerTypeId"),
+								this.getCustomerTypeDAO().find(rs.getInt("customerTypeId")),
 								rs.getString("phone"),
 								rs.getString("email"),
 								rs.getString("companyTitle"),
 								rs.getString("taxNumber"),
 								rs.getString("taxAdministration"),
-								rs.getInt("addressId"));
+								this.getAddressDAO().find(rs.getInt("addressId")));
 				customers.add(tmp);
 			}
 			System.out.println(customers);
@@ -183,16 +183,16 @@ public class CustomerDAO implements IDAO<Customer> {
 		int id = -1;
 
 		try {
-			ps = con.prepareStatement("INSERT INTO customer (name, surname, customertypeid, phone, email, companytitle, taxnumber, taxadministration, addressid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id");
+			ps = conn.prepareStatement("INSERT INTO customer (name, surname, customertypeid, phone, email, companytitle, taxnumber, taxadministration, addressid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id");
 			ps.setString(1, c.getName());
 			ps.setString(2, c.getSurname());
-			ps.setInt(3, c.getCustomerTypeId());
+			ps.setInt(3, c.getCustomerType().getId());
 			ps.setString(4, c.getPhone());
 			ps.setString(5, c.getEmail());
 			ps.setString(6, c.getCompanyTitle());
 			ps.setString(7, c.getTaxNumber());
 			ps.setString(8, c.getTaxAdministration());
-			ps.setInt(9, c.getAddressId());
+			ps.setInt(9, c.getAddress().getId());
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -207,16 +207,16 @@ public class CustomerDAO implements IDAO<Customer> {
 	@Override
 	public void update(Customer c) {
 		try {
-			ps = con.prepareStatement("UPDATE customer SET name=?,surname=?,customertypeid=?,phone=?,email=?,companytitle=?,taxnumber=?,taxadministration=?,addressid=? where id=?");
+			ps = conn.prepareStatement("UPDATE customer SET name=?,surname=?,customertypeid=?,phone=?,email=?,companytitle=?,taxnumber=?,taxadministration=?,addressid=? where id=?");
 			ps.setString(1, c.getName());
 			ps.setString(2, c.getSurname());
-			ps.setInt(3, c.getCustomerTypeId());
+			ps.setInt(3, c.getCustomerType().getId());
 			ps.setString(4, c.getPhone());
 			ps.setString(5, c.getEmail());
 			ps.setString(6, c.getCompanyTitle());
 			ps.setString(7, c.getTaxNumber());
 			ps.setString(8, c.getTaxAdministration());
-			ps.setInt(9, c.getAddressId());
+			ps.setInt(9, c.getAddress().getId());
 			ps.setInt(10, c.getId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
@@ -227,11 +227,27 @@ public class CustomerDAO implements IDAO<Customer> {
 	@Override
 	public void delete(int id) {
 		try {
-			ps = con.prepareStatement("DELETE FROM customer where id=?");
+			ps = conn.prepareStatement("DELETE FROM customer where id=?");
 			ps.setInt(1, id);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
+
+	public CustomerTypeDAO getCustomerTypeDAO() {
+		if (customerTypeDAO == null)
+			customerTypeDAO = new CustomerTypeDAO();
+
+		return customerTypeDAO;
+	}
+
+	public AddressDAO getAddressDAO() {
+		if (addressDAO == null)
+			addressDAO = new AddressDAO();
+
+		return addressDAO;
+	}
+
+
 }

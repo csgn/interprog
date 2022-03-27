@@ -1,8 +1,6 @@
 package DAO;
 
 import Model.Job;
-import Utils.PGConn;
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,8 +15,6 @@ import java.util.logging.Logger;
  * @author csgn
  */
 public class JobDAO implements IDAO<Job> {
-
-	Connection conn = PGConn.getConnection();
 
 	@Override
 	public Job find(int id) {

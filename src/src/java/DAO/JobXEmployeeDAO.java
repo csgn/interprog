@@ -1,8 +1,6 @@
 package DAO;
 
 import Model.JobXEmployee;
-import Utils.PGConn;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +15,6 @@ import java.util.logging.Logger;
  */
 public class JobXEmployeeDAO implements IDAO<JobXEmployee> {
 
-	private final Connection con = PGConn.getConnection();
 	private PreparedStatement ps;
 	private ResultSet rs;
 	private JobXEmployee tmp;
@@ -27,7 +24,7 @@ public class JobXEmployeeDAO implements IDAO<JobXEmployee> {
 
 		jobXEmployees = new ArrayList<>();
 		try {
-			this.ps = this.con.prepareStatement("Select * from jobxemployee");
+			this.ps = this.conn.prepareStatement("Select * from jobxemployee");
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				tmp = new JobXEmployee(
@@ -44,7 +41,7 @@ public class JobXEmployeeDAO implements IDAO<JobXEmployee> {
 	public JobXEmployee findByJobId(int jobId) {
 
 		try {
-			this.ps = this.con.prepareStatement("Select * from jobxemployeeid where jobid =?");
+			this.ps = this.conn.prepareStatement("Select * from jobxemployeeid where jobid =?");
 			this.ps.setInt(1, jobId);
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -61,7 +58,7 @@ public class JobXEmployeeDAO implements IDAO<JobXEmployee> {
 	public JobXEmployee findByEmployeeId(int employeeId) {
 
 		try {
-			this.ps = this.con.prepareStatement("Select * from employeexsquad where employeeid =?");
+			this.ps = this.conn.prepareStatement("Select * from employeexsquad where employeeid =?");
 			this.ps.setInt(1, employeeId);
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -78,7 +75,7 @@ public class JobXEmployeeDAO implements IDAO<JobXEmployee> {
 	public void insert(int jobId, int employeeId){
 		
 		try{
-			this.ps = this.con.prepareStatement("insert into jobxemployee values (jobid = ?, employeeid = ?)");
+			this.ps = this.conn.prepareStatement("insert into jobxemployee values (jobid = ?, employeeid = ?)");
 			this.ps.setInt(1,jobId);
 			this.ps.setInt(2, employeeId);
 			rs = ps.executeQuery();
@@ -90,7 +87,7 @@ public class JobXEmployeeDAO implements IDAO<JobXEmployee> {
 	public void deleteByJobId(int jobId){
 		
 		try {
-			this.ps = this.con.prepareStatement("delete from jobxemployee where (jobid = ?)");
+			this.ps = this.conn.prepareStatement("delete from jobxemployee where (jobid = ?)");
 			this.ps.setInt(1, jobId);
 			rs = ps.executeQuery();
 		} catch (Exception e) {
@@ -101,7 +98,7 @@ public class JobXEmployeeDAO implements IDAO<JobXEmployee> {
 	public void deleteByEmployeeId(int employeeId){
 		
 		try {
-			this.ps = this.con.prepareStatement("delete from employeexwarehouse where (employeeid = ?)");
+			this.ps = this.conn.prepareStatement("delete from employeexwarehouse where (employeeid = ?)");
 			this.ps.setInt(1, employeeId);
 			rs = ps.executeQuery();
 		} catch (Exception e) {
@@ -113,7 +110,7 @@ public class JobXEmployeeDAO implements IDAO<JobXEmployee> {
 	public JobXEmployee find(int jobId) {
 		JobXEmployee jobXEmployee = new JobXEmployee();
 		try {
-			this.ps = con.prepareStatement("SELECT * FROM jobxemployee WHERE jobid=?");
+			this.ps = conn.prepareStatement("SELECT * FROM jobxemployee WHERE jobid=?");
 			this.ps.setInt(1, jobId);
 			rs = ps.executeQuery();
 
@@ -130,7 +127,7 @@ public class JobXEmployeeDAO implements IDAO<JobXEmployee> {
 	public int create(JobXEmployee j) {
 		int jobId = -1;
 		try {
-			ps = con.prepareStatement("INSERT INTO jobxemployee (jobid, employeeid) VALUES (?, ?) RETURNING jobid");
+			ps = conn.prepareStatement("INSERT INTO jobxemployee (jobid, employeeid) VALUES (?, ?) RETURNING jobid");
 			ps.setInt(1, j.getJobId());
 			ps.setInt(2, j.getEmployeeId());
 			rs = ps.executeQuery();
@@ -151,7 +148,7 @@ public class JobXEmployeeDAO implements IDAO<JobXEmployee> {
 	@Override
 	public void delete(int jobId) {
 		try {
-			ps = con.prepareStatement("DELETE FROM jobxemployee where jobId=?");
+			ps = conn.prepareStatement("DELETE FROM jobxemployee where jobId=?");
 			ps.setInt(1, jobId);
 			ps.executeUpdate();
 		} catch (SQLException e) {

@@ -1,8 +1,6 @@
 package DAO;
 
 import Model.Address;
-import Utils.PGConn;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,14 +16,14 @@ import java.util.logging.Logger;
  */
 public class AddressDAO implements IDAO<Address> {
 
-	Connection conn = PGConn.getConnection();
+	private Address address;
+	private List<Address> addresses;
+	private PreparedStatement ps;
+	private ResultSet rs;
 
 	@Override
 	public Address find(int id) {
-		Address address = new Address();
-		PreparedStatement ps;
-		ResultSet rs;
-
+		address = new Address();
 		try {
 			ps = conn.prepareStatement("SELECT * FROM address WHERE id=?");
 			ps.setInt(1, id);
@@ -49,10 +47,7 @@ public class AddressDAO implements IDAO<Address> {
 
 	@Override
 	public List<Address> findAll() {
-		List<Address> addresses = new ArrayList<>();
-		Address address;
-		PreparedStatement ps;
-		ResultSet rs;
+		addresses = new ArrayList<>();
 
 		try {
 			ps = conn.prepareStatement("SELECT * FROM address");
@@ -80,8 +75,6 @@ public class AddressDAO implements IDAO<Address> {
 	@Override
 	public int create(Address a) {
 		int id = -1;
-		PreparedStatement ps;
-		ResultSet rs;
 
 		try {
 			ps = conn.prepareStatement("INSERT INTO address (title, context, region, district, directions) VALUES (?, ?, ?, ?, ?) RETURNING id");
@@ -104,15 +97,14 @@ public class AddressDAO implements IDAO<Address> {
 
 	@Override
 	public void update(Address a) {
-		PreparedStatement ps;
-
 		try {
-			ps = conn.prepareStatement("UPDATE address SET title=?, context=?, region=?, district=?, directions=?");
+			ps = conn.prepareStatement("UPDATE address SET title=?, context=?, region=?, district=?, directions=? where id=?");
 			ps.setString(1, a.getTitle());
 			ps.setString(2, a.getContext());
 			ps.setString(3, a.getRegion());
 			ps.setString(4, a.getDistrict());
 			ps.setString(5, a.getDirections());
+			ps.setInt(6, a.getId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			Logger.getLogger(AddressDAO.class.getName()).log(Level.SEVERE, null, e);
@@ -121,8 +113,6 @@ public class AddressDAO implements IDAO<Address> {
 
 	@Override
 	public void delete(int id) {
-		PreparedStatement ps;
-
 		try {
 			ps = conn.prepareStatement("DELETE FROM address where id=?");
 			ps.setInt(1, id);
@@ -132,13 +122,9 @@ public class AddressDAO implements IDAO<Address> {
 			Logger.getLogger(AddressDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
-	
+
 	public List<Address> findByDirections(String directions) {
-		List<Address> addresses = new ArrayList<>();
-		Address address;
-		PreparedStatement ps;
-		ResultSet rs;
-		
+		addresses = new ArrayList<>();
 		try {
 			ps = conn.prepareStatement("SELECT * FROM address WHERE directions = ?");
 			ps.setString(1, directions);
@@ -158,13 +144,10 @@ public class AddressDAO implements IDAO<Address> {
 		}
 		return addresses;
 	}
-	
+
 	public List<Address> findByDistrict(String district) {
-		List<Address> addresses = new ArrayList<>();
-		Address address;
-		PreparedStatement ps;
-		ResultSet rs;
-		
+		addresses = new ArrayList<>();
+
 		try {
 			ps = conn.prepareStatement("SELECT * FROM address WHERE district = ?");
 			ps.setString(1, district);
@@ -184,13 +167,10 @@ public class AddressDAO implements IDAO<Address> {
 		}
 		return addresses;
 	}
-	
+
 	public List<Address> findByRegion(String region) {
-		List<Address> addresses = new ArrayList<>();
-		Address address;
-		PreparedStatement ps;
-		ResultSet rs;
-		
+		addresses = new ArrayList<>();
+
 		try {
 			ps = conn.prepareStatement("SELECT * FROM address WHERE region = ?");
 			ps.setString(1, region);
@@ -210,13 +190,10 @@ public class AddressDAO implements IDAO<Address> {
 		}
 		return addresses;
 	}
-	
+
 	public List<Address> findByContext(String context) {
-		List<Address> addresses = new ArrayList<>();
-		Address address;
-		PreparedStatement ps;
-		ResultSet rs;
-		
+		addresses = new ArrayList<>();
+
 		try {
 			ps = conn.prepareStatement("SELECT * FROM address WHERE context = ?");
 			ps.setString(1, context);
@@ -236,13 +213,10 @@ public class AddressDAO implements IDAO<Address> {
 		}
 		return addresses;
 	}
-	
+
 	public List<Address> findByTitle(String title) {
-		List<Address> addresses = new ArrayList<>();
-		Address address;
-		PreparedStatement ps;
-		ResultSet rs;
-		
+		addresses = new ArrayList<>();
+
 		try {
 			ps = conn.prepareStatement("SELECT * FROM address WHERE title = ?");
 			ps.setString(1, title);

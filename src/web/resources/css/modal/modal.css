@@ -63,8 +63,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 
 .modal-context {
-  height: fit-content;
+  height: 100%;
   padding: 1rem 1rem;
+	margin-bottom: 250px;
 }
 
 .modal-footer {

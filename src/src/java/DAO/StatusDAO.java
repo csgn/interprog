@@ -1,8 +1,6 @@
 package DAO;
 
 import Model.Status;
-import Utils.PGConn;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,9 +14,6 @@ import java.util.logging.Logger;
  * @author Metin
  */
 public class StatusDAO implements IDAO<Status> {
-
-	Connection conn = PGConn.getConnection();
-
 	@Override
 	public Status find(int id) {
 		Status status = new Status();
@@ -97,8 +92,9 @@ public class StatusDAO implements IDAO<Status> {
 		PreparedStatement ps;
 
 		try {
-			ps = conn.prepareStatement("UPDATE status SET name=?");
+			ps = conn.prepareStatement("UPDATE status SET name=? where id=?");
 			ps.setString(1, s.getName());
+			ps.setInt(2, s.getId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			Logger.getLogger(StatusDAO.class.getName()).log(Level.SEVERE, null, e);

@@ -31,7 +31,7 @@
 						<f:ajax execute="@this" render=":container-group" onevent="currentContent" />
 					</h:commandLink>
 				</li>
-				<c:if test="#{sessionBean.employee.roleId == 1}">
+				<c:if test="#{sessionBean.employee.role.id == 1}">
 					<li id="customers" class="nav-item">
 						<h:commandLink action="#{navigation.setContent('customers')}" class='nav-link'>
 							<ion-icon name="person-add" size="large"></ion-icon>
@@ -40,7 +40,7 @@
 						</h:commandLink>
 					</li>
 				</c:if>
-				<c:if test="#{sessionBean.employee.roleId == 1}">
+				<c:if test="#{sessionBean.employee.role.id == 1}">
 					<li id="employees" class="nav-item">
 						<h:commandLink action="#{navigation.setContent('employees')}" class='nav-link'>
 							<ion-icon name="people" size="large"></ion-icon>
@@ -49,7 +49,7 @@
 						</h:commandLink>
 					</li>
 				</c:if>
-				<c:if test="#{sessionBean.employee.roleId == 1}">
+				<c:if test="#{sessionBean.employee.role.id == 1}">
 					<li id="products" class="nav-item">
 						<h:commandLink action="#{navigation.setContent('products')}" class='nav-link'>
 							<ion-icon name="albums" size="large"></ion-icon>

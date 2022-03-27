@@ -57,6 +57,6 @@ public class Warehouse {
 
 	@Override
 	public String toString() {
-		return name;
+		return String.valueOf(id);
 	}
 }
