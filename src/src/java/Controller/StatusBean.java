@@ -34,8 +34,6 @@ public class StatusBean implements Serializable {
 	public void create() {
 		int id = dao.create(model);
 		this.clearModel();
-
-		System.out.println("CREATED ID: " + id);
 	}
 
 	public void delete(int id) {

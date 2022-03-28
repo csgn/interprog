@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ @author csgn
+-->
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+								xmlns:ui='http://xmlns.jcp.org/jsf/facelets'
+								xmlns:h="http://xmlns.jcp.org/jsf/html"
+								xmlns:md="http://xmlns.jcp.org/jsf/composite/composite/modal"
+								xmlns:fm="http://xmlns.jcp.org/jsf/composite/composite/form"
+								xmlns:ez="http://xmlns.jcp.org/jsf/composite/composite"
+								xmlns:dd="http://xmlns.jcp.org/jsf/composite/composite/dropdown"
+								xmlns:ib="http://xmlns.jcp.org/jsf/composite/composite/icon-button"
+								xmlns:f="http://xmlns.jcp.org/jsf/core"
+								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	<md:modal id="createStatusModal" title="ADD Status">
+		<h:panelGroup id="createProductModalGroup">
+			<h:form>
+				<div>
+					<ez:ip-input type="text" placeholder="status name" required="true" value="#{statusBean.model.name}"/>
+				</div>
+				<div>
+					<ez:ip-input type="color" placeholder="color" value="#{statusBean.model.color}" required="true" />
+				</div>
+				<div class="modal-footer">
+					<h:commandButton class="button" value="Save" action="#{statusBean.create}"/>
+				</div>
+			</h:form>
+		</h:panelGroup>
+	</md:modal>
+
+	<div class='container-header'>
+		<div class='container-title'>
+			<h1>STATUS</h1>
+		</div>
+		<div class='container-button'>
+			<h:form>
+				<h:commandButton class="button" onclick="toggle('createStatusModal', 0)" action="#{statusBean.clearModel}" value="CREATE A NEW STATUS">
+					<f:ajax execute="@this" render="createStatusModal:createStatusModalGroup" />
+				</h:commandButton>
+			</h:form>
+		</div>
+	</div>
+
+	<div class='container-content'>
+		<div class="container-row disable">
+			<div class="container-column">NAME</div>
+			<div class="container-column">COLOR</div>
+			<div class="container-column">OPTIONS</div>
+		</div>
+		<h:panelGroup id="egroup">
+			<c:forEach items="#{statusBean.findAll()}" var="e">
+				<div class='container-row'>
+					<div class='container-column'>#{e.name}</div>
+					<div class='container-column'>
+						<span style="background: #{e.color}; border-radius: 10px; width: 32px; height: 32px;"></span>
+					</div>
+					<div class="container-column">
+						<dd:dropdown>
+							<ib:icon-button name="ellipsis-vertical" />
+							<dd:dropdown-menu>
+								<h:form>
+									<dd:dropdown-item>
+										<h:commandLink onclick="toggle('emodal_#{e.id}', 0)" action="#{statusBean.editForm(e)}">							
+											<ion-icon name="pencil" size="large"></ion-icon>
+											<span>Edit</span>
+											<f:ajax execute="@this" render="emodal_#{e.id}:modalgroup" />
+										</h:commandLink>
+									</dd:dropdown-item>
+									<dd:dropdown-item>
+										<h:commandLink action="#{statusBean.delete(e.id)}">							
+											<ion-icon name="trash" size="large"></ion-icon>
+											<span>Delete</span>
+											<f:ajax execute="@this" render="egroup" />
+										</h:commandLink>
+									</dd:dropdown-item>
+								</h:form>
+							</dd:dropdown-menu>
+						</dd:dropdown>
+					</div>
+				</div>
+
+				<md:modal id="emodal_#{e.id}" title="Edit #{e}">
+					<h:panelGroup id="modalgroup">
+						<h:form>
+							<div>
+								<ez:ip-input type="text" placeholder="status name" required="true" value="#{statusBean.model.name}"/>
+							</div>
+							<div>
+								<ez:ip-input type="color" placeholder="color" value="#{statusBean.model.color}" required="true" />
+							</div>
+							<div class="modal-footer">
+								<h:commandButton class="button" action="#{statusBean.update}" value="Save">
+									<f:ajax execute="@this" render="egroup" />
+								</h:commandButton>
+							</div>
+						</h:form>
+					</h:panelGroup>
+				</md:modal>
+
+			</c:forEach>
+		</h:panelGroup>
+		<div class="container-footer">
+		</div>
+	</div>
+
+</ui:composition>

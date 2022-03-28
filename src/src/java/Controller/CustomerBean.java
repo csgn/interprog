@@ -46,15 +46,12 @@ public class CustomerBean implements Serializable {
 
 	public void create() {
 		int addressId = addressDAO.create(model.getAddress());
-		System.out.println("ADDRESS ID:" + addressId);
 		int modelId = -1;
 
 		if (addressId != -1) {
 			model.getAddress().setId(addressId);
 			modelId = dao.create(model);
 		}
-
-		System.out.println("CREATED ID: " + modelId);
 
 		this.clearModel();
 	}

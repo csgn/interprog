@@ -1,5 +1,8 @@
 package Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Metin
@@ -14,10 +17,15 @@ public class Employee {
 	private String password;
 	private Role role;
 
+	private List<Squad> employeeSquads;
+	private List<Warehouse> employeeWarehouses;
+
 	public Employee() {
+		employeeSquads = new ArrayList<>();
+		employeeWarehouses = new ArrayList<>();
 	}
 	
-	public Employee(int id, String name, String surname, String phone, String color, String password, Role role) {
+	public Employee(int id, String name, String surname, String phone, String color, String password, Role role, List<Squad> employeeSquads, List<Warehouse> employeeWarehouses) {
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
@@ -25,6 +33,8 @@ public class Employee {
 		this.color = color;
 		this.password = password;
 		this.role = role;
+		this.employeeSquads = employeeSquads;
+		this.employeeWarehouses = employeeWarehouses;
 	}
 
 	public int getId() {
@@ -81,6 +91,22 @@ public class Employee {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public List<Squad> getEmployeeSquads() {
+		return employeeSquads;
+	}
+
+	public void setEmployeeSquads(List<Squad> employeeSquads) {
+		this.employeeSquads = employeeSquads;
+	}
+
+	public List<Warehouse> getEmployeeWarehouses() {
+		return employeeWarehouses;
+	}
+
+	public void setEmployeeWarehouses(List<Warehouse> employeeWarehouses) {
+		this.employeeWarehouses = employeeWarehouses;
 	}
 
 	@Override

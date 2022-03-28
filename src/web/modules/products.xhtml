@@ -17,22 +17,19 @@
 		<h:panelGroup id="createProductModalGroup">
 			<h:form>
 				<div>
-					<ez:ip-input type="text" placeholder="product name" required="true" />
+					<ez:ip-input type="text" placeholder="product name" required="true" value="#{productBean.model.name}"/>
 				</div>
 				<div>
-					<ez:ip-input type="text" placeholder="serial number" required="true" />
+					<ez:ip-input type="text" placeholder="serial number" required="true" value="#{productBean.model.serialNumber}" />
 				</div>
 				<div>
-					<ez:ip-input type="text" placeholder="name" required="true" />
+					<ez:ip-input type="number" placeholder="purchase price" required="true" value="#{productBean.model.purchasePrice}" />
 				</div>
 				<div>
-					<ez:ip-input type="number" placeholder="purchase price" required="true" />
+					<ez:ip-input type="number" placeholder="sale price" required="true" value="#{productBean.model.salePrice}" />
 				</div>
 				<div>
-					<ez:ip-input type="number" placeholder="sale price" required="true" />
-				</div>
-				<div>
-					<ez:ip-input type="number" placeholder="quantity" required="true" />
+					<ez:ip-input type="number" placeholder="quantity" required="true" value="#{productBean.model.quantity}" />
 				</div>
 				<div>
 					<h:selectOneMenu value="#{productBean.model.warehouse}" converter="warehouseConverter">
@@ -40,17 +37,17 @@
 					</h:selectOneMenu>
 				</div>
 				<div>
-					<h:selectOneMenu>
+					<h:selectOneMenu value="#{productBean.model.unit}">
 						<f:selectItems value="#{['kg', 'number', 'box', 'dozen', 'barrel', 'package', 'bag', 'roll']}" var="c" itemLabel="#{c}" itemValue="#{c}" />
 					</h:selectOneMenu>
 				</div>
 				<div>
-					<h:selectOneMenu>
+					<h:selectOneMenu value="#{productBean.model.vat}">
 						<f:selectItems value="#{['18', '8', '1', '0']}" var="c" itemLabel="#{c}%" itemValue="#{c}" />
 					</h:selectOneMenu>
 				</div>
 				<div class="modal-footer">
-					<h:commandButton class="button" value="Save"/>
+					<h:commandButton class="button" value="Save" action="#{productBean.create}"/>
 				</div>
 			</h:form>
 		</h:panelGroup>
@@ -71,7 +68,6 @@
 
 	<div class='container-content'>
 		<div class="container-row disable">
-			<div class="container-column checkbox" style="width: 20px;"></div>
 			<div class="container-column">NAME</div>
 			<div class="container-column">SERIAL NUMBER</div>
 			<div class="container-column">UNIT</div>
@@ -85,7 +81,6 @@
 		<h:panelGroup id="egroup">
 			<c:forEach items="#{productBean.findAll()}" var="e">
 				<div class='container-row'>
-					<div class="container-column checkbox" style="width: 20px;"></div>
 					<div class='container-column'>#{e.name}</div>
 					<div class='container-column'>#{e.serialNumber}</div>
 					<div class='container-column'>#{e.unit}</div>
@@ -140,12 +135,12 @@
 								</h:selectOneMenu>
 							</div>
 							<div>
-								<h:selectOneMenu>
+								<h:selectOneMenu value="#{productBean.model.unit}">
 									<f:selectItems value="#{['kg', 'number', 'box', 'dozen', 'barrel', 'package', 'bag', 'roll']}" var="c" itemLabel="#{c}" itemValue="#{c}" />
 								</h:selectOneMenu>
 							</div>
 							<div>
-								<h:selectOneMenu>
+								<h:selectOneMenu value="#{productBean.model.vat}">
 									<f:selectItems value="#{['18', '8', '1', '0']}" var="c" itemLabel="#{c}%" itemValue="#{c}" />
 								</h:selectOneMenu>
 							</div>

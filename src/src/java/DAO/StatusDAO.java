@@ -29,7 +29,7 @@ public class StatusDAO implements IDAO<Status> {
 			while (rs.next()) {
 				status.setId(rs.getInt("id"));
 				status.setName(rs.getString("name"));
-				status.setName(rs.getString("color"));
+				status.setColor(rs.getString("color"));
 			}
 		} catch (SQLException e) {
 			Logger.getLogger(StatusDAO.class.getName()).log(Level.SEVERE, null, e);
@@ -92,9 +92,10 @@ public class StatusDAO implements IDAO<Status> {
 		PreparedStatement ps;
 
 		try {
-			ps = conn.prepareStatement("UPDATE status SET name=? where id=?");
+			ps = conn.prepareStatement("UPDATE status SET name=?, color=? where id=?");
 			ps.setString(1, s.getName());
-			ps.setInt(2, s.getId());
+			ps.setString(2, s.getColor());
+			ps.setInt(3, s.getId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			Logger.getLogger(StatusDAO.class.getName()).log(Level.SEVERE, null, e);

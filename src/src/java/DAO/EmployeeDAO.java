@@ -1,6 +1,8 @@
 package DAO;
 
 import Model.Employee;
+import Model.Squad;
+import Model.Warehouse;
 import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +22,8 @@ public class EmployeeDAO implements IDAO<Employee> {
 	private PreparedStatement ps;
 	private ResultSet rs;
 	private RoleDAO roleDAO;
-	private JobXEmployeeDAO jobXEmployeeDAO;
+	private SquadDAO squadDAO;
+	private WarehouseDAO warehouseDAO;
 
 	@Override
 	public Employee find(int id) {
@@ -65,7 +68,9 @@ public class EmployeeDAO implements IDAO<Employee> {
 								rs.getString("phone"),
 								rs.getString("color"),
 								rs.getString("password"),
-								this.getRoleDAO().find(rs.getInt("roleid"))
+								this.getRoleDAO().find(rs.getInt("roleid")),
+								getEmployeeSquads(rs.getInt("id")),
+								getEmployeeWarehouses(rs.getInt("id"))
 				);
 
 				employees.add(employee);
@@ -116,6 +121,9 @@ public class EmployeeDAO implements IDAO<Employee> {
 		} catch (SQLException ex) {
 			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
 		}
+
+		updateEmployeeSquads(e.getId(), e.getEmployeeSquads());;
+		updateEmployeeWarehouses(e.getId(), e.getEmployeeWarehouses());
 	}
 
 	@Override
@@ -145,7 +153,10 @@ public class EmployeeDAO implements IDAO<Employee> {
 								rs.getString("phone"),
 								rs.getString("color"),
 								rs.getString("password"),
-								this.getRoleDAO().find(rs.getInt("roleId")));
+								getRoleDAO().find(rs.getInt("roleId")),
+								getEmployeeSquads(rs.getInt("id")),
+								getEmployeeWarehouses(rs.getInt("id"))
+				);
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -171,6 +182,63 @@ public class EmployeeDAO implements IDAO<Employee> {
 		return false;
 	}
 
+	public void updateEmployeeSquads(int employeeId, List<Squad> squads) {
+		PreparedStatement ps;
+
+		try {
+			ps = conn.prepareStatement("delete from employeexsquad where employeeId=?");
+			ps.setInt(1, employeeId);
+			ps.executeUpdate();
+		} catch (SQLException ex) {
+			Logger.getLogger(SquadDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		try {
+			for (var squad : squads) {
+				ps = conn.prepareStatement("insert into employeexsquad (employeeid, squadid) values (?, ?)");
+				ps.setInt(1, employeeId);
+				ps.setInt(2, squad.getId());
+				ps.executeUpdate();
+			}
+		} catch (SQLException e) {
+			Logger.getLogger(SquadDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+	}
+
+	public List<Squad> getEmployeeSquads(int employeeId) {
+		List<Squad> employeeSquads = new ArrayList<>();
+		PreparedStatement ps;
+		ResultSet rs;
+
+		try {
+			ps = conn.prepareStatement("select * from employeexsquad where employeeid = ?");
+			ps.setInt(1, employeeId);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				employeeSquads.add(getSquadDAO().find(rs.getInt("squadId")));
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(SquadDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		return employeeSquads;
+	}
+
+	public void createEmployeeSquad(int employeeId, int squadId) {
+		PreparedStatement ps;
+		ResultSet rs;
+
+		try {
+			ps = conn.prepareStatement("insert into (employeeid, squadId) values (?, ?)");
+			ps.setInt(1, employeeId);
+			ps.setInt(2, squadId);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			Logger.getLogger(SquadDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+	}
+
 	public RoleDAO getRoleDAO() {
 		if (roleDAO == null) {
 			roleDAO = new RoleDAO();
@@ -178,58 +246,77 @@ public class EmployeeDAO implements IDAO<Employee> {
 
 		return roleDAO;
 	}
-	
-	public JobXEmployeeDAO getJobXEmployeeDAO() {
-		if (jobXEmployeeDAO == null) {
-			jobXEmployeeDAO = new JobXEmployeeDAO();
-		}
-		
-		return jobXEmployeeDAO;
+
+	public SquadDAO getSquadDAO() {
+		if (squadDAO == null)
+			squadDAO = new SquadDAO();
+
+		return squadDAO;
 	}
 
-	public List<Employee> getJobEmployees(int jobId) {
-		List<Employee> jobEmployees = new ArrayList<>();
+	public WarehouseDAO getWarehouseDAO() {
+		if (warehouseDAO == null)
+			warehouseDAO = new WarehouseDAO();
+
+		return warehouseDAO;
+	}
+
+		public void updateEmployeeWarehouses(int employeeId, List<Warehouse> warehouses) {
+		PreparedStatement ps;
 
 		try {
-			ps = conn.prepareStatement("select * from jobxemployee where jobid = ?");
-			ps.setInt(1, jobId);
-			rs = ps.executeQuery();
-			
-			while (rs.next()) {
-				jobEmployees.add(this.find((int) rs.getLong("employeeId")));
-			}
-			System.out.println(jobEmployees);
-
-			System.out.println(jobEmployees.size());
+			ps = conn.prepareStatement("delete from employeexwarehouse where employeeId=?");
+			ps.setInt(1, employeeId);
+			ps.executeUpdate();
 		} catch (SQLException ex) {
-			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(WarehouseDAO.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
-		return jobEmployees;
-	}
-	
-	public void createJobEmployee(int jobId, int employeeId) {
 		try {
-			ps = conn.prepareStatement("insert into jobxemployee (jobid, employeeid) values (?, ?)");
-			ps.setInt(1, jobId);
-			ps.setInt(2, employeeId);
-			ps.executeQuery();
-		} catch (SQLException e) {
-			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, e);
-		}
-	}
-	
-	public void updateJobEmployee(int jobId, List<Employee> employees) {
-		try {
-			getJobXEmployeeDAO().delete(jobId);
-			for (var employee : employees) {
-				ps = conn.prepareStatement("insert into jobxemployee (jobid, employeeid) values (?, ?)");
-				ps.setInt(1, jobId);
-				ps.setInt(2, employee.getId());
+			for (var warehouse : warehouses) {
+				ps = conn.prepareStatement("insert into employeexwarehouse (employeeid, warehouseid) values (?, ?)");
+				ps.setInt(1, employeeId);
+				ps.setInt(2, warehouse.getId());
+				ps.executeUpdate();
 			}
-			ps.executeQuery();
 		} catch (SQLException e) {
-			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(WarehouseDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
+
+	public List<Warehouse> getEmployeeWarehouses(int employeeId) {
+		List<Warehouse> employeeWarehouses = new ArrayList<>();
+		PreparedStatement ps;
+		ResultSet rs;
+
+		try {
+			ps = conn.prepareStatement("select * from employeexwarehouse where employeeid = ?");
+			ps.setInt(1, employeeId);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				employeeWarehouses.add(getWarehouseDAO().find(rs.getInt("warehouseId")));
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(WarehouseDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		return employeeWarehouses;
+	}
+
+	public void createEmployeeWarehouse(int employeeId, int warehouseId) {
+		PreparedStatement ps;
+		ResultSet rs;
+
+		try {
+			ps = conn.prepareStatement("insert into (employeeid, warehouseId) values (?, ?)");
+			ps.setInt(1, employeeId);
+			ps.setInt(2, warehouseId);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			Logger.getLogger(WarehouseDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+	}
+
+
 }

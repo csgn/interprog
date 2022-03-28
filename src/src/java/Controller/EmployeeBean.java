@@ -16,13 +16,11 @@ import java.util.List;
 @SessionScoped
 public class EmployeeBean implements Serializable {
 	private Employee model;
-	private EmployeeDAO dao;
-	private boolean isLoading;
+	private final EmployeeDAO dao;
 
 	public EmployeeBean() {
 		model = new Employee();
 		dao = new EmployeeDAO();
-		isLoading = false;
 	}
 
 	public Employee find(int id) {
@@ -35,9 +33,16 @@ public class EmployeeBean implements Serializable {
 
 	public void create() {
 		int id = dao.create(model);
-		this.clearModel();
 
-		System.out.println("CREATED ID: " + id);
+		if (id == -1) return;
+
+		for (var s : model.getEmployeeSquads())
+			dao.createEmployeeSquad(id, s.getId());
+
+		for (var w : model.getEmployeeWarehouses())
+			dao.createEmployeeWarehouse(id, w.getId());
+
+		this.clearModel();
 	}
 
 	public void delete(int id) {
