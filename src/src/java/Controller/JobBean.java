@@ -3,10 +3,13 @@ package Controller;
 import DAO.EmployeeDAO;
 import DAO.JobDAO;
 import DAO.ProductDAO;
+import Model.Employee;
 import Model.Job;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import static java.time.LocalDate.now;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,12 +43,13 @@ public class JobBean implements Serializable {
 	}
 
 	public void create() {
-		//int id = dao.create(model);
+		int id = dao.create(model);
+	
+		if (id == -1) return;
 
-		//if (id == -1) return;
-
-		//System.out.println("id: " + id);
-		//this.clearModel();
+		for (Employee e : model.getJobEmployees()) {
+			employeeDAO.createJobEmployee(id, e.getId());
+		}
 	}
 
 	public void delete(int id) {

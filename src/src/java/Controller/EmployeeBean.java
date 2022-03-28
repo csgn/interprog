@@ -17,10 +17,12 @@ import java.util.List;
 public class EmployeeBean implements Serializable {
 	private Employee model;
 	private EmployeeDAO dao;
+	private boolean isLoading;
 
 	public EmployeeBean() {
 		model = new Employee();
 		dao = new EmployeeDAO();
+		isLoading = false;
 	}
 
 	public Employee find(int id) {
@@ -59,4 +61,5 @@ public class EmployeeBean implements Serializable {
 	public void editForm(Employee e) {
 		model = e;
 	}
+
 }

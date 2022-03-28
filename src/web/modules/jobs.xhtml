@@ -12,21 +12,26 @@
 								xmlns:dd="http://xmlns.jcp.org/jsf/composite/composite/dropdown"
 								xmlns:ib="http://xmlns.jcp.org/jsf/composite/composite/icon-button"
 								xmlns:f="http://xmlns.jcp.org/jsf/core"
-								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+								xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 	<md:modal id="createJobModal" title="Create New Job">
 		<h:panelGroup id="createJobModalGroup">
 			<h:form>
 				<div>
-					<h:selectOneMenu>
+					<h:selectOneMenu value="#{jobBean.model.customer}" converter="customerConverter">
 						<f:selectItems value="#{customerBean.findAll()}" var="c" itemLabel="#{c.name} #{c.surname}" itemValue="#{c}" />
 					</h:selectOneMenu>
-				</div>	
-				<div>
-					<textarea style="min-width: 500px; max-width: 500px; min-height: 120px; max-height: 120px;" />
 				</div>
 
 				<div>
-					<input type='date' />
+					<h:inputTextarea value="#{jobBean.model.description}" />
+				</div>
+
+
+				<div>
+					<h:inputText p:type="date" p:min="2022-03-28" p:value="#{jobBean.model.date}">
+						<f:convertDateTime pattern="yyyy-MM-dd"/>
+					</h:inputText>
 				</div>
 
 				<div>
@@ -34,7 +39,6 @@
 						<f:selectItems value="#{productBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 					</h:selectManyMenu>
 				</div>
-
 
 
 				<div>
@@ -117,37 +121,32 @@
 					<h:panelGroup id="modalgroup">
 						<h:form>
 							<div>
-								<h:selectOneMenu>
+								<h:selectOneMenu value="#{jobBean.model.customer}" converter="customerConverter">
 									<f:selectItems value="#{customerBean.findAll()}" var="c" itemLabel="#{c.name} #{c.surname}" itemValue="#{c}" />
 								</h:selectOneMenu>
-							</div>	
-							<div>
-								<textarea style="min-width: 500px; max-width: 500px; min-height: 120px; max-height: 120px;" />
 							</div>
 
 							<div>
-								<input type='date' />
+								<h:inputTextarea value="#{jobBean.model.description}" />
+							</div>
+
+
+							<div>
+								<h:inputText p:type="date" p:min="2022-03-28" p:value="#{jobBean.model.date}">
+									<f:convertDateTime pattern="yyyy-MM-dd"/>
+								</h:inputText>
 							</div>
 
 							<div>
-								<h:selectManyMenu style='height: 50px; width: 150px;'>
+								<h:selectManyMenu style='height: 50px; width: 150px;' value="#{jobBean.model.jobProducts}">
 									<f:selectItems value="#{productBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 								</h:selectManyMenu>
 							</div>
 
-
-
 							<div>
-								<h:selectManyMenu style='height: 50px; width: 150px'>
+								<h:selectManyMenu style='height: 50px; width: 150px' value="#{jobBean.model.jobEmployees}">
 									<f:selectItems value="#{employeeBean.findAll()}" var="c" itemLabel="#{c.name} #{c.surname}" itemValue="#{c}" />
 								</h:selectManyMenu>
-							</div>
-
-
-							<div class="modal-footer">
-								<h:commandButton class="button" action="#{jobBean.update}" value="Save">
-									<f:ajax execute="@this" render="egroup" />
-								</h:commandButton>
 							</div>
 						</h:form>
 					</h:panelGroup>

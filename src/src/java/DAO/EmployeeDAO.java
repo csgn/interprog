@@ -181,13 +181,17 @@ public class EmployeeDAO implements IDAO<Employee> {
 	public List<Employee> getJobEmployees(int jobId) {
 		List<Employee> jobEmployees = new ArrayList<>();
 
+		System.out.println("JOBID" + jobId);
+
 		try {
 			ps = conn.prepareStatement("select * from jobxemployee where jobId = ?");
 			ps.setInt(1, jobId);
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				jobEmployees.add(this.find(rs.getInt("employeeId")));
+				int id = rs.getInt("employeeid");
+				Employee e = this.find(id);
+				jobEmployees.add(e);
 			}
 		} catch (SQLException ex) {
 			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);

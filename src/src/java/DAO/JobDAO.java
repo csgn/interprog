@@ -70,8 +70,8 @@ public class JobDAO implements IDAO<Job> {
 				getStatusDAO().find(rs.getInt("statusId")),
 				getEmployeeDAO().find(rs.getInt("ownerId")),
 				getCustomerDAO().find(rs.getInt("customerId")),
-				getEmployeeDAO().getJobEmployees(job.getId()),
-				getProductDAO().getJobProducts(job.getId()));
+				getEmployeeDAO().getJobEmployees(rs.getInt("id")),
+				getProductDAO().getJobProducts(rs.getInt("id")));
 				jobs.add(job);
 			}
 		} catch (SQLException ex) {
@@ -86,13 +86,10 @@ public class JobDAO implements IDAO<Job> {
 		int id = -1;
 
 		try {
-			ps = conn.prepareStatement("INSERT INTO job (creationdate, description, date, statusid, ownerid, customerid) VALUES (?, ?, ?, ?, ?, ?) RETURNING id");
-			ps.setDate(1, (Date) j.getCreationDate());
-			ps.setString(2, j.getDescription());
-			ps.setDate(3, (Date) j.getDate());
-			ps.setInt(4, j.getStatus().getId());
-			ps.setInt(5, j.getOwner().getId());
-			ps.setInt(6, j.getCustomer().getId());
+			ps = conn.prepareStatement("INSERT INTO job (description, date, customerid) VALUES (?, ?, ?) RETURNING id");
+			ps.setString(1, j.getDescription());
+			ps.setDate(2, new java.sql.Date(j.getDate().getTime()));
+			ps.setInt(3, j.getCustomer().getId());
 			rs = ps.executeQuery();
 
 			while (rs.next()) {

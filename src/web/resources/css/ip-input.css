@@ -6,7 +6,8 @@
 .ip-input {
   width: 100%;
 	position: relative;
-  height: 57px;;
+  height: 57px;
+	;
   outline: none;
 	padding: 1.1rem 1.1rem;
   color: var(--text-secondary);
@@ -45,4 +46,10 @@
   top: -4.1rem;
   left: 0.4rem;
   background-color: var(--bg-primary);
+}
+
+.ip-input[required="true"]:not(:focus),
+.ip-input[required="true"]:not(:focus):valid ~ .ip-input_placeholder::before {
+	content: "*";
+	color: red;
 }
