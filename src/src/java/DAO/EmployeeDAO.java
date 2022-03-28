@@ -191,13 +191,16 @@ public class EmployeeDAO implements IDAO<Employee> {
 		List<Employee> jobEmployees = new ArrayList<>();
 
 		try {
-			ps = conn.prepareStatement("select * from jobxemployee where jobId = ?");
+			ps = conn.prepareStatement("select * from jobxemployee where jobid = ?");
 			ps.setInt(1, jobId);
 			rs = ps.executeQuery();
-
+			
 			while (rs.next()) {
-				jobEmployees.add(this.find(rs.getInt("employeeId")));
+				jobEmployees.add(this.find((int) rs.getLong("employeeId")));
 			}
+			System.out.println(jobEmployees);
+
+			System.out.println(jobEmployees.size());
 		} catch (SQLException ex) {
 			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -216,13 +219,13 @@ public class EmployeeDAO implements IDAO<Employee> {
 		}
 	}
 	
-	public void updateJobEmployee(int jobId, List<Integer> employeeIds) {
+	public void updateJobEmployee(int jobId, List<Employee> employees) {
 		try {
 			getJobXEmployeeDAO().delete(jobId);
-			for (Integer id : employeeIds) {
+			for (var employee : employees) {
 				ps = conn.prepareStatement("insert into jobxemployee (jobid, employeeid) values (?, ?)");
 				ps.setInt(1, jobId);
-				ps.setInt(2, id);
+				ps.setInt(2, employee.getId());
 			}
 			ps.executeQuery();
 		} catch (SQLException e) {

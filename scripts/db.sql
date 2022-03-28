@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS Role
     name varchar(255) UNIQUE NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS AccountType
+CREATE TABLE IF NOT EXISTS CustomerType
 (
     id   serial UNIQUE PRIMARY KEY,
     name varchar(255) UNIQUE NOT NULL
@@ -54,37 +54,27 @@ CREATE TABLE IF NOT EXISTS Status
 
 CREATE TABLE IF NOT EXISTS Customer
 (
-    id            serial UNIQUE  NOT NULL,
-    accountTypeId int            NOT NULL,
-    phone         varchar UNIQUE NOT NULL,
-    email         varchar UNIQUE NOT NULL,
-    addressId     int,
+    id                serial UNIQUE  NOT NULL,
+    name              varchar,
+    surname           varchar,
+    customerTypeId     int            NOT NULL,
+    phone             varchar UNIQUE NOT NULL,
+    email             varchar UNIQUE NOT NULL,
+    companyTitle      varchar,
+    taxNumber         varchar(255),
+    taxAdministration varchar(255),
+    addressId         int,
     CONSTRAINT fk_address
         FOREIGN KEY (addressId)
             REFERENCES Address (id)
             ON UPDATE CASCADE
             ON DELETE CASCADE,
-    CONSTRAINT fk_accountType
-        FOREIGN KEY (accountTypeId)
-            REFERENCES AccountType (id)
+    CONSTRAINT fk_CustomerType
+        FOREIGN KEY (customerTypeId)
+            REFERENCES CustomerType (id)
             ON UPDATE CASCADE,
     PRIMARY KEY (id)
 );
-
-CREATE TABLE IF NOT EXISTS CorporateCustomer
-(
-    companyTitle      varchar NOT NULL,
-    authorizedPerson  varchar(255),
-    taxNumber         varchar(255),
-    taxAdministration varchar(255)
-) INHERITS (Customer);
-
-CREATE TABLE IF NOT EXISTS IndividualCustomer
-(
-    companyTitle varchar,
-    name         varchar NOT NULL,
-    surname      varchar NOT NULL
-) INHERITS (Customer);
 
 CREATE TABLE IF NOT EXISTS Employee
 (
@@ -104,10 +94,9 @@ CREATE TABLE IF NOT EXISTS Job
     creationDate timestamp     NOT NULL DEFAULT NOW(),
     description  varchar       NOT NULL,
     date         timestamp     NOT NULL,
-    files        varchar[],
     statusId     int           NOT NULL DEFAULT 1,
     ownerId      int           NOT NULL DEFAULT 1,
-    customerId   int,
+    customerId   int           NOT NULL,
     FOREIGN KEY (statusId)
         REFERENCES Status (id)
         ON UPDATE CASCADE,
@@ -129,9 +118,7 @@ CREATE TABLE IF NOT EXISTS Product
     purchasePrice int     NOT NULL,
     salePrice     int     NOT NULL,
     vat           int     NOT NULL,
-    tags          varchar[],
     quantity      int,
-    files         varchar[],
     warehouseId   int,
     FOREIGN KEY (warehouseId) REFERENCES Warehouse (id)
 );
@@ -217,7 +204,7 @@ CREATE TABLE IF NOT EXISTS EmployeeXWarehouse
 /* END MANY TO MANY TABLES */
 
 
-/* ACTIVITY FUNCTIONS */
+/* ACTIVITY FUNCTIONS
 CREATE OR REPLACE FUNCTION add_activity()
     RETURNS TRIGGER
     LANGUAGE plpgsql
@@ -270,3 +257,4 @@ CREATE TRIGGER __add_activity__
     FOR EACH ROW
 EXECUTE PROCEDURE add_activity();
 /* END ACTIVITY TRIGGERS */
+*/
