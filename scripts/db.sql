@@ -258,3 +258,19 @@ CREATE TRIGGER __add_activity__
 EXECUTE PROCEDURE add_activity();
 /* END ACTIVITY TRIGGERS */
 */
+
+INSERT INTO role (name)
+VALUES ('owner'),
+       ('user');
+
+INSERT INTO customertype (name)
+VALUES ('corporate'),
+       ('individual');
+
+INSERT INTO status (name, color)
+VALUES ('open', '#4f4f4f'),
+       ('close', '#ff5959'),
+       ('done', '#82ff69');
+
+INSERT INTO employee (name, surname, phone, color, password, roleid)
+VALUES ('sergen', 'cepoglu', '05398463298', '#000000', '123', 1);
