@@ -59,19 +59,18 @@ public class JobDAO implements IDAO<Job> {
 		try {
 			ps = conn.prepareStatement("SELECT * FROM job");
 			rs = ps.executeQuery();
-			job = new Job();
 
 			while (rs.next()) {
 				job = new Job(
-				rs.getInt("id"),
-				rs.getDate("creationDate"),
-				rs.getString("description"),
-				rs.getDate("date"),
-				getStatusDAO().find(rs.getInt("statusId")),
-				getEmployeeDAO().find(rs.getInt("ownerId")),
-				getCustomerDAO().find(rs.getInt("customerId")),
-				getEmployeeDAO().getJobEmployees(rs.getInt("id")),
-				getProductDAO().getJobProducts(rs.getInt("id")));
+								rs.getInt("id"),
+								rs.getDate("creationDate"),
+								rs.getString("description"),
+								rs.getDate("date"),
+								getStatusDAO().find(rs.getInt("statusId")),
+								getEmployeeDAO().find(rs.getInt("ownerId")),
+								getCustomerDAO().find(rs.getInt("customerId")),
+								getEmployeeDAO().getJobEmployees(rs.getInt("id")),
+								getProductDAO().getJobProducts(rs.getInt("id")));
 				jobs.add(job);
 			}
 		} catch (SQLException ex) {
@@ -105,9 +104,9 @@ public class JobDAO implements IDAO<Job> {
 	public void update(Job j) {
 		try {
 			ps = conn.prepareStatement("UPDATE job SET creationdate=?,description=?,date=?,statusid=?,ownerid=?, customerid=? where id=?");
-			ps.setDate(1, (Date) j.getCreationDate());
+			ps.setDate(1, new java.sql.Date(j.getCreationDate().getTime()));
 			ps.setString(2, j.getDescription());
-			ps.setDate(3, (Date) j.getDate());
+			ps.setDate(3, new java.sql.Date(j.getDate().getTime()));
 			ps.setInt(4, j.getStatus().getId());
 			ps.setInt(5, j.getOwner().getId());
 			ps.setInt(6, j.getCustomer().getId());
@@ -131,30 +130,34 @@ public class JobDAO implements IDAO<Job> {
 	}
 
 	public StatusDAO getStatusDAO() {
-		if (statusDAO == null)
+		if (statusDAO == null) {
 			statusDAO = new StatusDAO();
+		}
 
 		return statusDAO;
 	}
 
 	public EmployeeDAO getEmployeeDAO() {
-		if (employeeDAO == null)
+		if (employeeDAO == null) {
 			employeeDAO = new EmployeeDAO();
+		}
 
 		return employeeDAO;
 	}
 
 	public CustomerDAO getCustomerDAO() {
-		if (customerDAO == null)
+		if (customerDAO == null) {
 			customerDAO = new CustomerDAO();
+		}
 
 		return customerDAO;
 	}
 
 	public ProductDAO getProductDAO() {
-		if (productDAO == null)
+		if (productDAO == null) {
 			productDAO = new ProductDAO();
-		
+		}
+
 		return productDAO;
 	}
 

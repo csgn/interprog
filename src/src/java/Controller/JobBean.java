@@ -20,6 +20,7 @@ import java.util.List;
 @Named("jobBean")
 @SessionScoped
 public class JobBean implements Serializable {
+	private List<Job> modelList;
 
 	private Job model;
 	private JobDAO dao;
@@ -39,7 +40,9 @@ public class JobBean implements Serializable {
 	}
 
 	public List<Job> findAll() {
-		return dao.findAll();
+		if (modelList == null)
+			modelList = dao.findAll();
+		return modelList;
 	}
 
 	public void create() {
@@ -59,6 +62,8 @@ public class JobBean implements Serializable {
 
 	public void update() {
 		dao.update(model);
+
+		employeeDAO.updateJobEmployee(model.getId(), model.getJobEmployees());
 		this.clearModel();
 	}
 

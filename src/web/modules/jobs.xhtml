@@ -47,7 +47,6 @@
 					</h:selectManyMenu>
 				</div>
 
-
 				<div class="modal-footer">
 					<h:commandButton class="button" action="#{jobBean.create}" value="Save"/>
 				</div>
@@ -147,6 +146,12 @@
 								<h:selectManyMenu style='height: 50px; width: 150px' value="#{jobBean.model.jobEmployees}">
 									<f:selectItems value="#{employeeBean.findAll()}" var="c" itemLabel="#{c.name} #{c.surname}" itemValue="#{c}" />
 								</h:selectManyMenu>
+							</div>
+
+							<div class="modal-footer">
+								<h:commandButton class="button" action="#{jobBean.update}" value="Save">
+									<f:ajax execute="@this" render="egroup" />
+								</h:commandButton>
 							</div>
 						</h:form>
 					</h:panelGroup>
