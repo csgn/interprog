@@ -20,6 +20,7 @@ public class EmployeeDAO implements IDAO<Employee> {
 	private PreparedStatement ps;
 	private ResultSet rs;
 	private RoleDAO roleDAO;
+	private JobXEmployeeDAO jobXEmployeeDAO;
 
 	@Override
 	public Employee find(int id) {
@@ -177,6 +178,14 @@ public class EmployeeDAO implements IDAO<Employee> {
 
 		return roleDAO;
 	}
+	
+	public JobXEmployeeDAO getJobXEmployeeDAO() {
+		if (jobXEmployeeDAO == null) {
+			jobXEmployeeDAO = new JobXEmployeeDAO();
+		}
+		
+		return jobXEmployeeDAO;
+	}
 
 	public List<Employee> getJobEmployees(int jobId) {
 		List<Employee> jobEmployees = new ArrayList<>();
@@ -202,7 +211,20 @@ public class EmployeeDAO implements IDAO<Employee> {
 			ps.setInt(1, jobId);
 			ps.setInt(2, employeeId);
 			ps.executeQuery();
-			
+		} catch (SQLException e) {
+			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+	}
+	
+	public void updateJobEmployee(int jobId, List<Integer> employeeIds) {
+		try {
+			getJobXEmployeeDAO().delete(jobId);
+			for (Integer id : employeeIds) {
+				ps = conn.prepareStatement("insert into jobxemployee (jobid, employeeid) values (?, ?)");
+				ps.setInt(1, jobId);
+				ps.setInt(2, id);
+			}
+			ps.executeQuery();
 		} catch (SQLException e) {
 			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
