@@ -273,4 +273,4 @@ VALUES ('open', '#4f4f4f'),
        ('done', '#82ff69');
 
 INSERT INTO employee (name, surname, phone, color, password, roleid)
-VALUES ('sergen', 'cepoglu', '05398463298', '#000000', '123', 1);
+VALUES ('admin', 'admin', '0', '#000000', 'admin', 1);
