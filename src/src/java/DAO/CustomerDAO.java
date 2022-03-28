@@ -49,6 +49,7 @@ public class CustomerDAO implements IDAO<Customer> {
 		return customer;
 	}
 
+	@Override
 	public List<Customer> findAll() {
 
 		customers = new ArrayList<>();
@@ -72,6 +73,7 @@ public class CustomerDAO implements IDAO<Customer> {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+
 		return customers;
 	}
 

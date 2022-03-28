@@ -1,8 +1,10 @@
 package DAO;
 
+import static DAO.IDAO.conn;
+import Model.Employee;
 import Model.Job;
+import Model.Product;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -69,8 +71,8 @@ public class JobDAO implements IDAO<Job> {
 								getStatusDAO().find(rs.getInt("statusId")),
 								getEmployeeDAO().find(rs.getInt("ownerId")),
 								getCustomerDAO().find(rs.getInt("customerId")),
-								getEmployeeDAO().getJobEmployees(rs.getInt("id")),
-								getProductDAO().getJobProducts(rs.getInt("id")));
+								getJobEmployees(rs.getInt("id")),
+								getJobProducts(rs.getInt("id")));
 				jobs.add(job);
 			}
 		} catch (SQLException ex) {
@@ -102,6 +104,7 @@ public class JobDAO implements IDAO<Job> {
 
 	@Override
 	public void update(Job j) {
+		PreparedStatement ps;
 		try {
 			ps = conn.prepareStatement("UPDATE job SET creationdate=?,description=?,date=?,statusid=?,ownerid=?, customerid=? where id=?");
 			ps.setDate(1, new java.sql.Date(j.getCreationDate().getTime()));
@@ -115,6 +118,9 @@ public class JobDAO implements IDAO<Job> {
 		} catch (SQLException ex) {
 			Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
 		}
+
+		updateJobEmployee(j.getId(), j.getJobEmployees());
+		updateJobProduct(j.getId(), j.getJobProducts());
 	}
 
 	@Override
@@ -126,6 +132,118 @@ public class JobDAO implements IDAO<Job> {
 			ps.executeUpdate();
 		} catch (SQLException ex) {
 			Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+	public void updateJobEmployee(int jobId, List<Employee> employees) {
+		PreparedStatement ps;
+
+		try {
+			ps = conn.prepareStatement("delete from jobxemployee where jobId=?");
+			ps.setInt(1, jobId);
+			ps.executeUpdate();
+		} catch (SQLException ex) {
+			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		try {
+			for (var employee : employees) {
+				ps = conn.prepareStatement("insert into jobxemployee (jobid, employeeid) values (?, ?)");
+				ps.setInt(1, jobId);
+				ps.setInt(2, employee.getId());
+				ps.executeUpdate();
+			}
+		} catch (SQLException e) {
+			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+	}
+
+	public List<Employee> getJobEmployees(int jobId) {
+		List<Employee> jobEmployees = new ArrayList<>();
+		PreparedStatement ps;
+		ResultSet rs;
+
+		try {
+			ps = conn.prepareStatement("select * from jobxemployee where jobid = ?");
+			ps.setInt(1, jobId);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				jobEmployees.add(getEmployeeDAO().find(rs.getInt("employeeId")));
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		return jobEmployees;
+	}
+
+	public void createJobEmployee(int jobId, int employeeId) {
+		PreparedStatement ps;
+		ResultSet rs;
+
+		try {
+			ps = conn.prepareStatement("insert into jobxemployee (jobid, employeeid) values (?, ?)");
+			ps.setInt(1, jobId);
+			ps.setInt(2, employeeId);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+	}
+
+	public List<Product> getJobProducts(int jobId) {
+		List<Product> jobProducts = new ArrayList<>();
+
+		try {
+			ps = conn.prepareStatement("select * from jobxproduct where jobId = ?");
+			ps.setInt(1, jobId);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				jobProducts.add(getProductDAO().find(rs.getInt("productId")));
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		return jobProducts;
+	}
+
+	public void createJobProduct(int jobId, int productId) {
+		PreparedStatement ps;
+		ResultSet rs;
+
+		try {
+			ps = conn.prepareStatement("insert into jobxproduct (jobid, productid) values (?, ?)");
+			ps.setInt(1, jobId);
+			ps.setInt(2, productId);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+	}
+
+		public void updateJobProduct(int jobId, List<Product> products) {
+		PreparedStatement ps;
+
+		try {
+			ps = conn.prepareStatement("delete from jobxproduct where jobId=?");
+			ps.setInt(1, jobId);
+			ps.executeUpdate();
+		} catch (SQLException ex) {
+			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		try {
+			for (var product : products) {
+				ps = conn.prepareStatement("insert into jobxproduct (jobid, productid) values (?, ?)");
+				ps.setInt(1, jobId);
+				ps.setInt(2, product.getId());
+				ps.executeUpdate();
+			}
+		} catch (SQLException e) {
+			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 

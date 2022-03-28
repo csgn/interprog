@@ -144,21 +144,5 @@ public class ProductDAO implements IDAO<Product> {
 		return warehouseDAO;
 	}
 
-	public List<Product> getJobProducts(int jobId) {
-		List<Product> jobProducts = new ArrayList<>();
-	
-		try {
-			ps = conn.prepareStatement("select * from jobxproduct where jobId = ?");
-			ps.setInt(1, jobId);
-			rs = ps.executeQuery();
 
-			while (rs.next()) {
-				jobProducts.add(this.find(rs.getInt("productId")));
-			}
-		} catch (SQLException ex) {
-			Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-		return jobProducts;
-	}
 }

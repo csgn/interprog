@@ -56,9 +56,7 @@
 
 	<div class='container-content'>
 		<div class="container-row disable">
-			<div class="container-column checkbox" style="width: 20px;"></div>
 			<div class="container-column">NAME</div>
-			<div class="container-column">SURNAME</div>
 			<div class="container-column">COMP. TITLE</div>
 			<div class="container-column">CUST. TYPE</div>
 			<div class="container-column">PHONE</div>
@@ -71,9 +69,7 @@
 		<h:panelGroup id="egroup">
 			<c:forEach items="#{customerBean.findAll()}" var="e">
 				<div class='container-row'>
-					<div class="container-column checkbox" style="width: 20px;"></div>
-					<div class='container-column'>#{e.name}</div>
-					<div class='container-column'>#{e.surname}</div>
+					<div class='container-column'>#{e.name} #{e.surname}</div>
 					<div class='container-column'>#{e.companyTitle}</div>
 					<div class='container-column'>#{e.customerType}</div>
 					<div class='container-column'>#{e.phone}</div>

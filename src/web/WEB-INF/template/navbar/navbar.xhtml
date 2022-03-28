@@ -59,6 +59,34 @@
 					</li>
 				</c:if>
 				<li id="settings" class="nav-item">
+					<h:commandLink action="#{navigation.setContent('warehouses')}" class='nav-link'>
+						<ion-icon name="server" size="large"></ion-icon>
+						<span class="link-text">Warehouses</span>
+						<f:ajax execute="@this" render=":container-group" onevent="currentContent" />
+					</h:commandLink>
+				</li>
+				<li id="settings" class="nav-item">
+					<h:commandLink action="#{navigation.setContent('squads')}" class='nav-link'>
+						<ion-icon name="construct" size="large"></ion-icon>
+						<span class="link-text">Squads</span>
+						<f:ajax execute="@this" render=":container-group" onevent="currentContent" />
+					</h:commandLink>
+				</li>
+				<li id="settings" class="nav-item">
+					<h:commandLink action="#{navigation.setContent('roles')}" class='nav-link'>
+						<ion-icon name="finger-print" size="large"></ion-icon>
+						<span class="link-text">Roles</span>
+						<f:ajax execute="@this" render=":container-group" onevent="currentContent" />
+					</h:commandLink>
+				</li>
+				<li id="settings" class="nav-item">
+					<h:commandLink action="#{navigation.setContent('status')}" class='nav-link'>
+						<ion-icon name="glasses" size="large"></ion-icon>
+						<span class="link-text">Status</span>
+						<f:ajax execute="@this" render=":container-group" onevent="currentContent" />
+					</h:commandLink>
+				</li>
+				<li id="settings" class="nav-item">
 					<h:commandLink action="#{navigation.setContent('settings')}" class='nav-link'>
 						<ion-icon name="settings" size="large"></ion-icon>
 						<span class="link-text">Settings</span>

@@ -22,7 +22,7 @@ public class Customer {
 		address = new Address();
 	}
 
-	public Customer(int id, String name, String surname, CustomerType customerTypeId, String phone, String email, String companyTitle, String taxNumber, String taxAdministration, Address address) {
+	public Customer(int id, String name, String surname, CustomerType customerType, String phone, String email, String companyTitle, String taxNumber, String taxAdministration, Address address) {
 		this.id = id;
 		this.name = name;
 		this.surname = surname;

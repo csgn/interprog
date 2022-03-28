@@ -36,6 +36,19 @@
 						<f:selectItems value="#{roleBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 					</h:selectOneMenu>
 				</div>
+
+				<div>
+					<h:selectManyMenu value="#{employeeBean.model.employeeSquads}" converter="squadConverter">
+						<f:selectItems value="#{squadBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
+					</h:selectManyMenu>
+				</div>
+				<div>
+					<h:selectManyMenu value="#{employeeBean.model.employeeWarehouses}" converter="warehouseConverter">
+						<f:selectItems value="#{warehouseBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
+					</h:selectManyMenu>
+				</div>
+
+
 				<div class="modal-footer">
 					<h:commandButton class="button" action="#{employeeBean.create}" value="Save"/>
 				</div>
@@ -58,23 +71,23 @@
 
 	<div class='container-content'>
 		<div class="container-row disable">
-			<div class="container-column checkbox" style="width: 20px;"></div>
 			<div class="container-column">NAME</div>
-			<div class="container-column">SURNAME</div>
 			<div class="container-column">PHONE</div>
 			<div class="container-column">ROLE</div>
 			<div class="container-column">COLOR</div>
+			<div class="container-column">SQUAD(S)</div>
+			<div class="container-column">WAREHOUSE(S)</div>
 			<div class="container-column">OPTIONS</div>
 		</div>
 		<h:panelGroup id="egroup">
 			<c:forEach items="#{employeeBean.findAll()}" var="e">
 				<div class='container-row'>
-					<div class="container-column checkbox" style="width: 20px;"></div>
-					<div class='container-column'>#{e.name}</div>
-					<div class='container-column'>#{e.surname}</div>
+					<div class='container-column'>#{e.name} #{e.surname}</div>
 					<div class='container-column'>#{e.phone}</div>
 					<div class='container-column'>#{e.role.name}</div>
 					<div class='container-column'><span class='color-badge' style='background-color: #{e.color}'></span></div>
+					<div class="container-column">#{e.employeeSquads.size()}</div>
+					<div class="container-column">#{e.employeeWarehouses.size()}</div>
 					<div class="container-column">
 						<dd:dropdown>
 							<ib:icon-button name="ellipsis-vertical" />
@@ -116,6 +129,16 @@
 							</div>
 							<div>
 								<ez:ip-input type="color" placeholder="color" value="#{employeeBean.model.color}" required="true" />
+							</div>
+							<div>
+								<h:selectManyMenu value="#{employeeBean.model.employeeSquads}" converter="squadConverter">
+									<f:selectItems value="#{squadBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
+								</h:selectManyMenu>
+							</div>
+							<div>
+								<h:selectManyMenu value="#{employeeBean.model.employeeWarehouses}" converter="warehouseConverter">
+									<f:selectItems value="#{warehouseBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
+								</h:selectManyMenu>
 							</div>
 							<div class="modal-footer">
 								<h:commandButton class="button" action="#{employeeBean.update}" value="Save">

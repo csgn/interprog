@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ @author csgn
+-->
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+								xmlns:ui='http://xmlns.jcp.org/jsf/facelets'
+								xmlns:h="http://xmlns.jcp.org/jsf/html"
+								xmlns:md="http://xmlns.jcp.org/jsf/composite/composite/modal"
+								xmlns:fm="http://xmlns.jcp.org/jsf/composite/composite/form"
+								xmlns:ez="http://xmlns.jcp.org/jsf/composite/composite"
+								xmlns:dd="http://xmlns.jcp.org/jsf/composite/composite/dropdown"
+								xmlns:ib="http://xmlns.jcp.org/jsf/composite/composite/icon-button"
+								xmlns:f="http://xmlns.jcp.org/jsf/core"
+								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	<md:modal id="createSquadModal" title="ADD SQUAD">
+		<h:panelGroup id="createProductModalGroup">
+			<h:form>
+				<div>
+					<ez:ip-input type="text" placeholder="squad name" required="true" value="#{squadBean.model.name}"/>
+				</div>
+				<div class="modal-footer">
+					<h:commandButton class="button" value="Save" action="#{squadBean.create}"/>
+				</div>
+			</h:form>
+		</h:panelGroup>
+	</md:modal>
+
+	<div class='container-header'>
+		<div class='container-title'>
+			<h1>SQUADS</h1>
+		</div>
+		<div class='container-button'>
+			<h:form>
+				<h:commandButton class="button" onclick="toggle('createSquadModal', 0)" action="#{squadBean.clearModel}" value="CREATE A NEW SQUAD">
+					<f:ajax execute="@this" render="createSquadModal:createSquadModalGroup" />
+				</h:commandButton>
+			</h:form>
+		</div>
+	</div>
+
+	<div class='container-content'>
+		<div class="container-row disable">
+			<div class="container-column">NAME</div>
+			<div class="container-column">OPTIONS</div>
+		</div>
+		<h:panelGroup id="egroup">
+			<c:forEach items="#{squadBean.findAll()}" var="e">
+				<div class='container-row'>
+					<div class='container-column'>#{e.name}</div>
+					<div class="container-column">
+						<dd:dropdown>
+							<ib:icon-button name="ellipsis-vertical" />
+							<dd:dropdown-menu>
+								<h:form>
+									<dd:dropdown-item>
+										<h:commandLink onclick="toggle('emodal_#{e.id}', 0)" action="#{squadBean.editForm(e)}">							
+											<ion-icon name="pencil" size="large"></ion-icon>
+											<span>Edit</span>
+											<f:ajax execute="@this" render="emodal_#{e.id}:modalgroup" />
+										</h:commandLink>
+									</dd:dropdown-item>
+									<dd:dropdown-item>
+										<h:commandLink action="#{squadBean.delete(e.id)}">							
+											<ion-icon name="trash" size="large"></ion-icon>
+											<span>Delete</span>
+											<f:ajax execute="@this" render="egroup" />
+										</h:commandLink>
+									</dd:dropdown-item>
+								</h:form>
+							</dd:dropdown-menu>
+						</dd:dropdown>
+					</div>
+				</div>
+
+				<md:modal id="emodal_#{e.id}" title="Edit #{e}">
+					<h:panelGroup id="modalgroup">
+						<h:form>
+							<div>
+								<ez:ip-input type="text" placeholder="squad name" required="true" value="#{squadBean.model.name}"/>
+							</div>
+							<div class="modal-footer">
+								<h:commandButton class="button" action="#{squadBean.update}" value="Save">
+									<f:ajax execute="@this" render="egroup" />
+								</h:commandButton>
+							</div>
+						</h:form>
+					</h:panelGroup>
+				</md:modal>
+
+			</c:forEach>
+		</h:panelGroup>
+		<div class="container-footer">
+		</div>
+	</div>
+
+</ui:composition>

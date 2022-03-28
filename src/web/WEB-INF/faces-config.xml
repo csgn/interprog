@@ -51,6 +51,22 @@
 			<to-view-id>/modules/products.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
+			<from-outcome>warehouses</from-outcome>
+			<to-view-id>/modules/warehouse.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>squads</from-outcome>
+			<to-view-id>/modules/squad.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>roles</from-outcome>
+			<to-view-id>/modules/role.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>status</from-outcome>
+			<to-view-id>/modules/status.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>settings</from-outcome>
 			<to-view-id>/modules/settings.xhtml</to-view-id>
 		</navigation-case>

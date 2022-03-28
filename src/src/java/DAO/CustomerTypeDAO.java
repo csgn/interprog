@@ -23,19 +23,19 @@ public class CustomerTypeDAO implements IDAO<CustomerType>{
 	
 	
 	public CustomerType find(int id){
-		CustomerType customerType = new CustomerType();
+		CustomerType customerType = null;
 		try{
 			this.ps = conn.prepareStatement("SELECT * FROM customertype WHERE id=?");
 			this.ps.setInt(1,id);
 			rs = ps.executeQuery();
 			
-			while (rs.next()) {
-				customerType.setId(rs.getInt("id"));
-				customerType.setName(rs.getString("name"));
+			if (rs.next()) {
+				customerType = new CustomerType(rs.getInt("id"), rs.getString("name"));
 			}
 		}catch(SQLException e){
 			Logger.getLogger(CustomerTypeDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
+
 		return customerType;
 	}
 
