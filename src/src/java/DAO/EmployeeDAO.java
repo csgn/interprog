@@ -193,9 +193,18 @@ public class EmployeeDAO implements IDAO<Employee> {
 			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
-
-
-		
 		return jobEmployees;
+	}
+	
+	public void createJobEmployee(int jobId, int employeeId) {
+		try {
+			ps = conn.prepareStatement("insert into jobxemployee (jobid, employeeid) values (?, ?)");
+			ps.setInt(1, jobId);
+			ps.setInt(2, employeeId);
+			ps.executeQuery();
+			
+		} catch (SQLException e) {
+			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
 	}
 }
