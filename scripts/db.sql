@@ -1,14 +1,3 @@
-DROP TYPE IF EXISTS activitytype;
-
-/* CUSTOM TYPES */
-CREATE TYPE activityType AS ENUM (
-    'job_created',
-    'job_status_changed',
-    'new_file_added',
-    'update'
-    );
-/* END CUSTOM TYPES */
-
 CREATE TABLE IF NOT EXISTS Squad
 (
     id   serial UNIQUE PRIMARY KEY,
@@ -123,23 +112,7 @@ CREATE TABLE IF NOT EXISTS Product
     FOREIGN KEY (warehouseId) REFERENCES Warehouse (id)
 );
 
-CREATE TABLE IF NOT EXISTS Activity
-(
-    id      serial UNIQUE NOT NULL,
-    date    timestamp     NOT NULL DEFAULT NOW(),
-    msg     varchar       NOT NULL,
-    info    varchar,
-    type    activityType  NOT NULL,
-    ownerId int           NOT NULL,
-    jobId   int           NOT NULL,
-    FOREIGN KEY (ownerId)
-        REFERENCES Employee (id)
-        ON UPDATE CASCADE,
-    FOREIGN KEY (jobId)
-        REFERENCES Job (id)
-        ON UPDATE CASCADE,
-    PRIMARY KEY (id)
-);
+
 
 /* MANY TO MANY TABLES */
 CREATE TABLE IF NOT EXISTS JobXProduct
@@ -204,6 +177,31 @@ CREATE TABLE IF NOT EXISTS EmployeeXWarehouse
 /* END MANY TO MANY TABLES */
 
 /*
+CREATE TYPE activityType AS ENUM (
+    'job_created',
+    'job_status_changed',
+    'new_file_added',
+    'update'
+    );
+
+CREATE TABLE IF NOT EXISTS Activity
+(
+    id      serial UNIQUE NOT NULL,
+    date    timestamp     NOT NULL DEFAULT NOW(),
+    msg     varchar       NOT NULL,
+    info    varchar,
+    type    activityType  NOT NULL,
+    ownerId int           NOT NULL,
+    jobId   int           NOT NULL,
+    FOREIGN KEY (ownerId)
+        REFERENCES Employee (id)
+        ON UPDATE CASCADE,
+    FOREIGN KEY (jobId)
+        REFERENCES Job (id)
+        ON UPDATE CASCADE,
+    PRIMARY KEY (id)
+);
+
 CREATE OR REPLACE FUNCTION add_activity()
     RETURNS TRIGGER
     LANGUAGE plpgsql
