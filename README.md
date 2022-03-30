@@ -1,7 +1,6 @@
-# interprog
-
-
-
+<p align="center">
+  <img src="docs/logo.png">
+</p>
 
 ```
 MIT License
