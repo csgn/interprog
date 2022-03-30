@@ -10,8 +10,8 @@
 </p>
 
 ## ACTIVE ISSUES
-- [ ] [Form componentlari tamamlanmadi](https://github.com/csgn/interprog/issues/37)
-- [ ] [AJAX isteginden sonra butonlar calismiyor](https://github.com/csgn/interprog/issues/34)
+- [ ] [The form components are not yet completed](https://github.com/csgn/interprog/issues/37)
+- [ ] [The buttons are not worked after making an ajax request](https://github.com/csgn/interprog/issues/34)
 
 ## LICENSE
 ```
