@@ -2,10 +2,22 @@
   <img src="docs/logo.png">
 </p>
 
+## SUMMARY
+
+## DATABASE DIAGRAM
+<p align="center">
+  <img src="docs/diagram.png">
+</p>
+
+## OPENED ISSUES
+- [ ] [Form componentlari tamamlanmadi](https://github.com/csgn/interprog/issues/37)
+- [ ] [AJAX isteginden sonra butonlar calismiyor](https://github.com/csgn/interprog/issues/34)
+
+## LICENSE
 ```
 MIT License
 
-Copyright (c) 2022 Sergen Çepoğlu
+Copyright (c) 2022 Sergen Çepoğlu, Metin Durmuş, Aykut Ecer, Ramazan Kılıçaslan
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
