@@ -9,7 +9,7 @@
   <img src="docs/diagram.png">
 </p>
 
-## OPENED ISSUES
+## ACTIVE ISSUES
 - [ ] [Form componentlari tamamlanmadi](https://github.com/csgn/interprog/issues/37)
 - [ ] [AJAX isteginden sonra butonlar calismiyor](https://github.com/csgn/interprog/issues/34)
 
