@@ -1,19 +1,20 @@
-<p align="center">
-  <img src="docs/logo.png">
-</p>
+![logo](/docs/logo.png)
 
 ## SUMMARY
 
+It ensures the flow of information between admin, employees and customers.
+
 ## DATABASE DIAGRAM
-<p align="center">
-  <img src="docs/diagram.png">
-</p>
+
+![diagram](/docs/diagram.png)
 
 ## ACTIVE ISSUES
+
 - [ ] [The form components are not yet completed](https://github.com/csgn/interprog/issues/37)
 - [ ] [The buttons are not worked after making an ajax request](https://github.com/csgn/interprog/issues/34)
 
 ## LICENSE
+
 ```
 MIT License
 
