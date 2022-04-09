@@ -32,17 +32,20 @@
 					<ez:ip-input type="color" placeholder="color" value="#{employeeBean.model.color}" required="true" />
 				</div>
 				<div>
+					<h:outputLabel>Role</h:outputLabel><br/>
 					<h:selectOneMenu value="#{employeeBean.model.role}" converter="roleConverter">
 						<f:selectItems value="#{roleBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 					</h:selectOneMenu>
 				</div>
 
 				<div>
+					<h:outputLabel>Squad(s)</h:outputLabel><br/>
 					<h:selectManyMenu value="#{employeeBean.model.employeeSquads}" converter="squadConverter">
 						<f:selectItems value="#{squadBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 					</h:selectManyMenu>
 				</div>
 				<div>
+					<h:outputLabel>Warehouse(s)</h:outputLabel><br/>
 					<h:selectManyMenu value="#{employeeBean.model.employeeWarehouses}" converter="warehouseConverter">
 						<f:selectItems value="#{warehouseBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 					</h:selectManyMenu>
@@ -131,11 +134,13 @@
 								<ez:ip-input type="color" placeholder="color" value="#{employeeBean.model.color}" required="true" />
 							</div>
 							<div>
+								<h:outputLabel>Squad(s)</h:outputLabel><br/>
 								<h:selectManyMenu value="#{employeeBean.model.employeeSquads}" converter="squadConverter">
 									<f:selectItems value="#{squadBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 								</h:selectManyMenu>
 							</div>
 							<div>
+								<h:outputLabel>Warehouse(s)</h:outputLabel><br/>
 								<h:selectManyMenu value="#{employeeBean.model.employeeWarehouses}" converter="warehouseConverter">
 									<f:selectItems value="#{warehouseBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 								</h:selectManyMenu>

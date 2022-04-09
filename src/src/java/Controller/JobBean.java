@@ -1,8 +1,6 @@
 package Controller;
 
-import DAO.EmployeeDAO;
 import DAO.JobDAO;
-import DAO.ProductDAO;
 import Model.Employee;
 import Model.Job;
 import Model.Product;
