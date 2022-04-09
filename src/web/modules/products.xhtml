@@ -32,16 +32,19 @@
 					<ez:ip-input type="number" placeholder="quantity" required="true" value="#{productBean.model.quantity}" />
 				</div>
 				<div>
+					<h:outputLabel>Warehouse(s)</h:outputLabel><br/>
 					<h:selectOneMenu value="#{productBean.model.warehouse}" converter="warehouseConverter">
 						<f:selectItems value="#{warehouseBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 					</h:selectOneMenu>
 				</div>
 				<div>
+					<h:outputLabel>Unit</h:outputLabel><br/>
 					<h:selectOneMenu value="#{productBean.model.unit}">
 						<f:selectItems value="#{['kg', 'number', 'box', 'dozen', 'barrel', 'package', 'bag', 'roll']}" var="c" itemLabel="#{c}" itemValue="#{c}" />
 					</h:selectOneMenu>
 				</div>
 				<div>
+					<h:outputLabel>VAT</h:outputLabel><br/>
 					<h:selectOneMenu value="#{productBean.model.vat}">
 						<f:selectItems value="#{['18', '8', '1', '0']}" var="c" itemLabel="#{c}%" itemValue="#{c}" />
 					</h:selectOneMenu>
@@ -130,16 +133,19 @@
 								<ez:ip-input type="number" placeholder="quantity" required="true" value="#{productBean.model.quantity}" />
 							</div>
 							<div>
+								<h:outputLabel>Warehouse(s)</h:outputLabel><br/>
 								<h:selectOneMenu value="#{productBean.model.warehouse}" converter="warehouseConverter">
 									<f:selectItems value="#{warehouseBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 								</h:selectOneMenu>
 							</div>
 							<div>
+								<h:outputLabel>Unit</h:outputLabel><br/>
 								<h:selectOneMenu value="#{productBean.model.unit}">
 									<f:selectItems value="#{['kg', 'number', 'box', 'dozen', 'barrel', 'package', 'bag', 'roll']}" var="c" itemLabel="#{c}" itemValue="#{c}" />
 								</h:selectOneMenu>
 							</div>
 							<div>
+								<h:outputLabel>VAT</h:outputLabel><br/>
 								<h:selectOneMenu value="#{productBean.model.vat}">
 									<f:selectItems value="#{['18', '8', '1', '0']}" var="c" itemLabel="#{c}%" itemValue="#{c}" />
 								</h:selectOneMenu>

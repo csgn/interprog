@@ -18,23 +18,27 @@
 		<h:panelGroup id="createJobModalGroup">
 			<h:form>
 				<div>
-					<h:selectOneMenu value="#{jobBean.model.customer}" converter="customerConverter">
+					<h:outputLabel>Customer</h:outputLabel><br/>
+					<h:selectOneMenu value="#{jobBean.model.customer}" converter="customerConverter" style="width: 10rem;">
 						<f:selectItems value="#{customerBean.findAll()}" var="c" itemLabel="#{c.name} #{c.surname}" itemValue="#{c}" />
 					</h:selectOneMenu>
 				</div>
 
 				<div>
+					<h:outputLabel>Description</h:outputLabel><br/>
 					<h:inputTextarea value="#{jobBean.model.description}" />
 				</div>
 
 
 				<div>
+					<h:outputLabel>Date &amp; Time</h:outputLabel><br/>
 					<h:inputText p:type="date" p:min="2022-03-28" p:value="#{jobBean.model.date}">
 						<f:convertDateTime pattern="yyyy-MM-dd"/>
 					</h:inputText>
 				</div>
 
 				<div>
+					<h:outputLabel>Product(s)</h:outputLabel><br/>
 					<h:selectManyMenu style='height: 50px; width: 150px;' value="#{jobBean.model.jobProducts}">
 						<f:selectItems value="#{productBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 					</h:selectManyMenu>
@@ -42,13 +46,14 @@
 
 
 				<div>
+					<h:outputLabel>Employee(s)</h:outputLabel><br/>
 					<h:selectManyMenu style='height: 50px; width: 150px' value="#{jobBean.model.jobEmployees}">
 						<f:selectItems value="#{employeeBean.findAll()}" var="c" itemLabel="#{c.name} #{c.surname}" itemValue="#{c}" />
 					</h:selectManyMenu>
 				</div>
 
 				<div class="modal-footer">
-					<h:commandButton class="button" action="#{jobBean.create}" value="Save"/>
+					<h:commandButton class="button" action="#{jobBean.create}"  value="Save"/>
 				</div>
 			</h:form>
 		</h:panelGroup>
@@ -117,29 +122,34 @@
 					<h:panelGroup id="modalgroup">
 						<h:form>
 							<div>
+								<h:outputLabel>Customer</h:outputLabel><br/>
 								<h:selectOneMenu value="#{jobBean.model.customer}" converter="customerConverter">
 									<f:selectItems value="#{customerBean.findAll()}" var="c" itemLabel="#{c.name} #{c.surname}" itemValue="#{c}" />
 								</h:selectOneMenu>
 							</div>
 
 							<div>
+								<h:outputLabel>Description</h:outputLabel><br/>
 								<h:inputTextarea p:value="#{jobBean.model.description}" />
 							</div>
 
 
 							<div>
+								<h:outputLabel>Date &amp; Time</h:outputLabel><br/>
 								<h:inputText p:type="date" p:min="2022-03-28" p:value="#{jobBean.model.date}">
 									<f:convertDateTime pattern="yyyy-MM-dd"/>
 								</h:inputText>
 							</div>
 
 							<div>
+								<h:outputLabel>Product(s)</h:outputLabel><br/>
 								<h:selectManyMenu style='height: 50px; width: 150px;' value="#{jobBean.model.jobProducts}">
 									<f:selectItems value="#{productBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 								</h:selectManyMenu>
 							</div>
 
 							<div>
+								<h:outputLabel>Employee(s)</h:outputLabel><br/>
 								<h:selectManyMenu style='height: 50px; width: 150px' value="#{jobBean.model.jobEmployees}">
 									<f:selectItems value="#{employeeBean.findAll()}" var="c" itemLabel="#{c.name} #{c.surname}" itemValue="#{c}" />
 								</h:selectManyMenu>

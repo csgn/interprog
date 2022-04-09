@@ -29,6 +29,7 @@
 				<ez:ip-input type="text" placeholder="district" value="#{customerBean.model.address.district}"/>
 				<ez:ip-input type="text" placeholder="directions" value="#{customerBean.model.address.directions}"/>
 				<div>
+					<h:outputLabel>Customer Type</h:outputLabel><br/>
 					<h:selectOneMenu value="#{customerBean.model.customerType}" converter="customerTypeConverter">
 						<f:selectItems value="#{customerTypeBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 					</h:selectOneMenu>
