@@ -15,7 +15,7 @@ public class PGConn {
 	private static PGConn instance;
 	private Connection conn;
 	final private static String DB_URL = "jdbc:postgresql://localhost:5432/interprog";
-	final private static String DB_USERNAME = "postgres";
+	final private static String DB_USERNAME = "root";
 	final private static String DB_PASSWORD = "12345";
 
 	public static PGConn connect() {

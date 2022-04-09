@@ -47,9 +47,3 @@
   left: 0.4rem;
   background-color: var(--bg-primary);
 }
-
-.ip-input[required="true"]:not(:focus),
-.ip-input[required="true"]:not(:focus):valid ~ .ip-input_placeholder::before {
-	content: "*";
-	color: red;
-}
