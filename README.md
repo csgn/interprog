@@ -13,6 +13,12 @@ It ensures the flow of information between admin, employees and customers.
 - [ ] [The form components are not yet completed](https://github.com/csgn/interprog/issues/37)
 - [ ] [The buttons are not worked after making an ajax request](https://github.com/csgn/interprog/issues/34)
 
+## CONTRIBUTORS
+- Metin Durmuş(mtndrms)
+- Sergen Çepoğlu(csgn)
+- Ramazan Kılıçaslan(rmznklcsln)
+- Aykut Ecer(aecr12, aykut-wq)
+
 ## LICENSE
 
 ```
