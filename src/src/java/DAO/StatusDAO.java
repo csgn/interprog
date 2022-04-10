@@ -14,6 +14,7 @@ import java.util.logging.Logger;
  * @author Metin
  */
 public class StatusDAO implements IDAO<Status> {
+
 	@Override
 	public Status find(int id) {
 		Status status = new Status();
@@ -114,12 +115,12 @@ public class StatusDAO implements IDAO<Status> {
 			Logger.getLogger(StatusDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
-	
+
 	public Status findByName(String name) {
 		Status status = new Status();
 		PreparedStatement ps;
 		ResultSet rs;
-		
+
 		try {
 			ps = conn.prepareStatement("SELECT * FROM status WHERE name =?");
 			ps.setString(1, name);
@@ -132,15 +133,15 @@ public class StatusDAO implements IDAO<Status> {
 		} catch (SQLException e) {
 			Logger.getLogger(StatusDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
-		
+
 		return status;
 	}
-	
+
 	public Status findByColor(String color) {
 		Status status = new Status();
 		PreparedStatement ps;
 		ResultSet rs;
-		
+
 		try {
 			ps = conn.prepareStatement("SELECT * FROM status WHERE color =?");
 			ps.setString(1, color);
@@ -153,7 +154,7 @@ public class StatusDAO implements IDAO<Status> {
 		} catch (SQLException e) {
 			Logger.getLogger(StatusDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
-		
+
 		return status;
 	}
 }

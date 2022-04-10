@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAO;
 
 import Model.Product;
@@ -20,16 +16,18 @@ import java.util.logging.Logger;
  */
 public class ProductDAO implements IDAO<Product> {
 	
-	private PreparedStatement ps;
-	private ResultSet rs;
 	private Product tmp;
 	private List<Product> products;
 	private WarehouseDAO warehouseDAO;
 	
+	@Override
 	public List<Product> findAll() {
 		products = new ArrayList<>();
+		PreparedStatement ps;
+		ResultSet rs;
+		
 		try {
-			this.ps = this.conn.prepareStatement("Select * from product");
+			ps = this.conn.prepareStatement("Select * from product");
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				tmp = new Product(
@@ -44,7 +42,7 @@ public class ProductDAO implements IDAO<Product> {
 								this.getWarehouseDAO().find(rs.getInt("warehouseId")));
 				products.add(tmp);
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 		
@@ -54,6 +52,9 @@ public class ProductDAO implements IDAO<Product> {
 	@Override
 	public Product find(int id) {
 		Product product = new Product();
+		PreparedStatement ps;
+		ResultSet rs;
+		
 		try {
 			ps = conn.prepareStatement("SELECT * FROM product WHERE id=?");
 			ps.setInt(1, id);
@@ -81,6 +82,9 @@ public class ProductDAO implements IDAO<Product> {
 
 	@Override
 	public int create(Product p) {
+		PreparedStatement ps;
+		ResultSet rs;
+		
 		int id = -1;
 		try {
 			ps = conn.prepareStatement("INSERT INTO product (name, serialnumber, unit, purchaseprice, saleprice, vat, quantity, warehouseid) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id");
@@ -105,7 +109,7 @@ public class ProductDAO implements IDAO<Product> {
 
 	@Override
 	public void update(Product p) {
-		//System.out.println(p.getName() + " " + p.getSerialNumber() + " " + p.getUnit() + " " + p.getPurchasePrice() + " " + p.getSalePrice() + " " + p.getVat());
+		PreparedStatement ps;
 
 		try {
 			ps = conn.prepareStatement("UPDATE product SET name=?,serialnumber=?, unit=?, purchaseprice=?, saleprice=?,vat=?,quantity=?,warehouseid=? where id=?");
@@ -126,6 +130,8 @@ public class ProductDAO implements IDAO<Product> {
 
 	@Override
 	public void delete(int id) {
+		PreparedStatement ps;
+		
 		try {
 			ps = conn.prepareStatement("DELETE FROM product where id=?");
 			ps.setInt(1, id);
@@ -143,6 +149,4 @@ public class ProductDAO implements IDAO<Product> {
 
 		return warehouseDAO;
 	}
-
-
 }

@@ -14,14 +14,14 @@ import java.util.logging.Logger;
  * @author Aykut
  * @author Metin
  */
-public class WarehouseDAO implements IDAO<Warehouse>{
+public class WarehouseDAO implements IDAO<Warehouse> {
 
 	@Override
 	public Warehouse find(int id) {
 		Warehouse warehouse = new Warehouse();
 		PreparedStatement ps;
 		ResultSet rs;
-		
+
 		try {
 			ps = conn.prepareStatement("SELECT * FROM warehouse WHERE id=?");
 			ps.setInt(1, id);
@@ -35,7 +35,7 @@ public class WarehouseDAO implements IDAO<Warehouse>{
 		} catch (SQLException e) {
 			Logger.getLogger(WarehouseDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
-		
+
 		return warehouse;
 	}
 
@@ -45,7 +45,7 @@ public class WarehouseDAO implements IDAO<Warehouse>{
 		Warehouse warehouse;
 		PreparedStatement ps;
 		ResultSet rs;
-		
+
 		try {
 			ps = conn.prepareStatement("SELECT * FROM warehouse");
 			rs = ps.executeQuery();
@@ -60,7 +60,7 @@ public class WarehouseDAO implements IDAO<Warehouse>{
 		} catch (SQLException e) {
 			Logger.getLogger(WarehouseDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
-		
+
 		return warehouses;
 	}
 
@@ -73,7 +73,7 @@ public class WarehouseDAO implements IDAO<Warehouse>{
 		try {
 			ps = conn.prepareStatement("INSERT INTO warehouse (name) VALUES (?) RETURNING id");
 			ps.setString(1, w.getName());
-			
+
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -112,12 +112,12 @@ public class WarehouseDAO implements IDAO<Warehouse>{
 			Logger.getLogger(WarehouseDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
-	
+
 	public Warehouse findByName(String name) {
 		Warehouse warehouse = new Warehouse();
 		PreparedStatement ps;
 		ResultSet rs;
-		
+
 		try {
 			ps = conn.prepareStatement("SELECT * FROM warehouse WHERE name =?");
 			ps.setString(1, name);

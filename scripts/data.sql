@@ -10,8 +10,8 @@ SELECT setval('squad_id_seq', 1, false);
 SELECT setval('status_id_seq', 1, false);
 SELECT setval('warehouse_id_seq', 1, false);
 
-insert into accounttype (name) values ('corporate');
-insert into accounttype (name) values ('individual');
+insert into customertype (name) values ('corporate');
+insert into customertype (name) values ('individual');
 
 insert into status (name, color) values ('open', 'gray');
 insert into status (name, color) values ('closed', 'red');
@@ -315,18 +315,6 @@ insert into customer (phone, email, addressid, accounttypeid) values ('721631583
 insert into customer (phone, email, addressid, accounttypeid) values ('6225691114', 'avorley3@fc2.com', 9, 2);
 insert into customer (phone, email, addressid, accounttypeid) values ('1604550639', 'efalkous4@dell.com', 10, 2);
 
-insert into corporatecustomer (phone, email, addressid, accounttypeid, companytitle, authorizedperson, taxnumber, taxadministration) values ('1561504178', 'rrickcord0@woothemes.com', 1, 1, 'Chemical Engineer', 'Joellen Hatje', 219493138, null);
-insert into corporatecustomer (phone, email, addressid, accounttypeid, companytitle, authorizedperson, taxnumber, taxadministration) values ('2714919781', 'vyaneev1@businessinsider.com', 2, 1, 'Physical Therapy Assistant', 'Ingunna Wolstenholme', 152845433, null);
-insert into corporatecustomer (phone, email, addressid, accounttypeid, companytitle, authorizedperson, taxnumber, taxadministration) values ('4029138311', 'gbater2@weebly.com', 3, 1, 'Cost Accountant', 'Elliot Hailes', 513220621, null);
-insert into corporatecustomer (phone, email, addressid, accounttypeid, companytitle, authorizedperson, taxnumber, taxadministration) values ('5121541194', 'jashpital3@github.com', 4, 1, 'General Manager', 'Alphonso Buncher', 191442798, null);
-insert into corporatecustomer (phone, email, addressid, accounttypeid, companytitle, authorizedperson, taxnumber, taxadministration) values ('3334505696', 'ejosum4@homestead.com', 5, 1, 'Senior Sales Associate', 'Rachelle Richten', 724006715, null);
-
-insert into individualcustomer (phone, email, addressid, accounttypeid, companytitle, name, surname) values ('1152371013', 'jkeohane0@unc.edu', 6, 2, 'Operator', 'Jordanna', 'Keohane');
-insert into individualcustomer (phone, email, addressid, accounttypeid, companytitle, name, surname) values ('9678605008', 'sferie1@addtoany.com', 7, 2, 'Business Systems Development Analyst', 'Shell', 'Ferie');
-insert into individualcustomer (phone, email, addressid, accounttypeid, companytitle, name, surname) values ('7216315838', 'sskegg2@ucoz.ru', 8, 2, 'Senior Sales Associate', 'Siward', 'Skegg');
-insert into individualcustomer (phone, email, addressid, accounttypeid, companytitle, name, surname) values ('6225691114', 'avorley3@fc2.com', 9, 2, 'Senior Quality Engineer', 'Arman', 'Vorley');
-insert into individualcustomer (phone, email, addressid, accounttypeid, companytitle, name, surname) values ('1604550639', 'efalkous4@dell.com', 10, 2, 'Structural Analysis Engineer', 'Earlie', 'Falkous');
-
 insert into employee (name, surname, phone, color, password, roleid) values ('Raynell', 'Divis', '8094990045', 'Aquamarine', '1dChzbu1c0', 2);
 insert into employee (name, surname, phone, color, password, roleid) values ('Coreen', 'Myrie', '6422288439', 'Violet', 'GKUiF5yXvaAK', 1);
 insert into employee (name, surname, phone, color, password, roleid) values ('Kain', 'Chatenier', '7433893617', 'Red', 'RcS2gZIoYnNU', 1);
@@ -360,35 +348,17 @@ insert into employeexwarehouse (employeeid, warehouseid) values (10, 8);
 insert into employeexwarehouse (employeeid, warehouseid) values (4, 9);
 insert into employeexwarehouse (employeeid, warehouseid) values (4, 10);
 
-insert into job (description, date, files, statusid, ownerid, customerid) values ('Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti.', '2021-10-15 06:32:28', null, 3, 4, 5);
-insert into job (description, date, files, statusid, ownerid, customerid) values ('Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla.', '2022-03-11 03:31:28', null, 1, 10, 1);
-insert into job (description, date, files, statusid, ownerid, customerid) values ('Vivamus in felis eu sapien cursus vestibulum. Proin eu mi.', '2021-04-17 15:40:42', null, 3, 3, 5);
-insert into job (description, date, files, statusid, ownerid, customerid) values ('Aenean sit amet justo. Morbi ut odio. Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.', '2022-01-01 03:30:27', null, 1, 7, 9);
-insert into job (description, date, files, statusid, ownerid, customerid) values ('Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.', '2021-05-09 05:52:51', null, 1, 4, 9);
-insert into job (description, date, files, statusid, ownerid, customerid) values ('Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.', '2022-03-06 12:27:18', null, 2, 1, 6);
+insert into job (description, date, statusid, ownerid, customerid) values ('Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti.', '2021-10-15 06:32:28', 3, 4, 5);
+insert into job (description, date, statusid, ownerid, customerid) values ('Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla.', '2022-03-11 03:31:28', 1, 10, 1);
+insert into job (description, date, statusid, ownerid, customerid) values ('Vivamus in felis eu sapien cursus vestibulum. Proin eu mi.', '2021-04-17 15:40:42', 3, 3, 5);
+insert into job (description, date, statusid, ownerid, customerid) values ('Aenean sit amet justo. Morbi ut odio. Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.', '2022-01-01 03:30:27', 1, 7, 9);
+insert into job (description, date, statusid, ownerid, customerid) values ('Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.', '2021-05-09 05:52:51', 1, 4, 9);
+insert into job (description, date, files, statusid, ownerid, customerid) values ('Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.', '2022-03-06 12:27:18', 2, 1, 6);
 insert into job (description, date, files, statusid, ownerid, customerid) values ('Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor.', '2021-06-19 11:13:32', null, 1, 10, 6);
-insert into job (description, date, files, statusid, ownerid, customerid) values ('Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', '2021-12-15 08:29:13', null, 3, 3, 7);
-insert into job (description, date, files, statusid, ownerid, customerid) values ('Vestibulum sed magna at nunc commodo placerat.', '2021-10-17 16:07:12', null, 3, 3, 5);
-insert into job (description, date, files, statusid, ownerid, customerid) values ('Proin leo odio, porttitor id, consequat in, consequat ut, nulla.', '2021-05-16 13:19:12', null, 1, 10, 2);
+insert into job (description, date, files, statusid, ownerid, customerid) values ('Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', '2021-12-15 08:29:13', 3, 3, 7);
+insert into job (description, date, files, statusid, ownerid, customerid) values ('Vestibulum sed magna at nunc commodo placerat.', '2021-10-17 16:07:12', 3, 3, 5);
+insert into job (description, date, files, statusid, ownerid, customerid) values ('Proin leo odio, porttitor id, consequat in, consequat ut, nulla.', '2021-05-16 13:19:12', 1, 10, 2);
 
 insert into jobxemployee (jobid, employeeid) values (1, 5);
-insert into jobxemployee (jobid, employeeid) values (2, 7);
-insert into jobxemployee (jobid, employeeid) values (3, 6);
-insert into jobxemployee (jobid, employeeid) values (4, 10);
-insert into jobxemployee (jobid, employeeid) values (5, 1);
-insert into jobxemployee (jobid, employeeid) values (6, 4);
-insert into jobxemployee (jobid, employeeid) values (7, 3);
-insert into jobxemployee (jobid, employeeid) values (8, 2);
-insert into jobxemployee (jobid, employeeid) values (9, 1);
-insert into jobxemployee (jobid, employeeid) values (10, 5);
 
 insert into jobxproduct (jobid, productid) values (1, 184);
-insert into jobxproduct (jobid, productid) values (2, 84);
-insert into jobxproduct (jobid, productid) values (3, 131);
-insert into jobxproduct (jobid, productid) values (4, 91);
-insert into jobxproduct (jobid, productid) values (5, 20);
-insert into jobxproduct (jobid, productid) values (6, 254);
-insert into jobxproduct (jobid, productid) values (7, 99);
-insert into jobxproduct (jobid, productid) values (8, 228);
-insert into jobxproduct (jobid, productid) values (9, 200);
-insert into jobxproduct (jobid, productid) values (10, 242);
