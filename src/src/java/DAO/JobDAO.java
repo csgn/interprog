@@ -21,8 +21,6 @@ public class JobDAO implements IDAO<Job> {
 
 	private Job job;
 	private List<Job> jobs;
-	private PreparedStatement ps;
-	private ResultSet rs;
 	private StatusDAO statusDAO;
 	private EmployeeDAO employeeDAO;
 	private CustomerDAO customerDAO;
@@ -31,6 +29,8 @@ public class JobDAO implements IDAO<Job> {
 	@Override
 	public Job find(int id) {
 		job = new Job();
+		PreparedStatement ps;
+		ResultSet rs;
 
 		try {
 			ps = conn.prepareStatement("SELECT * FROM job WHERE id=?");
@@ -55,8 +55,10 @@ public class JobDAO implements IDAO<Job> {
 	}
 
 	@Override
-	public List findAll() {
+	public List<Job> findAll() {
 		jobs = new ArrayList<>();
+		PreparedStatement ps;
+		ResultSet rs;
 
 		try {
 			ps = conn.prepareStatement("SELECT * FROM job");
@@ -79,12 +81,16 @@ public class JobDAO implements IDAO<Job> {
 			Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
+		System.out.println("JOBS: " + jobs.get(0));
+
 		return jobs;
 	}
 
 	@Override
 	public int create(Job j) {
 		int id = -1;
+		PreparedStatement ps;
+		ResultSet rs;
 
 		try {
 			ps = conn.prepareStatement("INSERT INTO job (description, date, customerid) VALUES (?, ?, ?) RETURNING id");
@@ -105,6 +111,7 @@ public class JobDAO implements IDAO<Job> {
 	@Override
 	public void update(Job j) {
 		PreparedStatement ps;
+
 		try {
 			ps = conn.prepareStatement("UPDATE job SET creationdate=?,description=?,date=?,statusid=?,ownerid=?, customerid=? where id=?");
 			ps.setDate(1, new java.sql.Date(j.getCreationDate().getTime()));
@@ -125,6 +132,8 @@ public class JobDAO implements IDAO<Job> {
 
 	@Override
 	public void delete(int id) {
+		PreparedStatement ps;
+
 		try {
 			ps = conn.prepareStatement("DELETE FROM job where id=?");
 			ps.setInt(1, id);
@@ -180,7 +189,6 @@ public class JobDAO implements IDAO<Job> {
 
 	public void createJobEmployee(int jobId, int employeeId) {
 		PreparedStatement ps;
-		ResultSet rs;
 
 		try {
 			ps = conn.prepareStatement("insert into jobxemployee (jobid, employeeid) values (?, ?)");
@@ -194,6 +202,8 @@ public class JobDAO implements IDAO<Job> {
 
 	public List<Product> getJobProducts(int jobId) {
 		List<Product> jobProducts = new ArrayList<>();
+		PreparedStatement ps;
+		ResultSet rs;
 
 		try {
 			ps = conn.prepareStatement("select * from jobxproduct where jobId = ?");
@@ -212,7 +222,6 @@ public class JobDAO implements IDAO<Job> {
 
 	public void createJobProduct(int jobId, int productId) {
 		PreparedStatement ps;
-		ResultSet rs;
 
 		try {
 			ps = conn.prepareStatement("insert into jobxproduct (jobid, productid) values (?, ?)");
@@ -224,7 +233,7 @@ public class JobDAO implements IDAO<Job> {
 		}
 	}
 
-		public void updateJobProduct(int jobId, List<Product> products) {
+	public void updateJobProduct(int jobId, List<Product> products) {
 		PreparedStatement ps;
 
 		try {

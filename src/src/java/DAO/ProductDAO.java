@@ -27,7 +27,7 @@ public class ProductDAO implements IDAO<Product> {
 		ResultSet rs;
 
 		try {
-			ps = this.conn.prepareStatement("Select * from product");
+			ps = conn.prepareStatement("Select * from product");
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				tmp = new Product(

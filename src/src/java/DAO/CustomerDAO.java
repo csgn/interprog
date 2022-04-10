@@ -16,8 +16,6 @@ import java.util.List;
  */
 public class CustomerDAO implements IDAO<Customer> {
 
-	private PreparedStatement ps;
-	private ResultSet rs;
 	private Customer tmp;
 	private List<Customer> customers;
 	private CustomerTypeDAO customerTypeDAO;
@@ -26,6 +24,8 @@ public class CustomerDAO implements IDAO<Customer> {
 	@Override
 	public Customer find(int id) {
 		Customer customer = new Customer();
+		PreparedStatement ps;
+		ResultSet rs;
 
 		try {
 			ps = conn.prepareStatement("SELECT * FROM customer WHERE id=?");
@@ -51,10 +51,12 @@ public class CustomerDAO implements IDAO<Customer> {
 
 	@Override
 	public List<Customer> findAll() {
+		PreparedStatement ps;
+		ResultSet rs;
 
 		customers = new ArrayList<>();
 		try {
-			this.ps = this.conn.prepareStatement("Select * from customer");
+			ps = conn.prepareStatement("Select * from customer");
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				tmp = new Customer(
@@ -78,9 +80,11 @@ public class CustomerDAO implements IDAO<Customer> {
 	}
 
 	public Customer findByPhone(String phone) {
+		PreparedStatement ps;
+		ResultSet rs;
 		try {
-			this.ps = this.conn.prepareStatement("Select * from customer where phone =?");
-			this.ps.setString(1, phone);
+			ps = conn.prepareStatement("Select * from customer where phone =?");
+			ps.setString(1, phone);
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -104,10 +108,11 @@ public class CustomerDAO implements IDAO<Customer> {
 	}
 
 	public Customer findByEmail(String email) {
-
+		PreparedStatement ps;
+		ResultSet rs;
 		try {
-			this.ps = this.conn.prepareStatement("Select * from customer where email =?");
-			this.ps.setString(1, email);
+			ps = conn.prepareStatement("Select * from customer where email =?");
+			ps.setString(1, email);
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -130,9 +135,11 @@ public class CustomerDAO implements IDAO<Customer> {
 	}
 
 	public Customer findByAddressId(int addressId) {
+		PreparedStatement ps;
+		ResultSet rs;
 		try {
-			this.ps = this.conn.prepareStatement("Select * from customer where addressId =?");
-			this.ps.setInt(1, addressId);
+			ps = conn.prepareStatement("Select * from customer where addressId =?");
+			ps.setInt(1, addressId);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				tmp = new Customer(
@@ -154,10 +161,12 @@ public class CustomerDAO implements IDAO<Customer> {
 	}
 
 	public List<Customer> findByCustomerType(int customerTypeId) {
+		PreparedStatement ps;
+		ResultSet rs;
 		customers = new ArrayList<>();
 		try {
-			this.ps = this.conn.prepareStatement("Select * from customer where customerTypeId =?");
-			this.ps.setInt(1, customerTypeId);
+			ps = conn.prepareStatement("Select * from customer where customerTypeId =?");
+			ps.setInt(1, customerTypeId);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				tmp = new Customer(
@@ -182,6 +191,8 @@ public class CustomerDAO implements IDAO<Customer> {
 
 	@Override
 	public int create(Customer c) {
+		PreparedStatement ps;
+		ResultSet rs;
 		int id = -1;
 
 		try {
@@ -208,6 +219,7 @@ public class CustomerDAO implements IDAO<Customer> {
 
 	@Override
 	public void update(Customer c) {
+		PreparedStatement ps;
 		try {
 			ps = conn.prepareStatement("UPDATE customer SET name=?,surname=?,customertypeid=?,phone=?,email=?,companytitle=?,taxnumber=?,taxadministration=?,addressid=? where id=?");
 			ps.setString(1, c.getName());
@@ -228,6 +240,7 @@ public class CustomerDAO implements IDAO<Customer> {
 
 	@Override
 	public void delete(int id) {
+		PreparedStatement ps;
 		try {
 			ps = conn.prepareStatement("DELETE FROM customer where id=?");
 			ps.setInt(1, id);

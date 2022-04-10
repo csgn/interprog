@@ -18,12 +18,13 @@ public class AddressDAO implements IDAO<Address> {
 
 	private Address address;
 	private List<Address> addresses;
-	private PreparedStatement ps;
-	private ResultSet rs;
 
 	@Override
 	public Address find(int id) {
+		PreparedStatement ps;
+		ResultSet rs;
 		address = new Address();
+
 		try {
 			ps = conn.prepareStatement("SELECT * FROM address WHERE id=?");
 			ps.setInt(1, id);
@@ -47,6 +48,8 @@ public class AddressDAO implements IDAO<Address> {
 
 	@Override
 	public List<Address> findAll() {
+		PreparedStatement ps;
+		ResultSet rs;
 		addresses = new ArrayList<>();
 
 		try {
@@ -74,6 +77,8 @@ public class AddressDAO implements IDAO<Address> {
 
 	@Override
 	public int create(Address a) {
+		PreparedStatement ps;
+		ResultSet rs;
 		int id = -1;
 
 		try {
@@ -97,6 +102,8 @@ public class AddressDAO implements IDAO<Address> {
 
 	@Override
 	public void update(Address a) {
+		PreparedStatement ps;
+		ResultSet rs;
 		try {
 			ps = conn.prepareStatement("UPDATE address SET title=?, context=?, region=?, district=?, directions=? where id=?");
 			ps.setString(1, a.getTitle());
@@ -113,6 +120,8 @@ public class AddressDAO implements IDAO<Address> {
 
 	@Override
 	public void delete(int id) {
+		PreparedStatement ps;
+		ResultSet rs;
 		try {
 			ps = conn.prepareStatement("DELETE FROM address where id=?");
 			ps.setInt(1, id);
@@ -124,6 +133,8 @@ public class AddressDAO implements IDAO<Address> {
 	}
 
 	public List<Address> findByDirections(String directions) {
+		PreparedStatement ps;
+		ResultSet rs;
 		addresses = new ArrayList<>();
 		try {
 			ps = conn.prepareStatement("SELECT * FROM address WHERE directions = ?");
@@ -146,6 +157,8 @@ public class AddressDAO implements IDAO<Address> {
 	}
 
 	public List<Address> findByDistrict(String district) {
+		PreparedStatement ps;
+		ResultSet rs;
 		addresses = new ArrayList<>();
 
 		try {
@@ -169,6 +182,8 @@ public class AddressDAO implements IDAO<Address> {
 	}
 
 	public List<Address> findByRegion(String region) {
+		PreparedStatement ps;
+		ResultSet rs;
 		addresses = new ArrayList<>();
 
 		try {
@@ -192,6 +207,8 @@ public class AddressDAO implements IDAO<Address> {
 	}
 
 	public List<Address> findByContext(String context) {
+		PreparedStatement ps;
+		ResultSet rs;
 		addresses = new ArrayList<>();
 
 		try {
@@ -215,6 +232,8 @@ public class AddressDAO implements IDAO<Address> {
 	}
 
 	public List<Address> findByTitle(String title) {
+		PreparedStatement ps;
+		ResultSet rs;
 		addresses = new ArrayList<>();
 
 		try {
