@@ -17,6 +17,7 @@ import java.util.List;
 @Named("jobBean")
 @SessionScoped
 public class JobBean implements Serializable {
+
 	private Job model;
 	private final JobDAO dao;
 
@@ -30,13 +31,17 @@ public class JobBean implements Serializable {
 	}
 
 	public List<Job> findAll() {
-		return dao.findAll();
+		List<Job> res = dao.findAll();
+
+		return res;
 	}
 
 	public void create() {
 		int id = dao.create(model);
-	
-		if (id == -1) return;
+
+		if (id == -1) {
+			return;
+		}
 
 		for (Employee e : model.getJobEmployees()) {
 			dao.createJobEmployee(id, e.getId());
