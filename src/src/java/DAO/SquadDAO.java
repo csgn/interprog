@@ -15,6 +15,7 @@ import java.util.logging.Logger;
  * @author Metin
  */
 public class SquadDAO implements IDAO<Squad> {
+
 	@Override
 	public Squad find(int id) {
 		Squad squad = new Squad();
@@ -129,7 +130,7 @@ public class SquadDAO implements IDAO<Squad> {
 		} catch (SQLException e) {
 			Logger.getLogger(SquadDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
-		
+
 		return squad;
 	}
 }

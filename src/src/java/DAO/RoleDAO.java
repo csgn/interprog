@@ -73,7 +73,7 @@ public class RoleDAO implements IDAO<Role> {
 		try {
 			ps = conn.prepareStatement("INSERT INTO role (name) VALUES (?) RETURNING id");
 			ps.setString(1, r.getName());
-			
+
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -112,12 +112,12 @@ public class RoleDAO implements IDAO<Role> {
 			Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
-	
+
 	public Role findByName(String name) {
 		PreparedStatement ps;
 		ResultSet rs;
 		Role role = new Role();
-		
+
 		try {
 			ps = conn.prepareStatement("SELECT * FROM role WHERE name =?");
 			ps.setString(1, name);
