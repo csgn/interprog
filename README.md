@@ -19,6 +19,7 @@ psql -u postgres -f scripts/interprog_dump.sql
 - [ ] [The buttons are not worked after making an ajax request](https://github.com/csgn/interprog/issues/34)
 - [ ] [Form inputs are not being checked after submitting](https://github.com/csgn/interprog/issues/46)
 - [ ] [The job form is being submitted again after page is reloaded](https://github.com/csgn/interprog/issues/45)
+- [ ] [Sometimes database returns an error but any message does not show up on the frontend](https://github.com/csgn/interprog/issues/50)
 
 ## CONTRIBUTORS
 - Metin Durmuş(mtndrms)
