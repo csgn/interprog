@@ -19,8 +19,6 @@ public class EmployeeDAO implements IDAO<Employee> {
 
 	private Employee employee;
 	List<Employee> employees;
-	private PreparedStatement ps;
-	private ResultSet rs;
 	private RoleDAO roleDAO;
 	private SquadDAO squadDAO;
 	private WarehouseDAO warehouseDAO;
@@ -28,6 +26,8 @@ public class EmployeeDAO implements IDAO<Employee> {
 	@Override
 	public Employee find(int id) {
 		employee = new Employee();
+		PreparedStatement ps;
+		ResultSet rs;
 
 		try {
 			ps = conn.prepareStatement("SELECT * FROM employee WHERE id=?");
@@ -55,6 +55,8 @@ public class EmployeeDAO implements IDAO<Employee> {
 	public List<Employee> findAll() {
 		employees = new ArrayList<>();
 		employee = new Employee();
+		PreparedStatement ps;
+		ResultSet rs;
 
 		try {
 			ps = conn.prepareStatement("SELECT * FROM employee");
@@ -86,6 +88,8 @@ public class EmployeeDAO implements IDAO<Employee> {
 	@Override
 	public int create(Employee e) {
 		int id = -1;
+		PreparedStatement ps;
+		ResultSet rs;
 		try {
 			ps = conn.prepareStatement("INSERT INTO employee (name, surname, phone, color, password, roleid) VALUES (?, ?, ?, ?, ?, ?) RETURNING id");
 			ps.setString(1, e.getName());
@@ -108,6 +112,8 @@ public class EmployeeDAO implements IDAO<Employee> {
 
 	@Override
 	public void update(Employee e) {
+		PreparedStatement ps;
+
 		try {
 			ps = conn.prepareStatement("UPDATE employee SET name=?,surname=?,phone=?,color=?,password=?,roleid=? where id=?");
 			ps.setString(1, e.getName());
@@ -122,12 +128,13 @@ public class EmployeeDAO implements IDAO<Employee> {
 			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
-		updateEmployeeSquads(e.getId(), e.getEmployeeSquads());;
+		updateEmployeeSquads(e.getId(), e.getEmployeeSquads());
 		updateEmployeeWarehouses(e.getId(), e.getEmployeeWarehouses());
 	}
 
 	@Override
 	public void delete(int id) {
+		PreparedStatement ps;
 		try {
 			ps = conn.prepareStatement("DELETE FROM employee where id=?");
 			ps.setInt(1, id);
@@ -140,6 +147,8 @@ public class EmployeeDAO implements IDAO<Employee> {
 
 	public Employee findByPhone(String phoneNumber) {
 		employee = null;
+		PreparedStatement ps;
+		ResultSet rs;
 
 		try {
 			ps = conn.prepareStatement("SELECT * FROM employee WHERE phone = ?");
@@ -166,6 +175,9 @@ public class EmployeeDAO implements IDAO<Employee> {
 	}
 
 	public boolean validate(String user, String password) {
+		PreparedStatement ps;
+		ResultSet rs;
+
 		try {
 			ps = conn.prepareStatement("SELECT phone, password, roleid FROM employee WHERE phone = ? AND password = ?");
 			ps.setString(1, user);
@@ -227,7 +239,6 @@ public class EmployeeDAO implements IDAO<Employee> {
 
 	public void createEmployeeSquad(int employeeId, int squadId) {
 		PreparedStatement ps;
-		ResultSet rs;
 
 		try {
 			ps = conn.prepareStatement("insert into (employeeid, squadId) values (?, ?)");
@@ -248,20 +259,22 @@ public class EmployeeDAO implements IDAO<Employee> {
 	}
 
 	public SquadDAO getSquadDAO() {
-		if (squadDAO == null)
+		if (squadDAO == null) {
 			squadDAO = new SquadDAO();
+		}
 
 		return squadDAO;
 	}
 
 	public WarehouseDAO getWarehouseDAO() {
-		if (warehouseDAO == null)
+		if (warehouseDAO == null) {
 			warehouseDAO = new WarehouseDAO();
+		}
 
 		return warehouseDAO;
 	}
 
-		public void updateEmployeeWarehouses(int employeeId, List<Warehouse> warehouses) {
+	public void updateEmployeeWarehouses(int employeeId, List<Warehouse> warehouses) {
 		PreparedStatement ps;
 
 		try {
@@ -306,7 +319,6 @@ public class EmployeeDAO implements IDAO<Employee> {
 
 	public void createEmployeeWarehouse(int employeeId, int warehouseId) {
 		PreparedStatement ps;
-		ResultSet rs;
 
 		try {
 			ps = conn.prepareStatement("insert into (employeeid, warehouseId) values (?, ?)");
@@ -317,6 +329,5 @@ public class EmployeeDAO implements IDAO<Employee> {
 			Logger.getLogger(WarehouseDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
-
 
 }

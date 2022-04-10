@@ -16,17 +16,17 @@ import java.util.logging.Logger;
 
 public class CustomerTypeDAO implements IDAO<CustomerType>{
 
-	private PreparedStatement ps;
-	private ResultSet rs;
 	private CustomerType tmp;
 	private List<CustomerType> customerTypes;
 	
-	
+	@Override
 	public CustomerType find(int id){
+		PreparedStatement ps;
+		ResultSet rs;
 		CustomerType customerType = null;
 		try{
-			this.ps = conn.prepareStatement("SELECT * FROM customertype WHERE id=?");
-			this.ps.setInt(1,id);
+			ps = conn.prepareStatement("SELECT * FROM customertype WHERE id=?");
+			ps.setInt(1,id);
 			rs = ps.executeQuery();
 			
 			if (rs.next()) {
@@ -39,11 +39,13 @@ public class CustomerTypeDAO implements IDAO<CustomerType>{
 		return customerType;
 	}
 
+	@Override
 	public List<CustomerType> findAll() {
-
+		PreparedStatement ps;
+		ResultSet rs;
 		try {
 			customerTypes = new ArrayList<>();
-			this.ps = this.conn.prepareStatement("Select * from customertype");
+			ps = conn.prepareStatement("Select * from customertype");
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				tmp = new CustomerType(
@@ -58,9 +60,11 @@ public class CustomerTypeDAO implements IDAO<CustomerType>{
 	}
 
 	public CustomerType findById(int id) {
+		PreparedStatement ps;
+		ResultSet rs;
 		try {
-			this.ps = this.conn.prepareStatement("Select * from customertype where id =?");
-			this.ps.setInt(1, id);
+			ps = conn.prepareStatement("Select * from customertype where id =?");
+			ps.setInt(1, id);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				tmp = new CustomerType(
@@ -74,9 +78,11 @@ public class CustomerTypeDAO implements IDAO<CustomerType>{
 	}
 
 	public CustomerType findByName(String name) {
+		PreparedStatement ps;
+		ResultSet rs;
 		try {
-			this.ps = this.conn.prepareStatement("Select * from customertype where name =?");
-			this.ps.setString(1, name);
+			ps = conn.prepareStatement("Select * from customertype where name =?");
+			ps.setString(1, name);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				tmp = new CustomerType(
@@ -89,7 +95,10 @@ public class CustomerTypeDAO implements IDAO<CustomerType>{
 		return tmp;
 	}
 
+	@Override
 	public int create(CustomerType a) {
+		PreparedStatement ps;
+		ResultSet rs;
 		int id = -1;
 		try {
 			ps = conn.prepareStatement("INSERT INTO customertype (name) VALUES (?) RETURNING id");
@@ -105,7 +114,9 @@ public class CustomerTypeDAO implements IDAO<CustomerType>{
 		return id;
 	}
 	
+	@Override
 	public void update(CustomerType a) {
+		PreparedStatement ps;
 
 		try {
 			ps = conn.prepareStatement("UPDATE customertype set name=? where id=?");
@@ -117,7 +128,9 @@ public class CustomerTypeDAO implements IDAO<CustomerType>{
 		}
 	}
 	
+	@Override
 	public void delete(int id) {
+		PreparedStatement ps;
 		try {
 			ps = conn.prepareStatement("DELETE FROM customertype where id=?");
 			ps.setInt(1, id);
@@ -129,9 +142,10 @@ public class CustomerTypeDAO implements IDAO<CustomerType>{
 	
 	
 	public void deleteByName(String name){
+		PreparedStatement ps;
 		try {
-			this.ps = this.conn.prepareStatement("delete from customertype where name = ?");
-			this.ps.setString(1, name);
+			ps = this.conn.prepareStatement("delete from customertype where name = ?");
+			ps.setString(1, name);
 			ps.executeQuery();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
