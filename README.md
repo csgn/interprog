@@ -8,6 +8,11 @@ It ensures the flow of information between admin, employees and customers.
 
 ![diagram](/docs/diagram.png)
 
+## RESTORE DATABASE FROM DUMP
+```bash
+psql -u postgres -f scripts/interprog_dump.sql
+```
+
 ## ACTIVE ISSUES
 
 - [ ] [The form components are not yet completed](https://github.com/csgn/interprog/issues/37)
