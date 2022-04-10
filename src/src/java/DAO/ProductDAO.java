@@ -15,17 +15,17 @@ import java.util.logging.Logger;
  * @author Sergen
  */
 public class ProductDAO implements IDAO<Product> {
-	
+
 	private Product tmp;
 	private List<Product> products;
 	private WarehouseDAO warehouseDAO;
-	
+
 	@Override
 	public List<Product> findAll() {
 		products = new ArrayList<>();
 		PreparedStatement ps;
 		ResultSet rs;
-		
+
 		try {
 			ps = this.conn.prepareStatement("Select * from product");
 			rs = ps.executeQuery();
@@ -45,7 +45,7 @@ public class ProductDAO implements IDAO<Product> {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		
+
 		return products;
 	}
 
@@ -54,7 +54,7 @@ public class ProductDAO implements IDAO<Product> {
 		Product product = new Product();
 		PreparedStatement ps;
 		ResultSet rs;
-		
+
 		try {
 			ps = conn.prepareStatement("SELECT * FROM product WHERE id=?");
 			ps.setInt(1, id);
@@ -71,7 +71,7 @@ public class ProductDAO implements IDAO<Product> {
 				product.setVat(rs.getInt("vat"));
 				product.setQuantity(rs.getInt("quantity"));
 				product.setWarehouse(this.getWarehouseDAO().find(rs.getInt("warehouseId")));
-				
+
 			}
 		} catch (SQLException ex) {
 			Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -84,7 +84,7 @@ public class ProductDAO implements IDAO<Product> {
 	public int create(Product p) {
 		PreparedStatement ps;
 		ResultSet rs;
-		
+
 		int id = -1;
 		try {
 			ps = conn.prepareStatement("INSERT INTO product (name, serialnumber, unit, purchaseprice, saleprice, vat, quantity, warehouseid) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id");
@@ -131,7 +131,7 @@ public class ProductDAO implements IDAO<Product> {
 	@Override
 	public void delete(int id) {
 		PreparedStatement ps;
-		
+
 		try {
 			ps = conn.prepareStatement("DELETE FROM product where id=?");
 			ps.setInt(1, id);
