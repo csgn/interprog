@@ -81,8 +81,6 @@ public class JobDAO implements IDAO<Job> {
 			Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
-		System.out.println("JOBS: " + jobs.get(0));
-
 		return jobs;
 	}
 
