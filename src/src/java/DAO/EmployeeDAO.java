@@ -51,7 +51,7 @@ public class EmployeeDAO implements IDAO<Employee> {
 		return employee;
 	}
 
-	@Override
+		@Override
 	public List<Employee> findAll() {
 		employees = new ArrayList<>();
 		employee = new Employee();
@@ -60,6 +60,46 @@ public class EmployeeDAO implements IDAO<Employee> {
 
 		try {
 			ps = conn.prepareStatement("SELECT * FROM employee");
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				employee = new Employee(
+								rs.getInt("id"),
+								rs.getString("name"),
+								rs.getString("surname"),
+								rs.getString("phone"),
+								rs.getString("color"),
+								rs.getString("password"),
+								this.getRoleDAO().find(rs.getInt("roleid")),
+								getEmployeeSquads(rs.getInt("id")),
+								getEmployeeWarehouses(rs.getInt("id"))
+				);
+
+				employees.add(employee);
+
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		return employees;
+	}
+
+	@Override
+	public List<Employee> findAll(int page, int pageSize) {
+		employees = new ArrayList<>();
+		employee = new Employee();
+		PreparedStatement ps;
+		ResultSet rs;
+
+		int start = (page-1)*pageSize;
+
+		System.out.println(start + " " + pageSize);
+
+		try {
+			ps = conn.prepareStatement("SELECT * FROM employee limit ? offset ?");
+			ps.setInt(1, pageSize);
+			ps.setInt(2, start);
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -328,6 +368,25 @@ public class EmployeeDAO implements IDAO<Employee> {
 		} catch (SQLException e) {
 			Logger.getLogger(WarehouseDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
+	}
+
+
+	public int count() {
+		int count = 0;
+		PreparedStatement ps;
+		ResultSet rs;
+
+		try {	
+			ps = conn.prepareStatement("SELECT count(id) as employee_count from employee");
+			rs = ps.executeQuery();
+			rs.next();
+			count = rs.getInt("employee_count");
+
+		} catch (SQLException ex) {
+			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		return count;
 	}
 
 }
