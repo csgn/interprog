@@ -21,6 +21,11 @@ public class JobBean implements Serializable {
 	private Job model;
 	private final JobDAO dao;
 
+	private int page = 1;
+	private int pageSize = 3;
+	private int pageCount;
+
+
 	public JobBean() {
 		dao = new JobDAO();
 		model = new Job();
@@ -31,7 +36,7 @@ public class JobBean implements Serializable {
 	}
 
 	public List<Job> findAll() {
-		List<Job> res = dao.findAll();
+		List<Job> res = dao.findAll(page, pageSize);
 
 		return res;
 	}
@@ -74,6 +79,47 @@ public class JobBean implements Serializable {
 
 	public void editForm(Job j) {
 		model = j;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public int getPageCount() {
+		this.pageCount = (int) Math.ceil(this.dao.count() / (double) pageSize);
+		return pageCount;
+	}
+
+	public void setPageCount(int pageCount) {
+		this.pageCount = pageCount;
+	}
+
+	public void next() {
+		if (page == pageCount) {
+			page = 1;
+		} else {
+			page++;
+		}
+	}
+
+	public void previous() {
+		if (page == 1) {
+			page = pageCount;
+		} else {
+			page--;
+		}
 	}
 
 }
