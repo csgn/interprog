@@ -149,4 +149,9 @@ public class ProductDAO implements IDAO<Product> {
 
 		return warehouseDAO;
 	}
+
+	@Override
+	public List<Product> findAll(int p, int ps) {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	}
 }

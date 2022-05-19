@@ -264,5 +264,10 @@ public class CustomerDAO implements IDAO<Customer> {
 		return addressDAO;
 	}
 
+	@Override
+	public List<Customer> findAll(int p, int ps) {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	}
+
 
 }

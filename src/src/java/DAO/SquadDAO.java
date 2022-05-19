@@ -133,4 +133,9 @@ public class SquadDAO implements IDAO<Squad> {
 
 		return squad;
 	}
+
+	@Override
+	public List<Squad> findAll(int p, int ps) {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	}
 }

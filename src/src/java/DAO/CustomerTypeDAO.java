@@ -151,4 +151,9 @@ public class CustomerTypeDAO implements IDAO<CustomerType>{
 			System.out.println(e.getMessage());
 		}
 	}
+
+	@Override
+	public List<CustomerType> findAll(int p, int ps) {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	}
 }

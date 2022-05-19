@@ -131,4 +131,9 @@ public class WarehouseDAO implements IDAO<Warehouse> {
 		}
 		return warehouse;
 	}
+
+	@Override
+	public List<Warehouse> findAll(int p, int ps) {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	}
 }
