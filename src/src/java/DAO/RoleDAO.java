@@ -63,7 +63,36 @@ public class RoleDAO implements IDAO<Role> {
 
 		return roles;
 	}
+	
+	@Override
+	public List<Role> findAll(int page, int pageSize) {
+		List<Role> roles = new ArrayList<>();
+		Role role = new Role();
+		PreparedStatement ps;
+		ResultSet rs;
 
+		int start = (page-1)*pageSize;
+
+		System.out.println(start + " " + pageSize);
+
+		try {
+			ps = conn.prepareStatement("SELECT * FROM role limit ? offset ?");
+			ps.setInt(1, pageSize);
+			ps.setInt(2, start);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				role = new Role(
+								rs.getInt("id"),
+								rs.getString("name")
+				);
+				roles.add(role);
+			}
+		}catch (SQLException e) {
+			Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+		return roles;
+	}
 	@Override
 	public int create(Role r) {
 		int id = -1;
@@ -132,8 +161,21 @@ public class RoleDAO implements IDAO<Role> {
 		return role;
 	}
 
-	@Override
-	public List<Role> findAll(int p, int ps) {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	public int count() {
+		int count = 0;
+		PreparedStatement ps;
+		ResultSet rs;
+
+		try {	
+			ps = conn.prepareStatement("SELECT count(id) as role_count from role");
+			rs = ps.executeQuery();
+			rs.next();
+			count = rs.getInt("role_count");
+
+		} catch (SQLException ex) {
+			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		return count;
 	}
 }
