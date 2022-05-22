@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSF/JSFManagedBean.java to edit this template
- */
 package Controller;
 
 import DAO.ProductDAO;
@@ -19,9 +15,12 @@ import java.util.List;
 @Named(value= "productBean")
 @SessionScoped
 public class ProductBean implements Serializable {
-		
 	private Product model;
 	private final ProductDAO dao;
+	
+	private int page=1;
+	private int pageSize=3;
+	private int pageCount;
 	
 	public ProductBean() {
 		model = new Product();
@@ -33,7 +32,7 @@ public class ProductBean implements Serializable {
 	}
 
 	public List<Product> findAll() {
-		return dao.findAll();
+		return dao.findAll(page, pageSize);
 	}
 
 	public void create() {
@@ -65,6 +64,45 @@ public class ProductBean implements Serializable {
 
 	public void editForm(Product p) {
 		model = p;
+	}
+	
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public int getPageCount() {
+		this.pageCount = (int) Math.ceil(this.dao.count() / (double) pageSize);
+		return pageCount;
+	}
+
+	public void setPageCount(int pageCount) {
+		this.pageCount = pageCount;
+	}
+
+	public void next() {
+		if (page == pageCount)
+			page = 1;
+		else
+			page++;
+	}
+
+	public void previous() {
+		if (page == 1)
+			page = pageCount;
+		else
+			page--;
 	}
 }
 

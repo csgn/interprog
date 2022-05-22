@@ -21,35 +21,6 @@ public class ProductDAO implements IDAO<Product> {
 	private WarehouseDAO warehouseDAO;
 
 	@Override
-	public List<Product> findAll() {
-		products = new ArrayList<>();
-		PreparedStatement ps;
-		ResultSet rs;
-
-		try {
-			ps = conn.prepareStatement("Select * from product");
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				tmp = new Product(
-								rs.getInt("id"),
-								rs.getString("name"),
-								rs.getString("serialNumber"),
-								rs.getString("unit"),
-								rs.getInt("purchasePrice"),
-								rs.getInt("salePrice"),
-								rs.getInt("vat"),
-								rs.getInt("quantity"),
-								this.getWarehouseDAO().find(rs.getInt("warehouseId")));
-				products.add(tmp);
-			}
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-
-		return products;
-	}
-
-	@Override
 	public Product find(int id) {
 		Product product = new Product();
 		PreparedStatement ps;
@@ -80,6 +51,68 @@ public class ProductDAO implements IDAO<Product> {
 		return product;
 	}
 
+	@Override
+	public List<Product> findAll() {
+		products = new ArrayList<>();
+		PreparedStatement ps;
+		ResultSet rs;
+
+		try {
+			ps = conn.prepareStatement("Select * from product");
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				tmp = new Product(
+								rs.getInt("id"),
+								rs.getString("name"),
+								rs.getString("serialNumber"),
+								rs.getString("unit"),
+								rs.getInt("purchasePrice"),
+								rs.getInt("salePrice"),
+								rs.getInt("vat"),
+								rs.getInt("quantity"),
+								this.getWarehouseDAO().find(rs.getInt("warehouseId")));
+				products.add(tmp);
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+
+		return products;
+	}
+	
+	@Override
+	public List<Product> findAll(int page, int pageSize) {
+		products = new ArrayList<>();
+		PreparedStatement ps;
+		ResultSet rs;
+		
+		int start = (page-1)*pageSize;
+
+		try {
+			ps = conn.prepareStatement("Select * from product limit ? offset ?");
+			ps.setInt(1, pageSize);
+			ps.setInt(2, start);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				tmp = new Product(
+								rs.getInt("id"),
+								rs.getString("name"),
+								rs.getString("serialNumber"),
+								rs.getString("unit"),
+								rs.getInt("purchasePrice"),
+								rs.getInt("salePrice"),
+								rs.getInt("vat"),
+								rs.getInt("quantity"),
+								this.getWarehouseDAO().find(rs.getInt("warehouseId")));
+				products.add(tmp);
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+
+		return products;
+	}
+	
 	@Override
 	public int create(Product p) {
 		PreparedStatement ps;
@@ -148,5 +181,23 @@ public class ProductDAO implements IDAO<Product> {
 		}
 
 		return warehouseDAO;
+	}
+
+	public int count() {
+		int count = 0;
+		PreparedStatement ps;
+		ResultSet rs;
+
+		try {	
+			ps = conn.prepareStatement("SELECT count(id) as product_count from product");
+			rs = ps.executeQuery();
+			rs.next();
+			count = rs.getInt("product_count");
+
+		} catch (SQLException ex) {
+			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		return count;
 	}
 }
