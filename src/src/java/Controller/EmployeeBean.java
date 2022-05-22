@@ -18,6 +18,11 @@ public class EmployeeBean implements Serializable {
 	private Employee model;
 	private final EmployeeDAO dao;
 
+
+	private int page=1;
+	private int pageSize=3;
+	private int pageCount;
+
 	public EmployeeBean() {
 		model = new Employee();
 		dao = new EmployeeDAO();
@@ -28,7 +33,7 @@ public class EmployeeBean implements Serializable {
 	}
 
 	public List<Employee> findAll() {
-		return dao.findAll();
+		return dao.findAll(page, pageSize);
 	}
 
 	public void create() {
@@ -66,5 +71,47 @@ public class EmployeeBean implements Serializable {
 	public void editForm(Employee e) {
 		model = e;
 	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public int getPageCount() {
+		this.pageCount = (int) Math.ceil(this.dao.count() / (double) pageSize);
+		System.out.println("PAGECOUNT: " + pageCount);
+		return pageCount;
+	}
+
+	public void setPageCount(int pageCount) {
+		this.pageCount = pageCount;
+	}
+
+	
+	public void next() {
+		if (page == pageCount)
+			page = 1;
+		else
+			page++;
+	}
+
+	public void previous() {
+		if (page == 1)
+			page = pageCount;
+		else
+			page--;
+	}
+
 
 }

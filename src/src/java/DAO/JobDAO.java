@@ -81,10 +81,43 @@ public class JobDAO implements IDAO<Job> {
 			Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
-		System.out.println("JOBS: " + jobs.get(0));
+		return jobs;
+	}
+
+		@Override
+	public List<Job> findAll(int page, int pageSize) {
+		jobs = new ArrayList<>();
+		PreparedStatement ps;
+		ResultSet rs;
+
+		int start = (page-1)*pageSize;
+
+		try {
+			ps = conn.prepareStatement("SELECT * FROM job limit ? offset ?");
+			ps.setInt(1, pageSize);
+			ps.setInt(2, start);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				job = new Job(
+								rs.getInt("id"),
+								rs.getDate("creationDate"),
+								rs.getString("description"),
+								rs.getDate("date"),
+								getStatusDAO().find(rs.getInt("statusId")),
+								getEmployeeDAO().find(rs.getInt("ownerId")),
+								getCustomerDAO().find(rs.getInt("customerId")),
+								getJobEmployees(rs.getInt("id")),
+								getJobProducts(rs.getInt("id")));
+				jobs.add(job);
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
 
 		return jobs;
 	}
+
 
 	@Override
 	public int create(Job j) {
@@ -286,6 +319,24 @@ public class JobDAO implements IDAO<Job> {
 		}
 
 		return productDAO;
+	}
+
+	public int count() {
+		int count = 0;
+		PreparedStatement ps;
+		ResultSet rs;
+
+		try {	
+			ps = conn.prepareStatement("SELECT count(id) as job_count from job");
+			rs = ps.executeQuery();
+			rs.next();
+			count = rs.getInt("job_count");
+
+		} catch (SQLException ex) {
+			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		return count;
 	}
 
 }

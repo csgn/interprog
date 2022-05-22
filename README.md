@@ -8,12 +8,18 @@ It ensures the flow of information between admin, employees and customers.
 
 ![diagram](/docs/diagram.png)
 
+## RESTORE DATABASE FROM DUMP
+```bash
+psql -u postgres -f scripts/interprog_dump.sql
+```
+
 ## ACTIVE ISSUES
 
 - [ ] [The form components are not yet completed](https://github.com/csgn/interprog/issues/37)
 - [ ] [The buttons are not worked after making an ajax request](https://github.com/csgn/interprog/issues/34)
 - [ ] [Form inputs are not being checked after submitting](https://github.com/csgn/interprog/issues/46)
 - [ ] [The job form is being submitted again after page is reloaded](https://github.com/csgn/interprog/issues/45)
+- [ ] [Sometimes database returns an error but any message does not show up on the frontend](https://github.com/csgn/interprog/issues/50)
 
 ## CONTRIBUTORS
 - Metin Durmuş(mtndrms)
