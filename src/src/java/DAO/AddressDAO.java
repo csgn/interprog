@@ -255,4 +255,9 @@ public class AddressDAO implements IDAO<Address> {
 		}
 		return addresses;
 	}
+
+	@Override
+	public List<Address> findAll(int p, int ps) {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	}
 }

@@ -281,11 +281,12 @@ public class EmployeeDAO implements IDAO<Employee> {
 		PreparedStatement ps;
 
 		try {
-			ps = conn.prepareStatement("insert into (employeeid, squadId) values (?, ?)");
+			ps = conn.prepareStatement("insert into employeexsquad (employeeid, squadId) values (?, ?)");
 			ps.setInt(1, employeeId);
 			ps.setInt(2, squadId);
 			ps.executeUpdate();
 		} catch (SQLException e) {
+			System.out.println("###################ERRORRRRRRRRRRRRRRRRRRRRR" + "employeeid: " + employeeId + " squadId: " + squadId);
 			Logger.getLogger(SquadDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
@@ -361,7 +362,7 @@ public class EmployeeDAO implements IDAO<Employee> {
 		PreparedStatement ps;
 
 		try {
-			ps = conn.prepareStatement("insert into (employeeid, warehouseId) values (?, ?)");
+			ps = conn.prepareStatement("insert into employeexwarehouse (employeeid, warehouseId) values (?, ?)");
 			ps.setInt(1, employeeId);
 			ps.setInt(2, warehouseId);
 			ps.executeUpdate();

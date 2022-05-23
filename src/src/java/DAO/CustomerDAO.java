@@ -308,7 +308,6 @@ public class CustomerDAO implements IDAO<Customer> {
 			rs = ps.executeQuery();
 			rs.next();
 			count = rs.getInt("customer_count");
-
 		} catch (SQLException ex) {
 			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
 		}

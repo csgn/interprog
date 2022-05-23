@@ -131,4 +131,9 @@ public class RoleDAO implements IDAO<Role> {
 		}
 		return role;
 	}
+
+	@Override
+	public List<Role> findAll(int p, int ps) {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	}
 }
