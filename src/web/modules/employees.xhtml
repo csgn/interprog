@@ -17,19 +17,19 @@
 		<h:panelGroup id="createEmployeeModalGroup">
 			<h:form>
 				<div>
-					<ez:ip-input type="text" placeholder="name" value="#{employeeBean.model.name}" required="true" />
+					<ez:ip-input id="createEmployeeModal-name" type="text" placeholder="name" value="#{employeeBean.model.name}" required="true" />
 				</div>
 				<div>
-					<ez:ip-input type="text" placeholder="lastname" value="#{employeeBean.model.surname}" required="true" />
+					<ez:ip-input id="createEmployeeModal-surname" type="text" placeholder="lastname" value="#{employeeBean.model.surname}" required="true" />
 				</div>
 				<div>
-					<ez:ip-input type="text" placeholder="phone" value="#{employeeBean.model.phone}" required="true" />
+					<ez:ip-input id="createEmployeeModal-phone" type="text" placeholder="phone" value="#{employeeBean.model.phone}" required="true" />
 				</div>
 				<div>
-					<ez:ip-input type="password" placeholder="password" value="#{employeeBean.model.password}" required="true" />
+					<ez:ip-input id="createEmployeeModal-password" type="password" placeholder="password" value="#{employeeBean.model.password}" required="true" validator="passwordValidator" />
 				</div>
 				<div>
-					<ez:ip-input type="color" placeholder="color" value="#{employeeBean.model.color}" required="true" />
+					<ez:ip-input id="createEmployeeModal-color" type="color" placeholder="color" value="#{employeeBean.model.color}" required="true" />
 				</div>
 				<div>
 					<h:outputLabel>Role</h:outputLabel><br/>
@@ -50,10 +50,15 @@
 						<f:selectItems value="#{warehouseBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 					</h:selectManyMenu>
 				</div>
-
+				
+				<div>
+					<h:messages style="color: red; list-style-type: none"/>
+				</div>
 
 				<div class="modal-footer">
-					<h:commandButton class="button" action="#{employeeBean.create}" value="Save"/>
+					<h:commandButton class="button" action="#{employeeBean.create}" value="Save">
+						<f:ajax execute="@this" render="createEmployeeModal:createEmployeeModalGroup" />
+					</h:commandButton>
 				</div>
 			</h:form>
 		</h:panelGroup>
@@ -145,6 +150,11 @@
 									<f:selectItems value="#{warehouseBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 								</h:selectManyMenu>
 							</div>
+
+							<div>
+								<h:messages style="color: red; list-style-type: none"/>
+							</div>
+
 							<div class="modal-footer">
 								<h:commandButton class="button" action="#{employeeBean.update}" value="Save">
 									<f:ajax execute="@this" render="egroup" />

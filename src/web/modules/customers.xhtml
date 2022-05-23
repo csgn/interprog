@@ -16,10 +16,9 @@
 	<md:modal id="createCustomerModal" title="ADD CUSTOMER">
 		<h:panelGroup id="createCustomerModalGroup">
 			<h:form>
-				<ez:ip-input type="text" placeholder="name" required="true" value="#{customerBean.model.name}" />
-				<ez:ip-input type="text" placeholder="surname" required="true" value="#{customerBean.model.surname}"/>
-				<ez:ip-input type="email" placeholder="email" required="true" value="#{customerBean.model.email}"/>
-				<ez:ip-input type="tel" placeholder="phone" required="true" value="#{customerBean.model.phone}"/>
+				<ez:ip-input type="text" placeholder="name" value="#{customerBean.model.name}" />
+				<ez:ip-input type="text" placeholder="surname" value="#{customerBean.model.surname}"/>
+				<ez:ip-input type="tel" placeholder="phone" value="#{customerBean.model.phone}"/>
 				<ez:ip-input type="text" placeholder="company title" value="#{customerBean.model.companyTitle}"/>
 				<ez:ip-input type="text" placeholder="tax number" value="#{customerBean.model.taxNumber}"/>
 				<ez:ip-input type="text" placeholder="tax administration" value="#{customerBean.model.taxAdministration}"/>
@@ -37,7 +36,9 @@
 				<div class="modal-footer">
 					<h:commandButton class="button" value="Save" action="#{customerBean.create}"/>
 				</div>
+
 			</h:form>
+
 		</h:panelGroup>
 	</md:modal>
 
