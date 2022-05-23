@@ -157,4 +157,9 @@ public class StatusDAO implements IDAO<Status> {
 
 		return status;
 	}
+
+	@Override
+	public List<Status> findAll(int p, int ps) {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	}
 }

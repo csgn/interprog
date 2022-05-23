@@ -15,12 +15,15 @@
 		<composite:attribute name='value' />
 		<composite:attribute name='autofocus' />
 		<composite:attribute name='placeholder' required="true" />
-		<composite:attribute name='required' default="false" />
 		<composite:attribute name='onfocus' />
 		<composite:attribute name='onblur' />
 		<composite:attribute name='oninput' />
 		<composite:attribute name='onclick' />
 		<composite:attribute name='converter' />
+		<composite:attribute name='required' type="boolean"/>
+		<composite:attribute name="validateLength" type="boolean" default="false" />
+		<composite:editableValueHolder name="validator" />
+
 	</composite:interface>
 
 	<composite:implementation>
@@ -30,7 +33,6 @@
 			<h:inputText
 				p:id="#{cc.id}"
 				p:class="ip-input"
-				p:required="#{cc.attrs.required}"
 				p:value="#{cc.attrs.value}"
 				p:autofocus="#{cc.attrs.autofocus}"
 				p:type="#{cc.attrs.type}"
@@ -38,9 +40,13 @@
 				p:onblur="#{cc.attrs.onblur}"
 				p:oninput="#{cc.attrs.oninput}"
 				p:onclick="#{cc.attrs.onclick}"
+				p:required="#{cc.attrs.required}"
 				>
 				<c:if test="#{cc.attrs.converter != null}">
 					<f:converter converterId="#{cc.attrs.converter}" />
+				</c:if>
+				<c:if test="#{cc.attrs.validator != null}">
+					<f:validator validatorId="#{cc.attrs.validator}" />
 				</c:if>
 			</h:inputText>
 			<h:outputLabel p:class="ip-input_placeholder">
