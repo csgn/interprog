@@ -100,7 +100,26 @@
 
 			</c:forEach>
 		</h:panelGroup>
-		<div class="container-footer">
+			
+		<div class="container-footer" style="display: flex; flex-direction: column;">
+			<h:panelGroup id="pageInfo">
+				<div style="display: flex; flex-direction: column;">
+					Page #{statusBean.page} of #{statusBean.pageCount}
+				</div>
+			</h:panelGroup>
+			<div style="display: flex;">
+				<div style="margin-right: 0.5rem">
+					<h:commandButton class="button" value="previous" action="#{statusBean.previous}">
+						<f:ajax execute="@this" render="egroup pageInfo" />
+					</h:commandButton>
+				</div>
+
+				<div>
+					<h:commandButton class="button" value="next" action="#{statusBean.next}">
+						<f:ajax execute="@this" render="egroup pageInfo" />
+					</h:commandButton>
+				</div>
+			</div>
 		</div>
 	</div>
 
