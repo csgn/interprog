@@ -173,7 +173,7 @@ public class RoleDAO implements IDAO<Role> {
 			count = rs.getInt("role_count");
 
 		} catch (SQLException ex) {
-			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
 		return count;

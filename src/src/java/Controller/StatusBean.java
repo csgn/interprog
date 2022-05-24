@@ -17,6 +17,9 @@ import java.util.List;
 public class StatusBean implements Serializable {
 	private Status model;
 	private final StatusDAO dao;
+	private int page = 1;
+	private int pageSize = 3;
+	private int pageCount;
 	
 	public StatusBean() {
 		model = new Status();
@@ -56,5 +59,45 @@ public class StatusBean implements Serializable {
 
 	public void editForm(Status s) {
 		model = s;
+	}
+	
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public int getPageCount() {
+		this.pageCount = (int) Math.ceil(this.dao.count() / (double) pageSize);
+		return pageCount;
+	}
+
+	public void setPageCount(int pageCount) {
+		this.pageCount = pageCount;
+	}
+
+	
+	public void next() {
+		if (page == pageCount)
+			page = 1;
+		else
+			page++;
+	}
+
+	public void previous() {
+		if (page == 1)
+			page = pageCount;
+		else
+			page--;
 	}
 }

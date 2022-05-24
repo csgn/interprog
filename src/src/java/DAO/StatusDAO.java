@@ -64,6 +64,36 @@ public class StatusDAO implements IDAO<Status> {
 
 		return statuses;
 	}
+	@Override
+	public List<Status> findAll(int page, int pageSize) {
+		List<Status> statuses = new ArrayList<>();
+		Status status = new Status();
+		PreparedStatement ps;
+		ResultSet rs;
+
+		int start = (page-1)*pageSize;
+
+		System.out.println(start + " " + pageSize);
+
+		try {
+			ps = conn.prepareStatement("SELECT * FROM status limit ? offset ?");
+			ps.setInt(1, pageSize);
+			ps.setInt(2, start);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				status = new Status(
+								rs.getInt("id"),
+								rs.getString("name"),
+								rs.getString("color")
+				);
+				statuses.add(status);
+			}
+		}catch (SQLException e) {
+			Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+		return statuses;
+	}
 
 	@Override
 	public int create(Status s) {
@@ -158,8 +188,21 @@ public class StatusDAO implements IDAO<Status> {
 		return status;
 	}
 
-	@Override
-	public List<Status> findAll(int p, int ps) {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	public int count() {
+		int count = 0;
+		PreparedStatement ps;
+		ResultSet rs;
+
+		try {	
+			ps = conn.prepareStatement("SELECT count(id) as status_count from status");
+			rs = ps.executeQuery();
+			rs.next();
+			count = rs.getInt("status_count");
+
+		} catch (SQLException ex) {
+			Logger.getLogger(StatusDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		return count;
 	}
 }
