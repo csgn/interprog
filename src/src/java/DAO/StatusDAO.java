@@ -188,6 +188,8 @@ public class StatusDAO implements IDAO<Status> {
 		return status;
 	}
 
+
+	
 	public int count() {
 		int count = 0;
 		PreparedStatement ps;
@@ -204,5 +206,6 @@ public class StatusDAO implements IDAO<Status> {
 		}
 
 		return count;
+
 	}
 }
