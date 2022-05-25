@@ -183,6 +183,7 @@ public class ProductDAO implements IDAO<Product> {
 		return warehouseDAO;
 	}
 
+
 	public int count() {
 		int count = 0;
 		PreparedStatement ps;
@@ -199,5 +200,7 @@ public class ProductDAO implements IDAO<Product> {
 		}
 
 		return count;
+
+
 	}
 }

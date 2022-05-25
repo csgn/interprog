@@ -298,6 +298,7 @@ public class CustomerDAO implements IDAO<Customer> {
 		return addressDAO;
 	}
 
+
 	public int count() {
 		int count = 0;
 		PreparedStatement ps;
@@ -311,6 +312,7 @@ public class CustomerDAO implements IDAO<Customer> {
 		} catch (SQLException ex) {
 			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
 		}
+
 
 		return count;
 	}

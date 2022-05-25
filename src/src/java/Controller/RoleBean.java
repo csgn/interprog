@@ -17,6 +17,9 @@ public class RoleBean implements Serializable{
 
 	private Role model;
 	private final RoleDAO dao;
+	private int page = 1;
+	private int pageSize = 3;
+	private int pageCount;
 	
 	public RoleBean() {
 		dao = new RoleDAO();
@@ -28,7 +31,7 @@ public class RoleBean implements Serializable{
 	}
 
 	public List<Role> findAll() {
-		return dao.findAll();
+		return dao.findAll(page,pageSize);
 	}
 
 	public void create() {
@@ -58,5 +61,45 @@ public class RoleBean implements Serializable{
 
 	public void editForm(Role r) {
 		model = r;
+	}
+	
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public int getPageCount() {
+		this.pageCount = (int) Math.ceil(this.dao.count() / (double) pageSize);
+		return pageCount;
+	}
+
+	public void setPageCount(int pageCount) {
+		this.pageCount = pageCount;
+	}
+
+	
+	public void next() {
+		if (page == pageCount)
+			page = 1;
+		else
+			page++;
+	}
+
+	public void previous() {
+		if (page == 1)
+			page = pageCount;
+		else
+			page--;
 	}
 }
