@@ -78,6 +78,40 @@ public class CustomerDAO implements IDAO<Customer> {
 
 		return customers;
 	}
+	
+	@Override
+	public List<Customer> findAll(int page, int pageSize) {
+		PreparedStatement ps;
+		ResultSet rs;
+
+		int start = (page-1)*pageSize;
+		
+		customers = new ArrayList<>();
+		try {
+			ps = conn.prepareStatement("SELECT * FROM customer limit ? offset ?");
+			ps.setInt(1, pageSize);
+			ps.setInt(2, start);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				tmp = new Customer(
+								rs.getInt("id"),
+								rs.getString("name"),
+								rs.getString("surname"),
+								this.getCustomerTypeDAO().find(rs.getInt("customerTypeId")),
+								rs.getString("phone"),
+								rs.getString("email"),
+								rs.getString("companyTitle"),
+								rs.getString("taxNumber"),
+								rs.getString("taxAdministration"),
+								this.getAddressDAO().find(rs.getInt("addressId")));
+				customers.add(tmp);
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+
+		return customers;
+	}
 
 	public Customer findByPhone(String phone) {
 		PreparedStatement ps;
@@ -264,10 +298,22 @@ public class CustomerDAO implements IDAO<Customer> {
 		return addressDAO;
 	}
 
-	@Override
-	public List<Customer> findAll(int p, int ps) {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+	public int count() {
+		int count = 0;
+		PreparedStatement ps;
+		ResultSet rs;
+
+		try {	
+			ps = conn.prepareStatement("SELECT count(id) as customer_count from customer");
+			rs = ps.executeQuery();
+			rs.next();
+			count = rs.getInt("customer_count");
+		} catch (SQLException ex) {
+			Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+
+		return count;
 	}
-
-
 }

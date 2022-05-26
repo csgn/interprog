@@ -161,6 +161,8 @@ public class RoleDAO implements IDAO<Role> {
 		return role;
 	}
 
+
+
 	public int count() {
 		int count = 0;
 		PreparedStatement ps;
@@ -177,5 +179,6 @@ public class RoleDAO implements IDAO<Role> {
 		}
 
 		return count;
+
 	}
 }

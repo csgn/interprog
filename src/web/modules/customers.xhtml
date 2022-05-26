@@ -16,10 +16,9 @@
 	<md:modal id="createCustomerModal" title="ADD CUSTOMER">
 		<h:panelGroup id="createCustomerModalGroup">
 			<h:form>
-				<ez:ip-input type="text" placeholder="name" required="true" value="#{customerBean.model.name}" />
-				<ez:ip-input type="text" placeholder="surname" required="true" value="#{customerBean.model.surname}"/>
-				<ez:ip-input type="email" placeholder="email" required="true" value="#{customerBean.model.email}"/>
-				<ez:ip-input type="tel" placeholder="phone" required="true" value="#{customerBean.model.phone}"/>
+				<ez:ip-input type="text" placeholder="name" value="#{customerBean.model.name}" />
+				<ez:ip-input type="text" placeholder="surname" value="#{customerBean.model.surname}"/>
+				<ez:ip-input type="tel" placeholder="phone" value="#{customerBean.model.phone}"/>
 				<ez:ip-input type="text" placeholder="company title" value="#{customerBean.model.companyTitle}"/>
 				<ez:ip-input type="text" placeholder="tax number" value="#{customerBean.model.taxNumber}"/>
 				<ez:ip-input type="text" placeholder="tax administration" value="#{customerBean.model.taxAdministration}"/>
@@ -37,7 +36,9 @@
 				<div class="modal-footer">
 					<h:commandButton class="button" value="Save" action="#{customerBean.create}"/>
 				</div>
+
 			</h:form>
+
 		</h:panelGroup>
 	</md:modal>
 
@@ -135,7 +136,25 @@
 				</md:modal>
 			</c:forEach>
 		</h:panelGroup>
-		<div class="container-footer">
+		<div class="container-footer" style="display: flex; flex-direction: column;">
+			<h:panelGroup id="pageInfo">
+				<div style="display: flex; flex-direction: column;">
+					Page #{customerBean.page} of #{customerBean.pageCount}
+				</div>
+			</h:panelGroup>
+			<div style="display: flex;">
+				<div style="margin-right: 0.5rem">
+					<h:commandButton class="button" value="previous" action="#{customerBean.previous}">
+						<f:ajax execute="@this" render="egroup pageInfo" />
+					</h:commandButton>
+				</div>
+
+				<div>
+					<h:commandButton class="button" value="next" action="#{customerBean.next}">
+						<f:ajax execute="@this" render="egroup pageInfo" />
+					</h:commandButton>
+				</div>
+			</div>
 		</div>
 	</div>
 </ui:composition>
