@@ -31,7 +31,7 @@ public class StatusBean implements Serializable {
 	}
 
 	public List<Status> findAll() {
-		return dao.findAll();
+		return dao.findAll(page,pageSize);
 	}
 
 	public void create() {
