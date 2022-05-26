@@ -90,7 +90,7 @@ public class StatusDAO implements IDAO<Status> {
 				statuses.add(status);
 			}
 		}catch (SQLException e) {
-			Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(StatusDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return statuses;
 	}
