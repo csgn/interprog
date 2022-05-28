@@ -33,7 +33,7 @@ public class EmailValidation implements Validator {
 	public void validate(FacesContext facesContext, UIComponent uiComponent, Object o) throws ValidatorException {
 		matcherObject = patternObject.matcher(o.toString());
 		if (!matcherObject.matches()) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Wrong Format", "Format of E-mail address is not valid");
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Wrong Format of E-mail address is not valid", null);
       throw new ValidatorException(message);
     }
 	}

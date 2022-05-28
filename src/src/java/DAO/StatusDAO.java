@@ -73,8 +73,6 @@ public class StatusDAO implements IDAO<Status> {
 
 		int start = (page-1)*pageSize;
 
-		System.out.println(start + " " + pageSize);
-
 		try {
 			ps = conn.prepareStatement("SELECT * FROM status limit ? offset ?");
 			ps.setInt(1, pageSize);

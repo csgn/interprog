@@ -17,8 +17,6 @@ public class PasswordValidation implements Validator {
 
 	@Override
 	public void validate(FacesContext fc, UIComponent uic, Object t) throws ValidatorException {
-		System.out.println("######################################################PASSWORDVALIDATE");
-
 		String v = (String) t;
 
 

@@ -17,9 +17,10 @@
 	<md:modal id="createJobModal" title="Create New Job">
 		<h:panelGroup id="createJobModalGroup">
 			<h:form>
+
 				<div>
 					<h:outputLabel>Customer</h:outputLabel><br/>
-					<h:selectOneMenu value="#{jobBean.model.customer}" converter="customerConverter" style="width: 10rem;">
+					<h:selectOneMenu id="customerSelectMenu" value="#{jobBean.model.customer}" converter="customerConverter" style="width: 10rem;" required="true">
 						<f:selectItems value="#{customerBean.findAll()}" var="c" itemLabel="#{c.name} #{c.surname}" itemValue="#{c}" />
 					</h:selectOneMenu>
 				</div>
@@ -28,7 +29,6 @@
 					<h:outputLabel>Description</h:outputLabel><br/>
 					<h:inputTextarea value="#{jobBean.model.description}" />
 				</div>
-
 
 				<div>
 					<h:outputLabel>Date &amp; Time</h:outputLabel><br/>
@@ -44,7 +44,6 @@
 					</h:selectManyMenu>
 				</div>
 
-
 				<div>
 					<h:outputLabel>Employee(s)</h:outputLabel><br/>
 					<h:selectManyMenu style='height: 50px; width: 150px' value="#{jobBean.model.jobEmployees}">
@@ -52,11 +51,19 @@
 					</h:selectManyMenu>
 				</div>
 
-				<div class="modal-footer">
-					<h:commandButton class="button" action="#{jobBean.create}"  value="Save"/>
+				<div>
+					<h:messages style="color: red; list-style-type: none"/>
 				</div>
+
+				<div class="modal-footer">
+					<h:commandButton class="button" action="#{jobBean.create}"  value="Save">
+						<f:ajax execute="@this" render="createJobModal:createJobModalGroup egroup" />
+					</h:commandButton>
+				</div>
+
 			</h:form>
 		</h:panelGroup>
+
 	</md:modal>
 
 	<div class='container-header'>
@@ -136,7 +143,7 @@
 
 							<div>
 								<h:outputLabel>Date &amp; Time</h:outputLabel><br/>
-								<h:inputText p:type="date" p:min="2022-03-28" p:value="#{jobBean.model.date}">
+								<h:inputText p:type="date" p:min="2022-05-28" p:value="#{jobBean.model.date}">
 									<f:convertDateTime pattern="yyyy-MM-dd"/>
 								</h:inputText>
 							</div>
@@ -174,24 +181,24 @@
 
 
 		<div class="container-footer" style="display: flex; flex-direction: column;">
-			<h:panelGroup id="pageInfo">
-				<div style="display: flex; flex-direction: column;">
-					Page #{jobBean.page} of #{jobBean.pageCount}
-				</div>
-			</h:panelGroup>
-			<div style="display: flex;">
-				<div style="margin-right: 0.5rem">
-					<h:commandButton class="button" value="previous" action="#{jobBean.previous}">
-						<f:ajax execute="@this" render="egroup pageInfo" />
-					</h:commandButton>
-				</div>
+				<h:panelGroup id="pageInfo">
+					<div style="display: flex; flex-direction: column;">
+						Page #{jobBean.page} of #{jobBean.pageCount}
+					</div>
+				</h:panelGroup>
+				<div style="display: flex;">
+					<div style="margin-right: 0.5rem">
+						<h:commandButton class="button" value="previous" action="#{jobBean.previous}">
+							<f:ajax execute="@this" render="egroup pageInfo" />
+						</h:commandButton>
+					</div>
 
-				<div>
-					<h:commandButton class="button" value="next" action="#{jobBean.next}">
-						<f:ajax execute="@this" render="egroup pageInfo" />
-					</h:commandButton>
+					<div>
+						<h:commandButton class="button" value="next" action="#{jobBean.next}">
+							<f:ajax execute="@this" render="egroup pageInfo" />
+						</h:commandButton>
+					</div>
 				</div>
-			</div>
 		</div>
 
 	</div>

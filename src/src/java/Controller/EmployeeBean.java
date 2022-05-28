@@ -90,7 +90,6 @@ public class EmployeeBean implements Serializable {
 
 	public int getPageCount() {
 		this.pageCount = (int) Math.ceil(this.dao.count() / (double) pageSize);
-		System.out.println("PAGECOUNT: " + pageCount);
 		return pageCount;
 	}
 
