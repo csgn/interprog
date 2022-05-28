@@ -16,9 +16,10 @@
 	<md:modal id="createCustomerModal" title="ADD CUSTOMER">
 		<h:panelGroup id="createCustomerModalGroup">
 			<h:form>
-				<ez:ip-input type="text" placeholder="name" value="#{customerBean.model.name}" />
-				<ez:ip-input type="text" placeholder="surname" value="#{customerBean.model.surname}"/>
-				<ez:ip-input type="tel" placeholder="phone" value="#{customerBean.model.phone}"/>
+				<ez:ip-input type="text" placeholder="name" required="true" value="#{customerBean.model.name}" />
+				<ez:ip-input type="text" placeholder="surname" required="true" value="#{customerBean.model.surname}"/>
+				<ez:ip-input type="tel" placeholder="phone" required="true" value="#{customerBean.model.phone}"/>
+				<ez:ip-input type="text" placeholder="email" required="true" value="#{customerBean.model.email}" validator="emailValidator"/>
 				<ez:ip-input type="text" placeholder="company title" value="#{customerBean.model.companyTitle}"/>
 				<ez:ip-input type="text" placeholder="tax number" value="#{customerBean.model.taxNumber}"/>
 				<ez:ip-input type="text" placeholder="tax administration" value="#{customerBean.model.taxAdministration}"/>
@@ -33,8 +34,15 @@
 						<f:selectItems value="#{customerTypeBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 					</h:selectOneMenu>
 				</div>
+
+				<div>
+					<h:messages style="color: red; list-style-type: none"/>
+				</div>
+
 				<div class="modal-footer">
-					<h:commandButton class="button" value="Save" action="#{customerBean.create}"/>
+					<h:commandButton class="button" action="#{customerBean.create}" value="Save">
+						<f:ajax execute="@this" render="createCustomerModal:createCustomerModalGroup" />
+					</h:commandButton>
 				</div>
 
 			</h:form>
@@ -110,7 +118,7 @@
 								<ez:ip-input type="text" placeholder="name" value="#{customerBean.model.name}" />
 								<ez:ip-input type="text" placeholder="surname" value="#{customerBean.model.surname}"/>
 								<ez:ip-input type="tel" placeholder="phone" value="#{customerBean.model.phone}"/>
-								<ez:ip-input type="email" placeholder="email" value="#{customerBean.model.email}" required="true" validator="emailValidator"/>
+								<ez:ip-input type="text" placeholder="email" value="#{customerBean.model.email}" required="true" validator="emailValidator"/>
 								<ez:ip-input type="text" placeholder="company title" value="#{customerBean.model.companyTitle}"/>
 								<ez:ip-input type="text" placeholder="tax number"  value="#{customerBean.model.taxNumber}"/>
 								<ez:ip-input type="text" placeholder="tax administration" value="#{customerBean.model.taxAdministration}"/>
@@ -125,9 +133,16 @@
 									<f:selectItems value="#{customerTypeBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 								</h:selectOneMenu>
 							</div>
+
+
+								<div>
+									<h:messages style="color: red; list-style-type: none"/>
+								</div>
+
+
 							<div class="modal-footer">
 								<h:commandButton class="button" action="#{customerBean.update}" value="Save">
-									<f:ajax execute="@this" render="egroup" />
+									<f:ajax execute="@this" render="emodal_#{e.id}:modalgroup" />
 								</h:commandButton>
 							</div>
 
@@ -136,6 +151,8 @@
 				</md:modal>
 			</c:forEach>
 		</h:panelGroup>
+
+
 		<div class="container-footer" style="display: flex; flex-direction: column;">
 			<h:panelGroup id="pageInfo">
 				<div style="display: flex; flex-direction: column;">
