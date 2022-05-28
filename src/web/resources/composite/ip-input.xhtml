@@ -22,6 +22,11 @@
 		<composite:attribute name='converter' />
 		<composite:attribute name='required' type="boolean"/>
 		<composite:attribute name="validateLength" type="boolean" default="false" />
+		<c:if test="#{cc.attrs.validateLength == true}">
+			<composite:attribute name="min" />
+			<composite:attribute name="max" />
+			<composite:attribute name="validatorMsg" />
+		</c:if>
 		<composite:editableValueHolder name="validator" />
 
 	</composite:interface>
@@ -41,12 +46,16 @@
 				p:oninput="#{cc.attrs.oninput}"
 				p:onclick="#{cc.attrs.onclick}"
 				p:required="#{cc.attrs.required}"
+				validatorMessage="#{cc.attrs.validatorMsg}"
 				>
 				<c:if test="#{cc.attrs.converter != null}">
 					<f:converter converterId="#{cc.attrs.converter}" />
 				</c:if>
 				<c:if test="#{cc.attrs.validator != null}">
 					<f:validator validatorId="#{cc.attrs.validator}" />
+				</c:if>
+				<c:if test="#{cc.attrs.validateLength}">
+					<f:validateLength minimum="#{cc.attrs.min}" maximum="#{cc.attrs.max}"  />
 				</c:if>
 			</h:inputText>
 			<h:outputLabel p:class="ip-input_placeholder">
