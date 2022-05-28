@@ -23,7 +23,7 @@
 					<ez:ip-input id="createEmployeeModal-surname" type="text" placeholder="lastname" value="#{employeeBean.model.surname}" required="true" />
 				</div>
 				<div>
-					<ez:ip-input id="createEmployeeModal-phone" type="text" placeholder="phone" value="#{employeeBean.model.phone}" required="true" />
+					<ez:ip-input id="createEmployeeModal-phone" type="text" placeholder="phone" value="#{employeeBean.model.phone}" required="true" validator="phoneValidator" />
 				</div>
 				<div>
 					<ez:ip-input id="createEmployeeModal-password" type="password" placeholder="password" value="#{employeeBean.model.password}" required="true" validator="passwordValidator" />
