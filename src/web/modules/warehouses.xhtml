@@ -13,16 +13,26 @@
 								xmlns:ib="http://xmlns.jcp.org/jsf/composite/composite/icon-button"
 								xmlns:f="http://xmlns.jcp.org/jsf/core"
 								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-	<md:modal id="createWarehouseModal" title="ADD WAREHOUSE">
-		<h:panelGroup id="createProductModalGroup">
+	<md:modal id="warehouseModal_create" title="ADD WAREHOUSE">
+		<h:panelGroup id="warehouseModal_create_group">
 			<h:form>
 				<div>
-					<ez:ip-input type="text" placeholder="warehouse name" required="true" value="#{warehouseBean.model.name}"/>
+					<ez:ip-input id="warehouseModal_textInput" type="text" placeholder="warehouse name" required="true" value="#{warehouseBean.model.name}" validateLength="true" min="5" max="16" validatorMsg="Password cannot be less than 5 characters!"/>
 				</div>
+
+				
+				<div>
+					<h:messages style="color: red; list-style-type: none"/>
+				</div>
+
+
 				<div class="modal-footer">
-					<h:commandButton class="button" value="Save" action="#{warehouseBean.create}"/>
+					<h:commandButton class="button" value="Save" action="#{warehouseBean.create}">
+						<f:ajax render="warehouseModal_create:warehouseModal_create_group warehouse_egroup" execute="@this" />
+					</h:commandButton>
 				</div>
 			</h:form>
+
 		</h:panelGroup>
 	</md:modal>
 
@@ -32,8 +42,8 @@
 		</div>
 		<div class='container-button'>
 			<h:form>
-				<h:commandButton class="button" onclick="toggle('createWarehouseModal', 0)" action="#{warehouseBean.clearModel}" value="CREATE A NEW WAREHOUSE">
-					<f:ajax execute="@this" render="createWarehouseModal:createWarehouseModalGroup" />
+				<h:commandButton class="button" onclick="toggle('warehouseModal_create', 0)" action="#{warehouseBean.clearModel}" value="CREATE A NEW WAREHOUSE">
+					<f:ajax execute="@this" render="warehouseModal_create:warehouseModal_crete_group" />
 				</h:commandButton>
 			</h:form>
 		</div>
@@ -44,7 +54,7 @@
 			<div class="container-column">NAME</div>
 			<div class="container-column">OPTIONS</div>
 		</div>
-		<h:panelGroup id="egroup">
+		<h:panelGroup id="warehouse_egroup">
 			<c:forEach items="#{warehouseBean.findAll()}" var="e">
 				<div class='container-row'>
 					<div class='container-column'>#{e.name}</div>
@@ -54,17 +64,17 @@
 							<dd:dropdown-menu>
 								<h:form>
 									<dd:dropdown-item>
-										<h:commandLink onclick="toggle('emodal_#{e.id}', 0)" action="#{warehouseBean.editForm(e)}">							
+										<h:commandLink onclick="toggle('warehouseModal_update_#{e.id}', 0)" action="#{warehouseBean.editForm(e)}">							
 											<ion-icon name="pencil" size="large"></ion-icon>
 											<span>Edit</span>
-											<f:ajax execute="@this" render="emodal_#{e.id}:modalgroup" />
+											<f:ajax execute="@this" render="warehouseModal_update_#{e.id}:warehouseModal_update_group_#{e.id}" />
 										</h:commandLink>
 									</dd:dropdown-item>
 									<dd:dropdown-item>
 										<h:commandLink action="#{warehouseBean.delete(e.id)}">							
 											<ion-icon name="trash" size="large"></ion-icon>
 											<span>Delete</span>
-											<f:ajax execute="@this" render="egroup" />
+											<f:ajax execute="@this" render="warehouse_egroup" />
 										</h:commandLink>
 									</dd:dropdown-item>
 								</h:form>
@@ -73,17 +83,23 @@
 					</div>
 				</div>
 
-				<md:modal id="emodal_#{e.id}" title="Edit #{e}">
-					<h:panelGroup id="modalgroup">
+				<md:modal id="warehouseModal_update_#{e.id}" title="Edit #{e}">
+					<h:panelGroup id="warehouseModal_update_group_#{e.id}">
 						<h:form>
 							<div>
-								<ez:ip-input type="text" placeholder="warehouse name" required="true" value="#{warehouseBean.model.name}"/>
+								<ez:ip-input type="warehouseModal_update_textInput_#{e.id}" placeholder="warehouse name" required="true" value="#{warehouseBean.model.name}" validateLength="true" min="5" max="16" validatorMsg="Password cannot be less than 5 characters!"/>
 							</div>
-							<div class="modal-footer">
-								<h:commandButton class="button" action="#{warehouseBean.update}" value="Save">
-									<f:ajax execute="@this" render="egroup" />
-								</h:commandButton>
-							</div>
+
+				<div>
+					<h:messages style="color: red; list-style-type: none"/>
+				</div>
+
+
+				<div class="modal-footer">
+					<h:commandButton class="button" value="Save" action="#{warehouseBean.update}">
+						<f:ajax render="warehouseModal_update:warehouseModal_update_egroup_#{e.id} warehouse_egroup" execute="@this" />
+					</h:commandButton>
+				</div>
 						</h:form>
 					</h:panelGroup>
 				</md:modal>
