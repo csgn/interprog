@@ -110,7 +110,7 @@
 								<ez:ip-input type="text" placeholder="name" value="#{customerBean.model.name}" />
 								<ez:ip-input type="text" placeholder="surname" value="#{customerBean.model.surname}"/>
 								<ez:ip-input type="tel" placeholder="phone" value="#{customerBean.model.phone}"/>
-								<ez:ip-input type="email" placeholder="email" value="#{customerBean.model.email}"/>
+								<ez:ip-input type="email" placeholder="email" value="#{customerBean.model.email}" required="true" validator="emailValidator"/>
 								<ez:ip-input type="text" placeholder="company title" value="#{customerBean.model.companyTitle}"/>
 								<ez:ip-input type="text" placeholder="tax number"  value="#{customerBean.model.taxNumber}"/>
 								<ez:ip-input type="text" placeholder="tax administration" value="#{customerBean.model.taxAdministration}"/>
