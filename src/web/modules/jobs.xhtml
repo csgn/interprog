@@ -91,7 +91,7 @@
 			<div class="container-column">OPTIONS</div>
 		</div>
 		<h:panelGroup id="egroup">
-			<c:forEach items="#{jobBean.findAll()}" var="e">
+			<c:forEach items="#{jobBean.findAllLimit()}" var="e">
 				<div class='container-row'>
 					<div class='container-column'>#{e.date}</div>
 					<div class='container-column'>#{e.description}</div>

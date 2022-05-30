@@ -98,6 +98,15 @@ CREATE TABLE IF NOT EXISTS Job
     PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS Document
+(
+    id          serial UNIQUE PRIMARY KEY,
+    filePath    varchar UNIQUE,
+    fileName    varchar,
+    fileType    varchar
+);
+
+
 CREATE TABLE IF NOT EXISTS Product
 (
     id            serial UNIQUE PRIMARY KEY,
@@ -109,7 +118,9 @@ CREATE TABLE IF NOT EXISTS Product
     vat           int     NOT NULL,
     quantity      int,
     warehouseId   int,
-    FOREIGN KEY (warehouseId) REFERENCES Warehouse (id)
+    documentId    int,
+    FOREIGN KEY (warehouseId)   REFERENCES Warehouse    (id),
+    FOREIGN KEY (documentId)    REFERENCES Document     (id)
 );
 
 

@@ -20,11 +20,14 @@ public class Product {
 	private int vat;
 	private int quantity;
 	private Warehouse warehouse;
+	private Document document;
 
 	public Product() {
+		warehouse = new Warehouse();
+		document = new Document();
 	}
 
-	public Product(int id, String name, String serialNumber, String unit, int purchasePrice, int salePrice, int vat, int quantity, Warehouse warehouse) {
+	public Product(int id, String name, String serialNumber, String unit, int purchasePrice, int salePrice, int vat, int quantity, Warehouse warehouse, Document document) {
 		this.id = id;
 		this.name = name;
 		this.serialNumber = serialNumber;
@@ -34,6 +37,7 @@ public class Product {
 		this.vat = vat;
 		this.quantity = quantity;
 		this.warehouse = warehouse;
+		this.document = document;
 	}
 	
 	public int getPurchasePrice() {
@@ -107,6 +111,15 @@ public class Product {
 	public void setWarehouse(Warehouse warehouse) {
 		this.warehouse = warehouse;
 	}
+
+	public Document getDocument() {
+		return document;
+	}
+
+	public void setDocument(Document document) {
+		this.document = document;
+	}
+
 
 	@Override
 	public int hashCode() {

@@ -80,7 +80,7 @@
 			<div class="container-column">OPTIONS</div>
 		</div>
 		<h:panelGroup id="egroup">
-			<c:forEach items="#{customerBean.findAll()}" var="e">
+			<c:forEach items="#{customerBean.findAllLimit()}" var="e">
 				<div class='container-row'>
 					<div class='container-column'>#{e.name} #{e.surname}</div>
 					<div class='container-column'>#{e.companyTitle}</div>

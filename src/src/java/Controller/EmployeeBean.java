@@ -33,8 +33,13 @@ public class EmployeeBean implements Serializable {
 	}
 
 	public List<Employee> findAll() {
+		return dao.findAll();
+	}
+
+	public List<Employee> findAllLimit() {
 		return dao.findAll(page, pageSize);
 	}
+
 
 	public void create() {
 		int id = dao.create(model);
