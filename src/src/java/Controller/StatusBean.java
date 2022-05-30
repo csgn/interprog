@@ -31,8 +31,14 @@ public class StatusBean implements Serializable {
 	}
 
 	public List<Status> findAll() {
+		return dao.findAll();
+	}
+
+	public List<Status> findAllLimit() {
 		return dao.findAll(page,pageSize);
 	}
+
+
 
 	public void create() {
 		int id = dao.create(model);

@@ -31,8 +31,14 @@ public class RoleBean implements Serializable{
 	}
 
 	public List<Role> findAll() {
+		return dao.findAll();
+	}
+
+	public List<Role> findAllLimit() {
 		return dao.findAll(page,pageSize);
 	}
+
+
 
 	public void create() {
 		int id = dao.create(model);

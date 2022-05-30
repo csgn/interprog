@@ -35,11 +35,15 @@ public class JobBean implements Serializable {
 		return dao.find(id);
 	}
 
-	public List<Job> findAll() {
-		List<Job> res = dao.findAll(page, pageSize);
 
-		return res;
+	public List<Job> findAll() {
+		return dao.findAll(page, pageSize);
 	}
+
+	public List<Job> findAllLimit() {
+		return dao.findAll(page, pageSize);
+	}
+
 
 	public void create() {
 		int id = dao.create(model);

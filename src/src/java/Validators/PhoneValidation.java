@@ -32,7 +32,7 @@ public class PhoneValidation implements Validator {
 	public void validate(FacesContext fc, UIComponent uic, Object t) throws ValidatorException {
 		matcherObject = patternObject.matcher(t.toString());
 		if (!matcherObject.matches()) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Wrong Format", "Format of phone number is not valid");
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Wrong Format of Phone number is not valid", null);
 			throw new ValidatorException(message);
 		}
 	}

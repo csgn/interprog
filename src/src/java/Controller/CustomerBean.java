@@ -41,8 +41,13 @@ public class CustomerBean implements Serializable {
 	}
 
 	public List<Customer> findAll() {
+		return dao.findAll();
+	}
+
+	public List<Customer> findAllLimit() {
 		return dao.findAll(page, pageSize);
 	}
+
 
 	public void create() {
 		int addressId = addressDAO.create(model.getAddress());

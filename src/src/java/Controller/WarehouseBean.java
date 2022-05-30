@@ -31,6 +31,10 @@ public class WarehouseBean implements Serializable {
 		return dao.findAll();
 	}
 
+	public List<Warehouse> findAllLimit() {
+		return dao.findAll();
+	}
+
 	public void create() {
 		int id = dao.create(model);
 		this.clearModel();

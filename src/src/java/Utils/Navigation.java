@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class Navigation implements Serializable {
 	final private String path = "/modules/";
 	final private String extension = ".xhtml";
-	private String content = "home";
+	private String content = "jobs";
 
 	public String getContent() {
 		return content;

@@ -19,6 +19,7 @@ public class ProductDAO implements IDAO<Product> {
 	private Product tmp;
 	private List<Product> products;
 	private WarehouseDAO warehouseDAO;
+	private DocumentDAO documentDAO;
 
 	@Override
 	public Product find(int id) {
@@ -42,7 +43,7 @@ public class ProductDAO implements IDAO<Product> {
 				product.setVat(rs.getInt("vat"));
 				product.setQuantity(rs.getInt("quantity"));
 				product.setWarehouse(this.getWarehouseDAO().find(rs.getInt("warehouseId")));
-
+				product.setDocument(this.getDocumentDAO().find(rs.getInt("documentId")));
 			}
 		} catch (SQLException ex) {
 			Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -70,7 +71,8 @@ public class ProductDAO implements IDAO<Product> {
 								rs.getInt("salePrice"),
 								rs.getInt("vat"),
 								rs.getInt("quantity"),
-								this.getWarehouseDAO().find(rs.getInt("warehouseId")));
+								this.getWarehouseDAO().find(rs.getInt("warehouseId")),
+								this.getDocumentDAO().find(rs.getInt("documentId")));
 				products.add(tmp);
 			}
 		} catch (SQLException e) {
@@ -103,7 +105,8 @@ public class ProductDAO implements IDAO<Product> {
 								rs.getInt("salePrice"),
 								rs.getInt("vat"),
 								rs.getInt("quantity"),
-								this.getWarehouseDAO().find(rs.getInt("warehouseId")));
+								this.getWarehouseDAO().find(rs.getInt("warehouseId")),
+								this.getDocumentDAO().find(rs.getInt("documentId")));
 				products.add(tmp);
 			}
 		} catch (SQLException e) {
@@ -120,7 +123,7 @@ public class ProductDAO implements IDAO<Product> {
 
 		int id = -1;
 		try {
-			ps = conn.prepareStatement("INSERT INTO product (name, serialnumber, unit, purchaseprice, saleprice, vat, quantity, warehouseid) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id");
+			ps = conn.prepareStatement("INSERT INTO product (name, serialnumber, unit, purchaseprice, saleprice, vat, quantity, warehouseid, documentid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id");
 			ps.setString(1, p.getName());
 			ps.setString(2, p.getSerialNumber());
 			ps.setString(3, p.getUnit());
@@ -129,6 +132,7 @@ public class ProductDAO implements IDAO<Product> {
 			ps.setInt(6, p.getVat());
 			ps.setInt(7, p.getQuantity());
 			ps.setInt(8, p.getWarehouse().getId());
+			ps.setInt(9, p.getDocument().getId());
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -145,7 +149,7 @@ public class ProductDAO implements IDAO<Product> {
 		PreparedStatement ps;
 
 		try {
-			ps = conn.prepareStatement("UPDATE product SET name=?,serialnumber=?, unit=?, purchaseprice=?, saleprice=?,vat=?,quantity=?,warehouseid=? where id=?");
+			ps = conn.prepareStatement("UPDATE product SET name=?,serialnumber=?, unit=?, purchaseprice=?, saleprice=?,vat=?,quantity=?,warehouseid=?,documentid=? where id=?");
 			ps.setString(1, p.getName());
 			ps.setString(2, p.getSerialNumber());
 			ps.setString(3, p.getUnit());
@@ -154,7 +158,8 @@ public class ProductDAO implements IDAO<Product> {
 			ps.setInt(6, p.getVat());
 			ps.setInt(7, p.getQuantity());
 			ps.setInt(8, p.getWarehouse().getId());
-			ps.setInt(9, p.getId());
+			ps.setInt(9, p.getDocument().getId());
+			ps.setInt(10, p.getId());
 			ps.executeUpdate();
 		} catch (SQLException ex) {
 			Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -183,6 +188,14 @@ public class ProductDAO implements IDAO<Product> {
 		return warehouseDAO;
 	}
 
+	public DocumentDAO getDocumentDAO() {
+		if (documentDAO == null) {
+			this.documentDAO = new DocumentDAO();
+		}
+
+		return documentDAO;
+	}
+
 
 	public int count() {
 		int count = 0;
@@ -200,7 +213,5 @@ public class ProductDAO implements IDAO<Product> {
 		}
 
 		return count;
-
-
 	}
 }
