@@ -19,6 +19,11 @@
 				<div>
 					<ez:ip-input type="text" placeholder="role name" required="true" value="#{roleBean.model.name}" validateLength="true" min="5" max="16" validatorMsg=""/>
 				</div>
+				
+				<div>
+					<h:messages style="color: red; list-style-type: none"/>
+				</div>
+				
 				<div class="modal-footer">
 					<h:commandButton class="button" value="Save" action="#{roleBean.create}"/>
 				</div>
