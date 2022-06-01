@@ -14,13 +14,20 @@
 								xmlns:f="http://xmlns.jcp.org/jsf/core"
 								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 	<md:modal id="createSquadModal" title="ADD SQUAD">
-		<h:panelGroup id="createProductModalGroup">
+		<h:panelGroup id="createSquadModalGroup">
 			<h:form>
 				<div>
-					<ez:ip-input type="text" placeholder="squad name" required="true" value="#{squadBean.model.name}"/>
+					<ez:ip-input type="text" placeholder="squad name" required="true" value="#{squadBean.model.name}" validateLength="true" min="5" max="16" />
 				</div>
+
+				<div>
+					<h:messages style="color: red; list-style-type: none"/>
+				</div>
+
 				<div class="modal-footer">
-					<h:commandButton class="button" value="Save" action="#{squadBean.create}"/>
+					<h:commandButton class="button" value="Save" action="#{squadBean.create}">
+						<f:ajax execute="@this" render="createSquadModal:createSquadModalGroup egroup" />
+					</h:commandButton>
 				</div>
 			</h:form>
 		</h:panelGroup>
@@ -77,11 +84,14 @@
 					<h:panelGroup id="modalgroup">
 						<h:form>
 							<div>
-								<ez:ip-input type="text" placeholder="squad name" required="true" value="#{squadBean.model.name}"/>
+								<ez:ip-input type="text" placeholder="squad name" required="true" value="#{squadBean.model.name}" validateLength="true" min="5" max="16"/>
+							</div>
+							<div>
+								<h:messages style="color: red; list-style-type: none"/>
 							</div>
 							<div class="modal-footer">
 								<h:commandButton class="button" action="#{squadBean.update}" value="Save">
-									<f:ajax execute="@this" render="egroup" />
+									<f:ajax execute="@this" render="emodal_#{e.id}:modalgroup" />
 								</h:commandButton>
 							</div>
 						</h:form>
