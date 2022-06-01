@@ -65,6 +65,36 @@ public class WarehouseDAO implements IDAO<Warehouse> {
 	}
 
 	@Override
+	public List<Warehouse> findAll(int page, int pageSize) {
+		List<Warehouse> warehouses = new ArrayList<>();
+		Warehouse warehouse;
+		PreparedStatement ps;
+		ResultSet rs;
+
+		int start = (page-1)*pageSize;
+
+		try {
+			ps = conn.prepareStatement("SELECT * FROM warehouse limit ? offset ?");
+			ps.setInt(1, pageSize);
+			ps.setInt(2, start);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				warehouse = new Warehouse(
+								rs.getInt("id"),
+								rs.getString("name")
+				);
+				warehouses.add(warehouse);
+			}
+		} catch (SQLException e) {
+			Logger.getLogger(WarehouseDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+
+		return warehouses;
+	}
+
+
+	@Override
 	public int create(Warehouse w) {
 		int id = -1;
 		PreparedStatement ps;
@@ -132,8 +162,22 @@ public class WarehouseDAO implements IDAO<Warehouse> {
 		return warehouse;
 	}
 
-	@Override
-	public List<Warehouse> findAll(int p, int ps) {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	public int count() {
+		int count = 0;
+		PreparedStatement ps;
+		ResultSet rs;
+
+		try {
+			ps = conn.prepareStatement("SELECT count(id) as warehouse_count from warehouse");
+			rs = ps.executeQuery();
+			rs.next();
+			count = rs.getInt("warehouse_count");
+
+		} catch (SQLException ex) {
+			Logger.getLogger(WarehouseDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		return count;
 	}
+
 }
