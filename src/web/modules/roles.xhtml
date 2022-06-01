@@ -26,6 +26,7 @@
 				
 				<div class="modal-footer">
 					<h:commandButton class="button" value="Save" action="#{roleBean.create}"/>
+						<f:ajax render="roleModal_create:roleModal_create_group role_egroup" execute="@this" />
 				</div>
 			</h:form>
 		</h:panelGroup>
