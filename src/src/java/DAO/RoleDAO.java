@@ -73,8 +73,6 @@ public class RoleDAO implements IDAO<Role> {
 
 		int start = (page-1)*pageSize;
 
-		System.out.println(start + " " + pageSize);
-
 		try {
 			ps = conn.prepareStatement("SELECT * FROM role limit ? offset ?");
 			ps.setInt(1, pageSize);

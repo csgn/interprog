@@ -13,51 +13,43 @@
 								xmlns:ib="http://xmlns.jcp.org/jsf/composite/composite/icon-button"
 								xmlns:f="http://xmlns.jcp.org/jsf/core"
 								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-	<md:modal id="createEmployeeModal" title="Add Employee">
-		<h:panelGroup id="createEmployeeModalGroup">
+	<md:modal id="employeeModal_create" title="Add Employee">
+		<h:panelGroup id="employeeModal_create_group">
 			<h:form>
-				<div>
-					<ez:ip-input id="createEmployeeModal-name" type="text" placeholder="name" value="#{employeeBean.model.name}" required="true" />
-				</div>
-				<div>
-					<ez:ip-input id="createEmployeeModal-surname" type="text" placeholder="lastname" value="#{employeeBean.model.surname}" required="true" />
-				</div>
-				<div>
-					<ez:ip-input id="createEmployeeModal-phone" type="text" placeholder="phone" value="#{employeeBean.model.phone}" required="true" validator="phoneValidator" />
-				</div>
-				<div>
-					<ez:ip-input id="createEmployeeModal-password" type="password" placeholder="password" value="#{employeeBean.model.password}" required="true" validator="passwordValidator" />
-				</div>
-				<div>
-					<ez:ip-input id="createEmployeeModal-color" type="color" placeholder="color" value="#{employeeBean.model.color}" required="true" />
-				</div>
+					<ez:ip-input type="text" placeholder="name" value="#{employeeBean.model.name}" required="true" />
+					<ez:ip-input type="text" placeholder="lastname" value="#{employeeBean.model.surname}" required="true" />
+					<ez:ip-input type="text" placeholder="phone" value="#{employeeBean.model.phone}" required="true" validator="phoneValidator" />
+					<ez:ip-input type="password" placeholder="password" value="#{employeeBean.model.password}" required="true" validator="passwordValidator" />
+					<ez:ip-input type="color" placeholder="color" value="#{employeeBean.model.color}" required="true" />
 				<div>
 					<h:outputLabel>Role</h:outputLabel><br/>
 					<h:selectOneMenu value="#{employeeBean.model.role}" converter="roleConverter">
 						<f:selectItems value="#{roleBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 					</h:selectOneMenu>
 				</div>
-
 				<div>
 					<h:outputLabel>Squad(s)</h:outputLabel><br/>
-					<h:selectManyMenu value="#{employeeBean.model.employeeSquads}" converter="squadConverter">
+					<h:selectManyMenu value="#{employeeBean.model.employeeSquads}" converter="squadConverter" style="height: 5rem;">
 						<f:selectItems value="#{squadBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 					</h:selectManyMenu>
 				</div>
 				<div>
 					<h:outputLabel>Warehouse(s)</h:outputLabel><br/>
-					<h:selectManyMenu value="#{employeeBean.model.employeeWarehouses}" converter="warehouseConverter">
+					<h:selectManyMenu value="#{employeeBean.model.employeeWarehouses}" converter="warehouseConverter" style="height: 5rem;">
 						<f:selectItems value="#{warehouseBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 					</h:selectManyMenu>
 				</div>
-				
-				<div>
-					<h:messages style="color: red; list-style-type: none"/>
-				</div>
+
+					<div>
+						<h:panelGroup id="messageGroup">
+							<h:messages style="color: red; list-style-type: none"/>
+						</h:panelGroup>
+					</div>
+
 
 				<div class="modal-footer">
 					<h:commandButton class="button" action="#{employeeBean.create}" value="Save">
-						<f:ajax execute="@this" render="createEmployeeModal:createEmployeeModalGroup" />
+						<f:ajax execute="@this" render="employeeModal_create:employeeModal_create_group employee_egroup messageGroup" />
 					</h:commandButton>
 				</div>
 			</h:form>
@@ -70,8 +62,8 @@
 		</div>
 		<div class='container-button'>
 			<h:form>
-				<h:commandButton class="button" onclick="toggle('createEmployeeModal', 0)" action="#{employeeBean.clearModel}" value="ADD A NEW EMPLOYEE">
-					<f:ajax execute="@this" render="createEmployeeModal:createEmployeeModalGroup" />
+				<h:commandButton class="button" onclick="toggle('employeeModal_create', 0)" action="#{employeeBean.clearModel}" value="ADD A NEW EMPLOYEE">
+					<f:ajax execute="@this" render="employeeModal_create:employeeModal_create_group" />
 				</h:commandButton>
 			</h:form>
 		</div>
@@ -87,8 +79,8 @@
 			<div class="container-column">WAREHOUSE(S)</div>
 			<div class="container-column">OPTIONS</div>
 		</div>
-		<h:panelGroup id="egroup">
-			<c:forEach items="#{employeeBean.findAll()}" var="e">
+		<h:panelGroup id="employee_egroup">
+			<c:forEach items="#{employeeBean.findAllLimit()}" var="e">
 				<div class='container-row'>
 					<div class='container-column'>#{e.name} #{e.surname}</div>
 					<div class='container-column'>#{e.phone}</div>
@@ -102,10 +94,10 @@
 							<dd:dropdown-menu>
 								<h:form>
 									<dd:dropdown-item>
-										<h:commandLink onclick="toggle('emodal_#{e.id}', 0)" action="#{employeeBean.editForm(e)}">							
+										<h:commandLink onclick="toggle('employeeModal_update_#{e.id}', 0)" action="#{employeeBean.editForm(e)}">							
 											<ion-icon name="pencil" size="large"></ion-icon>
 											<span>Edit</span>
-											<f:ajax execute="@this" render="emodal_#{e.id}:modalgroup" />
+											<f:ajax execute="@this" render="employeeModal_update_#{e.id}:employeeModal_update_group_#{e.id}" />
 										</h:commandLink>
 									</dd:dropdown-item>
 									<c:if test="#{sessionBean.employee.id != e.id}">
@@ -113,7 +105,7 @@
 											<h:commandLink action="#{employeeBean.delete(e.id)}">							
 												<ion-icon name="trash" size="large"></ion-icon>
 												<span>Delete</span>
-												<f:ajax execute="@this" render="egroup" />
+												<f:ajax execute="@this" render="employee_egroup" />
 											</h:commandLink>
 										</dd:dropdown-item>
 									</c:if>
@@ -123,30 +115,30 @@
 					</div>
 				</div>
 
-				<md:modal id="emodal_#{e.id}" title="Edit #{e}">
-					<h:panelGroup id="modalgroup">
+				<md:modal id="employeeModal_update_#{e.id}" title="Edit #{e}">
+					<h:panelGroup id="employeeModal_update_group_#{e.id}">
 						<h:form>
 							<div>
-								<ez:ip-input type="text" placeholder="name" value="#{employeeBean.model.name}" required="true" />
+								<ez:ip-input id="employeeModal_update_textInput_name" type="text" placeholder="name" value="#{employeeBean.model.name}" required="true" />
 							</div>
 							<div>
-								<ez:ip-input type="text" placeholder="lastname" value="#{employeeBean.model.surname}" required="true" />
+								<ez:ip-input id="employeeModal_update_textInput_lastname" type="text" placeholder="lastname" value="#{employeeBean.model.surname}" required="true" />
 							</div>
 							<div>
-								<ez:ip-input type="text" placeholder="phone" value="#{employeeBean.model.phone}" required="true" />
+								<ez:ip-input id="employeeModal_update_textInput_phone" type="text" placeholder="phone" value="#{employeeBean.model.phone}" required="true" />
 							</div>
 							<div>
-								<ez:ip-input type="color" placeholder="color" value="#{employeeBean.model.color}" required="true" />
+								<ez:ip-input id="employeeModal_update_colorInput_color" type="color" placeholder="color" value="#{employeeBean.model.color}" required="true" />
 							</div>
 							<div>
 								<h:outputLabel>Squad(s)</h:outputLabel><br/>
-								<h:selectManyMenu value="#{employeeBean.model.employeeSquads}" converter="squadConverter">
+								<h:selectManyMenu value="#{employeeBean.model.employeeSquads}" converter="squadConverter" style="height: 5rem;">
 									<f:selectItems value="#{squadBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 								</h:selectManyMenu>
 							</div>
 							<div>
 								<h:outputLabel>Warehouse(s)</h:outputLabel><br/>
-								<h:selectManyMenu value="#{employeeBean.model.employeeWarehouses}" converter="warehouseConverter">
+								<h:selectManyMenu value="#{employeeBean.model.employeeWarehouses}" converter="warehouseConverter" style="height: 5rem;">
 									<f:selectItems value="#{warehouseBean.findAll()}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 								</h:selectManyMenu>
 							</div>
@@ -157,7 +149,7 @@
 
 							<div class="modal-footer">
 								<h:commandButton class="button" action="#{employeeBean.update}" value="Save">
-									<f:ajax execute="@this" render="egroup" />
+									<f:ajax execute="@this" render="employee_egroup" />
 								</h:commandButton>
 							</div>
 						</h:form>
@@ -175,13 +167,13 @@
 			<div style="display: flex;">
 				<div style="margin-right: 0.5rem">
 					<h:commandButton class="button" value="previous" action="#{employeeBean.previous}">
-						<f:ajax execute="@this" render="egroup pageInfo" />
+						<f:ajax execute="@this" render="employee_egroup pageInfo" />
 					</h:commandButton>
 				</div>
 
 				<div>
 					<h:commandButton class="button" value="next" action="#{employeeBean.next}">
-						<f:ajax execute="@this" render="egroup pageInfo" />
+						<f:ajax execute="@this" render="employee_egroup pageInfo" />
 					</h:commandButton>
 				</div>
 			</div>

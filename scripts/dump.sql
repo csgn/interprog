@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 14.2
--- Dumped by pg_dump version 14.2
+-- Dumped from database version 14.3
+-- Dumped by pg_dump version 14.3
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -158,6 +158,42 @@ ALTER SEQUENCE public.customertype_id_seq OWNED BY public.customertype.id;
 
 
 --
+-- Name: document; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.document (
+    id integer NOT NULL,
+    filepath character varying,
+    filename character varying,
+    filetype character varying
+);
+
+
+ALTER TABLE public.document OWNER TO postgres;
+
+--
+-- Name: document_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.document_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.document_id_seq OWNER TO postgres;
+
+--
+-- Name: document_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.document_id_seq OWNED BY public.document.id;
+
+
+--
 -- Name: employee; Type: TABLE; Schema: public; Owner: root
 --
 
@@ -296,7 +332,8 @@ CREATE TABLE public.product (
     saleprice integer NOT NULL,
     vat integer NOT NULL,
     quantity integer,
-    warehouseid integer
+    warehouseid integer,
+    documentid integer
 );
 
 
@@ -483,6 +520,13 @@ ALTER TABLE ONLY public.customertype ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: document id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.document ALTER COLUMN id SET DEFAULT nextval('public.document_id_seq'::regclass);
+
+
+--
 -- Name: employee id; Type: DEFAULT; Schema: public; Owner: root
 --
 
@@ -535,12 +579,20 @@ ALTER TABLE ONLY public.warehouse ALTER COLUMN id SET DEFAULT nextval('public.wa
 -- Data for Name: address; Type: TABLE DATA; Schema: public; Owner: root
 --
 
+INSERT INTO public.address (id, title, context, region, district, directions) VALUES (1, 'West Terrace', 'West Terrace', 'West Terrace', 'West Terrace', 'West Terrace');
+INSERT INTO public.address (id, title, context, region, district, directions) VALUES (2, '6 New Castle Hill', '6 New Castle Hill', '6 New Castle Hill', '6 New Castle Hill', '6 New Castle Hill');
+INSERT INTO public.address (id, title, context, region, district, directions) VALUES (3, '512 Pierstorff Junction', '512 Pierstorff Junction', '512 Pierstorff Junction', '512 Pierstorff Junction', '512 Pierstorff Junction');
+INSERT INTO public.address (id, title, context, region, district, directions) VALUES (4, '2338 5th Court', '2338 5th Court', '2338 5th Court', '2338 5th Court', '2338 5th Court');
 
 
 --
 -- Data for Name: customer; Type: TABLE DATA; Schema: public; Owner: root
 --
 
+INSERT INTO public.customer (id, name, surname, customertypeid, phone, email, companytitle, taxnumber, taxadministration, addressid) VALUES (1, 'Kizzee', 'Durnell', 1, '9573595081', 'kdurnell0@blogtalkradio.com', 'Wordpedia', '880-24-4750', 'Kizzee Durnell', 1);
+INSERT INTO public.customer (id, name, surname, customertypeid, phone, email, companytitle, taxnumber, taxadministration, addressid) VALUES (2, 'Adolpho', 'Plaistowe', 1, '6536882107', 'aplaistowe1@cbc.ca', 'Fadeo', '	642-30-9432', 'Adolpho Plaistowe', 2);
+INSERT INTO public.customer (id, name, surname, customertypeid, phone, email, companytitle, taxnumber, taxadministration, addressid) VALUES (3, 'Craggy', 'Bentame', 1, '9776827141', 'cbentame2@bing.com', 'Twiyo', '780-75-6690', 'Craggy Bentame', 3);
+INSERT INTO public.customer (id, name, surname, customertypeid, phone, email, companytitle, taxnumber, taxadministration, addressid) VALUES (4, 'Cinderella', 'Bristoe', 1, '8025499171', 'cbristoe9@dedecms.com', 'Brightdog', '844-03-2963', 'Cinderella Bristoe', 4);
 
 
 --
@@ -552,46 +604,106 @@ INSERT INTO public.customertype (id, name) VALUES (2, 'individual');
 
 
 --
+-- Data for Name: document; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.document (id, filepath, filename, filetype) VALUES (15, '/home/csgn/Desktop/interprog/uploads/iphone-12-family-select-2021.jpeg', 'iphone-12-family-select-2021.jpeg', 'image/jpeg');
+INSERT INTO public.document (id, filepath, filename, filetype) VALUES (16, '/home/csgn/Desktop/interprog/uploads/MsiGF63-8RD__1__01.jpeg', 'MsiGF63-8RD__1__01.jpeg', 'image/jpeg');
+
+
+--
 -- Data for Name: employee; Type: TABLE DATA; Schema: public; Owner: root
 --
 
 INSERT INTO public.employee (id, name, surname, phone, color, password, roleid) VALUES (1, 'admin', 'admin', '0', '#000000', 'admin', 1);
+INSERT INTO public.employee (id, name, surname, phone, color, password, roleid) VALUES (2, 'Karee', 'Clarricoates', '3941690424', '#3bc49b', 'zkBgUyt', 2);
+INSERT INTO public.employee (id, name, surname, phone, color, password, roleid) VALUES (3, 'Glori', 'Mauvin', '6997749639', '#b1a635', 'WdknARm3X', 2);
+INSERT INTO public.employee (id, name, surname, phone, color, password, roleid) VALUES (4, 'Ailis', 'Alesio', '7442768198', '#ffa70f', '0Pu2d2H', 2);
+INSERT INTO public.employee (id, name, surname, phone, color, password, roleid) VALUES (5, 'Corrianne', 'Fratson', '9147156693', '#fea4a4', 'J1QSc6SXbsny', 2);
+INSERT INTO public.employee (id, name, surname, phone, color, password, roleid) VALUES (6, 'Aggi', 'Ratnage', '6714853340', '#e13ddb', 'OE2CBF6', 2);
+INSERT INTO public.employee (id, name, surname, phone, color, password, roleid) VALUES (7, 'Joice', 'Hovie', '8749128382', '#c70000', '0qeVvyz2Rik', 2);
 
 
 --
 -- Data for Name: employeexsquad; Type: TABLE DATA; Schema: public; Owner: root
 --
 
+INSERT INTO public.employeexsquad (employeeid, squadid) VALUES (2, 1);
+INSERT INTO public.employeexsquad (employeeid, squadid) VALUES (2, 2);
+INSERT INTO public.employeexsquad (employeeid, squadid) VALUES (2, 3);
+INSERT INTO public.employeexsquad (employeeid, squadid) VALUES (3, 2);
+INSERT INTO public.employeexsquad (employeeid, squadid) VALUES (3, 3);
+INSERT INTO public.employeexsquad (employeeid, squadid) VALUES (3, 4);
+INSERT INTO public.employeexsquad (employeeid, squadid) VALUES (3, 5);
+INSERT INTO public.employeexsquad (employeeid, squadid) VALUES (4, 2);
+INSERT INTO public.employeexsquad (employeeid, squadid) VALUES (4, 3);
+INSERT INTO public.employeexsquad (employeeid, squadid) VALUES (4, 4);
+INSERT INTO public.employeexsquad (employeeid, squadid) VALUES (4, 5);
+INSERT INTO public.employeexsquad (employeeid, squadid) VALUES (5, 2);
+INSERT INTO public.employeexsquad (employeeid, squadid) VALUES (5, 3);
+INSERT INTO public.employeexsquad (employeeid, squadid) VALUES (5, 4);
+INSERT INTO public.employeexsquad (employeeid, squadid) VALUES (6, 2);
+INSERT INTO public.employeexsquad (employeeid, squadid) VALUES (6, 3);
+INSERT INTO public.employeexsquad (employeeid, squadid) VALUES (7, 1);
+INSERT INTO public.employeexsquad (employeeid, squadid) VALUES (7, 2);
+INSERT INTO public.employeexsquad (employeeid, squadid) VALUES (7, 3);
 
 
 --
 -- Data for Name: employeexwarehouse; Type: TABLE DATA; Schema: public; Owner: root
 --
 
+INSERT INTO public.employeexwarehouse (employeeid, warehouseid) VALUES (2, 1);
+INSERT INTO public.employeexwarehouse (employeeid, warehouseid) VALUES (2, 2);
+INSERT INTO public.employeexwarehouse (employeeid, warehouseid) VALUES (2, 3);
+INSERT INTO public.employeexwarehouse (employeeid, warehouseid) VALUES (3, 1);
+INSERT INTO public.employeexwarehouse (employeeid, warehouseid) VALUES (3, 2);
+INSERT INTO public.employeexwarehouse (employeeid, warehouseid) VALUES (4, 8);
+INSERT INTO public.employeexwarehouse (employeeid, warehouseid) VALUES (5, 4);
+INSERT INTO public.employeexwarehouse (employeeid, warehouseid) VALUES (6, 5);
+INSERT INTO public.employeexwarehouse (employeeid, warehouseid) VALUES (7, 10);
 
 
 --
 -- Data for Name: job; Type: TABLE DATA; Schema: public; Owner: root
 --
 
+INSERT INTO public.job (id, creationdate, description, date, statusid, ownerid, customerid) VALUES (4, '2022-05-30 22:35:49.966615', 'DESCRIPTION-3', '2022-06-10 00:00:00', 1, 1, 3);
+INSERT INTO public.job (id, creationdate, description, date, statusid, ownerid, customerid) VALUES (2, '2022-05-30 00:00:00', 'DESCRIPTION-2', '2022-05-31 00:00:00', 4, 1, 1);
+INSERT INTO public.job (id, creationdate, description, date, statusid, ownerid, customerid) VALUES (1, '2022-05-30 00:00:00', 'DESCRIPTION-1', '2022-06-02 00:00:00', 2, 1, 1);
+INSERT INTO public.job (id, creationdate, description, date, statusid, ownerid, customerid) VALUES (3, '2022-05-30 00:00:00', 'DESCRIPTION-1', '2022-06-11 00:00:00', 3, 1, 2);
 
 
 --
 -- Data for Name: jobxemployee; Type: TABLE DATA; Schema: public; Owner: root
 --
 
+INSERT INTO public.jobxemployee (jobid, employeeid) VALUES (4, 2);
+INSERT INTO public.jobxemployee (jobid, employeeid) VALUES (4, 3);
+INSERT INTO public.jobxemployee (jobid, employeeid) VALUES (2, 2);
+INSERT INTO public.jobxemployee (jobid, employeeid) VALUES (1, 2);
+INSERT INTO public.jobxemployee (jobid, employeeid) VALUES (3, 2);
+INSERT INTO public.jobxemployee (jobid, employeeid) VALUES (3, 3);
 
 
 --
 -- Data for Name: jobxproduct; Type: TABLE DATA; Schema: public; Owner: root
 --
 
+INSERT INTO public.jobxproduct (jobid, productid) VALUES (4, 13);
+INSERT INTO public.jobxproduct (jobid, productid) VALUES (4, 14);
+INSERT INTO public.jobxproduct (jobid, productid) VALUES (2, 14);
+INSERT INTO public.jobxproduct (jobid, productid) VALUES (1, 13);
+INSERT INTO public.jobxproduct (jobid, productid) VALUES (3, 13);
+INSERT INTO public.jobxproduct (jobid, productid) VALUES (3, 14);
 
 
 --
 -- Data for Name: product; Type: TABLE DATA; Schema: public; Owner: root
 --
 
+INSERT INTO public.product (id, name, serialnumber, unit, purchaseprice, saleprice, vat, quantity, warehouseid, documentid) VALUES (13, 'IPhone', '123213', 'number', 8000, 9000, 18, 10, 1, 15);
+INSERT INTO public.product (id, name, serialnumber, unit, purchaseprice, saleprice, vat, quantity, warehouseid, documentid) VALUES (14, 'MSI', '124124', 'number', 14000, 17000, 0, 0, 1, 16);
 
 
 --
@@ -606,6 +718,11 @@ INSERT INTO public.role (id, name) VALUES (2, 'user');
 -- Data for Name: squad; Type: TABLE DATA; Schema: public; Owner: root
 --
 
+INSERT INTO public.squad (id, name) VALUES (1, 'SQUAD-1');
+INSERT INTO public.squad (id, name) VALUES (2, 'SQUAD-2');
+INSERT INTO public.squad (id, name) VALUES (3, 'SQUAD-3');
+INSERT INTO public.squad (id, name) VALUES (4, 'SQUAD-4');
+INSERT INTO public.squad (id, name) VALUES (5, 'SQUAD-5');
 
 
 --
@@ -615,12 +732,23 @@ INSERT INTO public.role (id, name) VALUES (2, 'user');
 INSERT INTO public.status (id, name, color) VALUES (1, 'open', '#4f4f4f');
 INSERT INTO public.status (id, name, color) VALUES (2, 'close', '#ff5959');
 INSERT INTO public.status (id, name, color) VALUES (3, 'done', '#82ff69');
+INSERT INTO public.status (id, name, color) VALUES (4, 'preparing', '#5f69ec');
 
 
 --
 -- Data for Name: warehouse; Type: TABLE DATA; Schema: public; Owner: root
 --
 
+INSERT INTO public.warehouse (id, name) VALUES (1, 'WAREHOUSE-1');
+INSERT INTO public.warehouse (id, name) VALUES (2, 'WAREHOUSE-2');
+INSERT INTO public.warehouse (id, name) VALUES (3, 'WAREHOUSE-3');
+INSERT INTO public.warehouse (id, name) VALUES (4, 'WAREHOUSE-4');
+INSERT INTO public.warehouse (id, name) VALUES (5, 'WAREHOUSE-5');
+INSERT INTO public.warehouse (id, name) VALUES (6, 'WAREHOUSE-6');
+INSERT INTO public.warehouse (id, name) VALUES (7, 'WAREHOUSE-7');
+INSERT INTO public.warehouse (id, name) VALUES (8, 'WAREHOUSE-8');
+INSERT INTO public.warehouse (id, name) VALUES (9, 'WAREHOUSE-9');
+INSERT INTO public.warehouse (id, name) VALUES (10, 'WAREHOUSE-10');
 
 
 --
@@ -642,6 +770,13 @@ SELECT pg_catalog.setval('public.customer_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('public.customertype_id_seq', 2, true);
+
+
+--
+-- Name: document_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.document_id_seq', 16, true);
 
 
 --
@@ -739,6 +874,22 @@ ALTER TABLE ONLY public.customertype
 
 ALTER TABLE ONLY public.customertype
     ADD CONSTRAINT customertype_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: document document_filepath_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.document
+    ADD CONSTRAINT document_filepath_key UNIQUE (filepath);
+
+
+--
+-- Name: document document_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.document
+    ADD CONSTRAINT document_pkey PRIMARY KEY (id);
 
 
 --
@@ -979,6 +1130,14 @@ ALTER TABLE ONLY public.jobxproduct
 
 ALTER TABLE ONLY public.jobxproduct
     ADD CONSTRAINT jobxproduct_productid_fkey FOREIGN KEY (productid) REFERENCES public.product(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: product product_documentid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.product
+    ADD CONSTRAINT product_documentid_fkey FOREIGN KEY (documentid) REFERENCES public.document(id);
 
 
 --
