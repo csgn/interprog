@@ -17,10 +17,18 @@
 		<h:panelGroup id="createProductModalGroup">
 			<h:form>
 				<div>
-					<ez:ip-input type="text" placeholder="status name" required="true" value="#{statusBean.model.name}"/>
+					<ez:ip-input type="text" placeholder="status name" required="true" value="#{statusBean.model.name}" validateLength="true" min="5" max="16" validatorMsg="The status name must be between 5 and 16 characters in length."/>
 				</div>
 				<div>
-					<ez:ip-input type="color" placeholder="color" value="#{statusBean.model.color}" required="true" />
+					<h:messages style="color: red; list-style-type: none"/>
+				</div>
+				</div>
+				<div>
+					<ez:ip-input type="color" placeholder="color" value="#{statusBean.model.color}" required="true" validateLength="true" min="5" max="16" validatorMsg="Invalid input."/>
+				</div>
+				<div>
+					<h:messages style="color: red; list-style-type: none"/>
+				</div>
 				</div>
 				<div class="modal-footer">
 					<h:commandButton class="button" value="Save" action="#{statusBean.create}"/>
@@ -84,10 +92,18 @@
 					<h:panelGroup id="modalgroup">
 						<h:form>
 							<div>
-								<ez:ip-input type="text" placeholder="status name" required="true" value="#{statusBean.model.name}"/>
+								<ez:ip-input type="text" placeholder="status name" required="true" value="#{statusBean.model.name}" validateLength="true" min="5" max="16" validatorMsg="The status name must be between 5 and 16 characters in length."/>
 							</div>
 							<div>
-								<ez:ip-input type="color" placeholder="color" value="#{statusBean.model.color}" required="true" />
+								<h:messages style="color: red; list-style-type: none"/>
+							</div>
+							</div>
+							<div>
+								<ez:ip-input type="color" placeholder="color" value="#{statusBean.model.color}" required="true" validateLength="true" min="5" max="16" validatorMsg="Invalid input."/>
+							</div>
+							<div>
+								<h:messages style="color: red; list-style-type: none"/>
+							</div>
 							</div>
 							<div class="modal-footer">
 								<h:commandButton class="button" action="#{statusBean.update}" value="Save">
@@ -100,7 +116,7 @@
 
 			</c:forEach>
 		</h:panelGroup>
-			
+
 		<div class="container-footer" style="display: flex; flex-direction: column;">
 			<h:panelGroup id="pageInfo">
 				<div style="display: flex; flex-direction: column;">
