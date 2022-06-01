@@ -65,6 +65,36 @@ public class SquadDAO implements IDAO<Squad> {
 		return squads;
 	}
 
+		@Override
+	public List<Squad> findAll(int page, int pageSize) {
+		List<Squad> squads = new ArrayList<>();
+		Squad squad;
+		PreparedStatement ps;
+		ResultSet rs;
+
+		int start = (page - 1) * pageSize;
+
+		try {
+			ps = conn.prepareStatement("SELECT * FROM squad limit ? offset ?");
+			ps.setInt(1, pageSize);
+			ps.setInt(2, start);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				squad = new Squad(
+								rs.getInt("id"),
+								rs.getString("name")
+				);
+
+				squads.add(squad);
+			}
+		} catch (SQLException e) {
+			Logger.getLogger(SquadDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+
+		return squads;
+	}
+
 	@Override
 	public int create(Squad s) {
 		int id = -1;
@@ -134,8 +164,21 @@ public class SquadDAO implements IDAO<Squad> {
 		return squad;
 	}
 
-	@Override
-	public List<Squad> findAll(int p, int ps) {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	public int count() {
+		int count = 0;
+		PreparedStatement ps;
+		ResultSet rs;
+
+		try {
+			ps = conn.prepareStatement("SELECT count(id) as squad_count from squad");
+			rs = ps.executeQuery();
+			rs.next();
+			count = rs.getInt("squad_count");
+
+		} catch (SQLException ex) {
+			Logger.getLogger(SquadDAO.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		return count;
 	}
 }
