@@ -14,16 +14,21 @@
 								xmlns:f="http://xmlns.jcp.org/jsf/core"
 								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 	<md:modal id="createStatusModal" title="ADD Status">
-		<h:panelGroup id="createProductModalGroup">
+		<h:panelGroup id="createStatusModalGroup">
 			<h:form>
 				<div>
-					<ez:ip-input type="text" placeholder="status name" required="true" value="#{statusBean.model.name}"/>
+					<ez:ip-input type="text" placeholder="status name" required="true" value="#{statusBean.model.name}" validateLength="true" min="5" max="16" validatorMsg="Status name cannot be less than 5 characters!"/>
 				</div>
 				<div>
-					<ez:ip-input type="color" placeholder="color" value="#{statusBean.model.color}" required="true" />
+					<ez:ip-input type="color" placeholder="color" value="#{statusBean.model.color}" required="true"/>
+				</div>
+				<div>
+					<h:messages style="color: red; list-style-type: none"/>
 				</div>
 				<div class="modal-footer">
-					<h:commandButton class="button" value="Save" action="#{statusBean.create}"/>
+					<h:commandButton class="button" value="Save" action="#{statusBean.create}">
+						<f:ajax render="createStatusModal:createStatusModalGroup" execute="@this" />
+					</h:commandButton>
 				</div>
 			</h:form>
 		</h:panelGroup>
@@ -84,14 +89,17 @@
 					<h:panelGroup id="modalgroup">
 						<h:form>
 							<div>
-								<ez:ip-input type="text" placeholder="status name" required="true" value="#{statusBean.model.name}"/>
+								<ez:ip-input type="text" placeholder="status name" required="true" value="#{statusBean.model.name}" validateLength="true" min="5" max="16" validatorMsg="Status name cannot be less than 5 characters!"/>
 							</div>
 							<div>
-								<ez:ip-input type="color" placeholder="color" value="#{statusBean.model.color}" required="true" />
+								<ez:ip-input type="color" placeholder="color" value="#{statusBean.model.color}" required="true"/>
+							</div>
+							<div>
+								<h:messages style="color: red; list-style-type: none"/>
 							</div>
 							<div class="modal-footer">
 								<h:commandButton class="button" action="#{statusBean.update}" value="Save">
-									<f:ajax execute="@this" render="egroup" />
+									<f:ajax render="egroup" execute="@this"/>
 								</h:commandButton>
 							</div>
 						</h:form>
@@ -100,7 +108,7 @@
 
 			</c:forEach>
 		</h:panelGroup>
-			
+
 		<div class="container-footer" style="display: flex; flex-direction: column;">
 			<h:panelGroup id="pageInfo">
 				<div style="display: flex; flex-direction: column;">
