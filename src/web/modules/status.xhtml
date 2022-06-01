@@ -49,7 +49,7 @@
 			<div class="container-column">OPTIONS</div>
 		</div>
 		<h:panelGroup id="egroup">
-			<c:forEach items="#{statusBean.findAll()}" var="e">
+			<c:forEach items="#{statusBean.findAllLimit()}" var="e">
 				<div class='container-row'>
 					<div class='container-column'>#{e.name}</div>
 					<div class='container-column'>

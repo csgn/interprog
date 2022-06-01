@@ -31,6 +31,11 @@ public class SquadBean implements Serializable{
 		return dao.findAll();
 	}
 
+	public List<Squad> findAllLimit() {
+		return dao.findAll();
+	}
+
+
 	public void create() {
 		int id = dao.create(model);
 		this.clearModel();

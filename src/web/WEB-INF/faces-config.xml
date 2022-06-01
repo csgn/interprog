@@ -31,10 +31,6 @@
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>
-			<from-outcome>home</from-outcome>
-			<to-view-id>/modules/home.xhtml</to-view-id>
-		</navigation-case>
-		<navigation-case>
 			<from-outcome>jobs</from-outcome>
 			<to-view-id>/modules/jobs.xhtml</to-view-id>
 		</navigation-case>
@@ -65,10 +61,6 @@
 		<navigation-case>
 			<from-outcome>status</from-outcome>
 			<to-view-id>/modules/status.xhtml</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>settings</from-outcome>
-			<to-view-id>/modules/settings.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 </faces-config>

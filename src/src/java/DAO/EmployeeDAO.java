@@ -94,8 +94,6 @@ public class EmployeeDAO implements IDAO<Employee> {
 
 		int start = (page-1)*pageSize;
 
-		System.out.println(start + " " + pageSize);
-
 		try {
 			ps = conn.prepareStatement("SELECT * FROM employee limit ? offset ?");
 			ps.setInt(1, pageSize);
@@ -286,7 +284,6 @@ public class EmployeeDAO implements IDAO<Employee> {
 			ps.setInt(2, squadId);
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("###################ERRORRRRRRRRRRRRRRRRRRRRR" + "employeeid: " + employeeId + " squadId: " + squadId);
 			Logger.getLogger(SquadDAO.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}

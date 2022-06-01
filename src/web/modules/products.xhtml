@@ -15,7 +15,7 @@
 								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 	<md:modal id="createProductModal" title="ADD PRODUCT">
 		<h:panelGroup id="createProductModalGroup">
-			<h:form>
+			<h:form enctype="multipart/form-data">
 				<div>
 					<ez:ip-input type="text" placeholder="product name" required="true" value="#{productBean.model.name}"/>
 				</div>
@@ -49,6 +49,11 @@
 						<f:selectItems value="#{['18', '8', '1', '0']}" var="c" itemLabel="#{c}%" itemValue="#{c}" />
 					</h:selectOneMenu>
 				</div>
+				<div>
+					<h:outputLabel>Image</h:outputLabel><br/>
+					<h:inputFile value="#{productBean.doc}" />
+				</div>
+							
 				<div class="modal-footer">
 					<h:commandButton class="button" value="Save" action="#{productBean.create}"/>
 				</div>
@@ -79,10 +84,11 @@
 			<div class="container-column">VAT</div>
 			<div class="container-column">QUANTITY</div>
 			<div class="container-column">WAREHOUSE</div>
+			<div class="container-column">DOCUMENT</div>
 			<div class="container-column">OPTIONS</div>
 		</div>
 		<h:panelGroup id="egroup">
-			<c:forEach items="#{productBean.findAll()}" var="e">
+			<c:forEach items="#{productBean.findAllLimit()}" var="e">
 				<div class='container-row'>
 					<div class='container-column'>#{e.name}</div>
 					<div class='container-column'>#{e.serialNumber}</div>
@@ -92,6 +98,9 @@
 					<div class='container-column'>#{e.vat}%</div>
 					<div class='container-column'>#{e.quantity}</div>
 					<div class='container-column'>#{e.warehouse.name}</div>
+					<div class='container-column'>
+						<h:graphicImage value="/file/#{e.document.fileName}" width="32" height="32"/>
+					</div>
 					<div class="container-column">
 						<dd:dropdown>
 							<ib:icon-button name="ellipsis-vertical" />
