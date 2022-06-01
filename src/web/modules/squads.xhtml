@@ -52,7 +52,7 @@
 			<div class="container-column">OPTIONS</div>
 		</div>
 		<h:panelGroup id="egroup">
-			<c:forEach items="#{squadBean.findAll()}" var="e">
+			<c:forEach items="#{squadBean.findAllLimit()}" var="e">
 				<div class='container-row'>
 					<div class='container-column'>#{e.name}</div>
 					<div class="container-column">
@@ -100,7 +100,25 @@
 
 			</c:forEach>
 		</h:panelGroup>
-		<div class="container-footer">
+		<div class="container-footer" style="display: flex; flex-direction: column;">
+			<h:panelGroup id="pageInfo">
+				<div style="display: flex; flex-direction: column;">
+					Page #{squadBean.page} of #{squadBean.pageCount}
+				</div>
+			</h:panelGroup>
+			<div style="display: flex;">
+				<div style="margin-right: 0.5rem">
+					<h:commandButton class="button" value="previous" action="#{squadBean.previous}">
+						<f:ajax execute="@this" render="egroup pageInfo" />
+					</h:commandButton>
+				</div>
+
+				<div>
+					<h:commandButton class="button" value="next" action="#{squadBean.next}">
+						<f:ajax execute="@this" render="egroup pageInfo" />
+					</h:commandButton>
+				</div>
+			</div>
 		</div>
 	</div>
 
