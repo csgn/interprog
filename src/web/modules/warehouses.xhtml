@@ -17,7 +17,7 @@
 		<h:panelGroup id="warehouseModal_create_group">
 			<h:form>
 				<div>
-					<ez:ip-input id="warehouseModal_textInput_warehouseName" type="text" placeholder="warehouse name" required="true" value="#{warehouseBean.model.name}" validateLength="true" min="5" max="16" validatorMsg="Password cannot be less than 5 characters!"/>
+					<ez:ip-input id="warehouseModal_textInput_warehouseName" type="text" placeholder="warehouse name" required="true" value="#{warehouseBean.model.name}" validateLength="true" min="5" max="16"/>
 				</div>
 
 				
@@ -106,7 +106,25 @@
 
 			</c:forEach>
 		</h:panelGroup>
-		<div class="container-footer">
+		<div class="container-footer" style="display: flex; flex-direction: column;">
+			<h:panelGroup id="pageInfo">
+				<div style="display: flex; flex-direction: column;">
+					Page #{warehouseBean.page} of #{warehouseBean.pageCount}
+				</div>
+			</h:panelGroup>
+			<div style="display: flex;">
+				<div style="margin-right: 0.5rem">
+					<h:commandButton class="button" value="previous" action="#{warehouseBean.previous}">
+						<f:ajax execute="@this" render="warehouse_egroup pageInfo" />
+					</h:commandButton>
+				</div>
+
+				<div>
+					<h:commandButton class="button" value="next" action="#{warehouseBean.next}">
+						<f:ajax execute="@this" render="warehouse_egroup pageInfo" />
+					</h:commandButton>
+				</div>
+			</div>
 		</div>
 	</div>
 
