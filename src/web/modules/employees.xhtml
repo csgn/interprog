@@ -16,8 +16,8 @@
 	<md:modal id="employeeModal_create" title="Add Employee">
 		<h:panelGroup id="employeeModal_create_group">
 			<h:form>
-					<ez:ip-input type="text" placeholder="name" value="#{employeeBean.model.name}" required="true" />
-					<ez:ip-input type="text" placeholder="lastname" value="#{employeeBean.model.surname}" required="true" />
+					<ez:ip-input type="text" placeholder="name" value="#{employeeBean.model.name}" required="true" validator="nameValidator" />
+					<ez:ip-input type="text" placeholder="lastname" value="#{employeeBean.model.surname}" required="true" validator="nameValidator" />
 					<ez:ip-input type="text" placeholder="phone" value="#{employeeBean.model.phone}" required="true" validator="phoneValidator" />
 					<ez:ip-input type="password" placeholder="password" value="#{employeeBean.model.password}" required="true" validator="passwordValidator" />
 					<ez:ip-input type="color" placeholder="color" value="#{employeeBean.model.color}" required="true" />
@@ -119,16 +119,16 @@
 					<h:panelGroup id="employeeModal_update_group_#{e.id}">
 						<h:form>
 							<div>
-								<ez:ip-input id="employeeModal_update_textInput_name" type="text" placeholder="name" value="#{employeeBean.model.name}" required="true" />
+								<ez:ip-input type="text" placeholder="name" value="#{employeeBean.model.name}" required="true" validator="nameValidator" />
 							</div>
 							<div>
-								<ez:ip-input id="employeeModal_update_textInput_lastname" type="text" placeholder="lastname" value="#{employeeBean.model.surname}" required="true" />
+								<ez:ip-input type="text" placeholder="lastname" value="#{employeeBean.model.surname}" required="true" valdiator="nameValidator" />
 							</div>
 							<div>
-								<ez:ip-input id="employeeModal_update_textInput_phone" type="text" placeholder="phone" value="#{employeeBean.model.phone}" required="true" />
+								<ez:ip-input type="text" placeholder="phone" value="#{employeeBean.model.phone}" required="true" validator="phoneValidator" />
 							</div>
 							<div>
-								<ez:ip-input id="employeeModal_update_colorInput_color" type="color" placeholder="color" value="#{employeeBean.model.color}" required="true" />
+								<ez:ip-input type="color" placeholder="color" value="#{employeeBean.model.color}" required="true" />
 							</div>
 							<div>
 								<h:outputLabel>Squad(s)</h:outputLabel><br/>
