@@ -17,16 +17,17 @@
 		<h:panelGroup id="createProductModalGroup">
 			<h:form>
 				<div>
-					<ez:ip-input type="text" placeholder="role name" required="true" value="#{roleBean.model.name}" validateLength="true" min="5" max="16" validatorMsg=""/>
+					<ez:ip-input type="text" placeholder="role name" required="true" value="#{roleBean.model.name}" validateLength="true" min="5" max="16" validatorMsg="Role name cannot be less than 5 characters!"/>
 				</div>
-				
+
 				<div>
 					<h:messages style="color: red; list-style-type: none"/>
 				</div>
-				
+
 				<div class="modal-footer">
-					<h:commandButton class="button" value="Save" action="#{roleBean.create}"/>
-						<f:ajax render="roleModal_create:roleModal_create_group role_egroup" execute="@this" />
+					<h:commandButton class="button" value="Save" action="#{roleBean.create}">
+						<f:ajax render="createRoleModal:createProductModalGroup egroup" execute="@this" />
+					</h:commandButton>
 				</div>
 			</h:form>
 		</h:panelGroup>
@@ -96,7 +97,7 @@
 
 			</c:forEach>
 		</h:panelGroup>
-			
+
 		<div class="container-footer" style="display: flex; flex-direction: column;">
 			<h:panelGroup id="pageInfo">
 				<div style="display: flex; flex-direction: column;">
