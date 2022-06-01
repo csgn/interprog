@@ -38,8 +38,6 @@ public class StatusBean implements Serializable {
 		return dao.findAll(page,pageSize);
 	}
 
-
-
 	public void create() {
 		int id = dao.create(model);
 		this.clearModel();

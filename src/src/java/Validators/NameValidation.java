@@ -25,7 +25,7 @@ public class NameValidation implements Validator {
 
 	@Override
 	public void validate(FacesContext fc, UIComponent uic, Object t) throws ValidatorException {
-		
+
 	String v = (String) t;
 
 	if (v.isEmpty()) {
@@ -37,8 +37,6 @@ public class NameValidation implements Validator {
 	if (!matcherObject.matches()) {
 		throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Name is not valid!", null));
 	}
-
-
 
 	}
 	

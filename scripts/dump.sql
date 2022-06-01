@@ -755,14 +755,14 @@ INSERT INTO public.warehouse (id, name) VALUES (10, 'WAREHOUSE-10');
 -- Name: address_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
-SELECT pg_catalog.setval('public.address_id_seq', 1, false);
+SELECT pg_catalog.setval('public.address_id_seq', 5, false);
 
 
 --
 -- Name: customer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
-SELECT pg_catalog.setval('public.customer_id_seq', 1, false);
+SELECT pg_catalog.setval('public.customer_id_seq', 4, false);
 
 
 --
@@ -783,49 +783,49 @@ SELECT pg_catalog.setval('public.document_id_seq', 16, true);
 -- Name: employee_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
-SELECT pg_catalog.setval('public.employee_id_seq', 1, true);
+SELECT pg_catalog.setval('public.employee_id_seq', 7, true);
 
 
 --
 -- Name: job_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
-SELECT pg_catalog.setval('public.job_id_seq', 1, false);
+SELECT pg_catalog.setval('public.job_id_seq', 5, false);
 
 
 --
 -- Name: product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
-SELECT pg_catalog.setval('public.product_id_seq', 1, false);
+SELECT pg_catalog.setval('public.product_id_seq', 15, false);
 
 
 --
 -- Name: role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
-SELECT pg_catalog.setval('public.role_id_seq', 2, true);
+SELECT pg_catalog.setval('public.role_id_seq', 3, true);
 
 
 --
 -- Name: squad_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
-SELECT pg_catalog.setval('public.squad_id_seq', 1, false);
+SELECT pg_catalog.setval('public.squad_id_seq', 6, false);
 
 
 --
 -- Name: status_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
-SELECT pg_catalog.setval('public.status_id_seq', 3, true);
+SELECT pg_catalog.setval('public.status_id_seq', 4, true);
 
 
 --
 -- Name: warehouse_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
-SELECT pg_catalog.setval('public.warehouse_id_seq', 1, false);
+SELECT pg_catalog.setval('public.warehouse_id_seq', 11, false);
 
 
 --

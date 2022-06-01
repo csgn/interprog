@@ -64,6 +64,7 @@ public class StatusDAO implements IDAO<Status> {
 
 		return statuses;
 	}
+
 	@Override
 	public List<Status> findAll(int page, int pageSize) {
 		List<Status> statuses = new ArrayList<>();
@@ -204,6 +205,5 @@ public class StatusDAO implements IDAO<Status> {
 		}
 
 		return count;
-
 	}
 }

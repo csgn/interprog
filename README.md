@@ -13,6 +13,14 @@ It ensures the flow of information between admin, employees and customers.
 psql -U postgres -f scripts/dump.sql
 ```
 
+## SET PATH OF UPLOADS FOLDER
+```java
+ */
+public class ProductBean implements Serializable {
+	...
+	private final String uploadTo = "<path_of_project>/uploads/";
+```
+
 ## ACTIVE ISSUES
 
 - [ ] [The form components are not yet completed](https://github.com/csgn/interprog/issues/37)

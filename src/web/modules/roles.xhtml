@@ -14,7 +14,7 @@
 								xmlns:f="http://xmlns.jcp.org/jsf/core"
 								xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 	<md:modal id="createRoleModal" title="ADD ROLE">
-		<h:panelGroup id="createProductModalGroup">
+		<h:panelGroup id="createRoleModalGroup">
 			<h:form>
 				<div>
 					<ez:ip-input type="text" placeholder="role name" required="true" value="#{roleBean.model.name}" validateLength="true" min="5" max="16" validatorMsg="Role name cannot be less than 5 characters!"/>
@@ -26,7 +26,7 @@
 
 				<div class="modal-footer">
 					<h:commandButton class="button" value="Save" action="#{roleBean.create}">
-						<f:ajax render="createRoleModal:createProductModalGroup egroup" execute="@this" />
+						<f:ajax render="createRoleModal:createRoleModalGroup egroup" execute="@this" />
 					</h:commandButton>
 				</div>
 			</h:form>
@@ -84,11 +84,16 @@
 					<h:panelGroup id="modalgroup">
 						<h:form>
 							<div>
-								<ez:ip-input type="text" placeholder="role name" required="true" value="#{roleBean.model.name}"/>
+								<ez:ip-input type="text" placeholder="role name" required="true" value="#{roleBean.model.name}"  validateLength="true" min="5" max="16"/>
 							</div>
+
+						<div>
+							<h:messages style="color: red; list-style-type: none"/>
+						</div>
+				
 							<div class="modal-footer">
 								<h:commandButton class="button" action="#{roleBean.update}" value="Save">
-									<f:ajax execute="@this" render="egroup" />
+									<f:ajax execute="@this" render="emodal_#{e.id}:modalgroup" />
 								</h:commandButton>
 							</div>
 						</h:form>
