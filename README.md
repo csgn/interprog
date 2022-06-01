@@ -10,7 +10,7 @@ It ensures the flow of information between admin, employees and customers.
 
 ## RESTORE DATABASE FROM DUMP
 ```bash
-psql -U postgres -f scripts/interprog_dump.sql
+psql -U postgres -f scripts/dump.sql
 ```
 
 ## ACTIVE ISSUES
