@@ -63,7 +63,7 @@ public class AuthorizationFilter implements Filter {
 
 				// request to login page and logged in -> redirect to index
 			} else if (loginRequest && loginStatus) {
-				res.sendRedirect("/");
+				res.sendRedirect("/dashboard");
 			} else {
 				chain.doFilter(request, response);
 			}
