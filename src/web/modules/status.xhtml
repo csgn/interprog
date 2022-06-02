@@ -99,7 +99,7 @@
 							</div>
 							<div class="modal-footer">
 								<h:commandButton class="button" action="#{statusBean.update}" value="Save">
-									<f:ajax render="egroup" execute="@this"/>
+									<f:ajax render="emodal_#{e.id}:modalgroup" execute="@this"/>
 								</h:commandButton>
 							</div>
 						</h:form>
